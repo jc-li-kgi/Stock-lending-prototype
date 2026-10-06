@@ -28,7 +28,7 @@ export function BottomNav({ active = 'account' }) {
       ${ITEMS.map(
         (item) => html`
           <button
-            class=${'bottom-nav__item t-body' + (item.key === active ? ' bottom-nav__item--active' : '')}
+            class=${'bottom-nav__item ' + (item.key === active ? 'bottom-nav__item--active t-body-bold' : 't-body-regular')}
             onClick=${() => item.key !== active && showToast(COPY.common.notAvailable)}
           >
             <span class="bottom-nav__icon">${item.icon}</span>

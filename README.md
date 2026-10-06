@@ -20,6 +20,28 @@ python3 -m http.server 8080
 - 主持人頁：`#/moderator`，或在帳務頁**長按「帳務」標題 1.5 秒**
 - 未實作的按鈕會跳「此功能未開放於本次測試」提示
 
+## 設計規範：One KGI Design Guideline
+
+`One KGI Design Guideline/` 是顏色、間距、圓角、陰影、字級的**唯一來源**，由 `index.html` 直接載入：
+
+| 類別 | Token 檔 | 用法範例 |
+|---|---|---|
+| 顏色 | `Color/colors.css` | `var(--color-content-general-primary)` |
+| 間距 | `Spacing/spacing.css` | `var(--spacing-16)` |
+| 圓角 | `Radius/radius-tokens.css` | `var(--radius-medium)`（卡片） |
+| 陰影 | `Shadow/shadow.css` | `var(--shadow-basic)`（藍底上的卡片） |
+| 字級 | `Typography/kgi-typography-tokens.css` | 用 `styles/typography.css` 的 class |
+
+文字樣式 class（`styles/typography.css`）：`.t-*` 中文、`.n-*` 英數，層級名稱同 Guideline：
+`display-l/m/s`、`headline`、`title`、`subtitle-bold`、`subtitle-regular`、`body-bold`、`body-regular`、`caption-regular`。
+例：`<p class="t-body-regular">`、`<span class="n-title">`。
+
+規則：
+- `styles/` 裡**不寫死**顏色、間距、圓角、陰影數值，一律用 Guideline token
+- Guideline 沒有的（互動狀態色、字型堆疊、版面寬度）才放 `styles/tokens.css`
+- Guideline 更新時，直接覆蓋 `One KGI Design Guideline/` 資料夾即可
+- 加大字級：主持人頁切換，或網址加 `?textScale=large`
+
 ## 字型
 
 依裝置自動切換（`src/boot/platform.js` 偵測，`styles/tokens.css` 設定）：
@@ -42,14 +64,16 @@ python3 -m http.server 8080
 | 步驟順序 / 組新流程 | `src/flows/flows.js` |
 | 利率、上下限、手續費、公式 | `src/lib/calc.js` |
 | 股價、成數 | `src/mock/stocks.js` |
-| 顏色、字型 | `styles/tokens.css`（字型偵測在 `src/boot/platform.js`） |
+| 顏色、間距、圓角、陰影、字級 | `One KGI Design Guideline/`（App 補充在 `styles/tokens.css`） |
+| 字型 | `styles/tokens.css`（偵測在 `src/boot/platform.js`） |
 | 共用元件長相（按鈕、輸入框、費用卡…） | `styles/components.css`，元件用法寫在各元件檔開頭 |
 
 ## 結構
 
 ```
 index.html
-styles/          tokens / base / components / 各頁樣式
+One KGI Design Guideline/   ★ 設計規範 token（顏色/間距/圓角/陰影/字級）
+styles/          tokens / typography / base / components / 各頁樣式
 assets/icons/    Figma 匯出的 icon
 src/
   app.js         進入點

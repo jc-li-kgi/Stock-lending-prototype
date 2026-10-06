@@ -15,16 +15,16 @@ export function LoanRecords() {
     <div class="page records-page">
       <${PageHeader} title=${t.title} onBack=${() => navigate(entryHome())} showShare=${false} />
       <div class="records-list">
-        ${loans.length === 0 && html`<p class="t-body c-secondary">${t.empty}</p>`}
+        ${loans.length === 0 && html`<p class="t-body-regular c-secondary">${t.empty}</p>`}
         ${loans.map(
           (l) => html`
             <div class="card records-item">
               <div class="records-item__head">
-                <span class="t-body c-secondary">${date(l.applyDate)}</span>
-                <span class="records-item__status t-caption">${l.status}</span>
+                <span class="t-body-regular c-secondary">${date(l.applyDate)}</span>
+                <span class="records-item__status t-caption-regular">${l.status}</span>
               </div>
               <p class="n-title c-primary">${twd(l.amount)}</p>
-              <p class="t-caption c-secondary">${l.purpose}・到期日 ${date(l.dueDate)}</p>
+              <p class="t-caption-regular c-secondary">${l.purpose}・到期日 ${date(l.dueDate)}</p>
             </div>
           `
         )}

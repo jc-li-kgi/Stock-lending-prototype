@@ -2,21 +2,31 @@
 .moderator-page {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px 16px;
+  gap: var(--spacing-16);
+  padding: var(--spacing-24) var(--spacing-16);
 }
 .moderator-page h1 { margin: 0; }
-.moderator-task { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+.moderator-task { display: flex; flex-direction: column; gap: var(--spacing-8); padding: var(--spacing-16); }
 .moderator-task__url { word-break: break-all; }
-.moderator-platforms { display: flex; flex-wrap: wrap; gap: 8px; }
+.moderator-options { display: flex; flex-wrap: wrap; gap: var(--spacing-8); }
+.moderator-options .btn-capsule[aria-pressed="true"] {
+  background: var(--color-container-general-active-primary);
+  color: var(--color-content-general-light-active);
+}
 .moderator-task__go { align-self: flex-end; text-decoration: none; }
 
-.records-list { display: flex; flex-direction: column; gap: 12px; padding: 8px 16px 32px; }
-.records-item { display: flex; flex-direction: column; gap: 4px; padding: 16px; }
+/* 紀錄頁（卡片組 12；卡片 16×16） */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-8) var(--spacing-16) var(--spacing-40);
+}
+.records-item { display: flex; flex-direction: column; gap: var(--spacing-4); padding: var(--spacing-16); }
 .records-item__head { display: flex; justify-content: space-between; align-items: center; }
 .records-item__status {
-  padding: 2px 8px;
-  border-radius: 10px;
-  background: var(--container-active-secondary);
-  color: var(--content-active);
+  padding: var(--spacing-2) var(--spacing-8);
+  border-radius: var(--radius-full); /* Guideline：Tag 用 radius-full */
+  background: var(--color-container-general-active-secondary);
+  color: var(--color-content-general-active);
 }

@@ -16,7 +16,7 @@ export function LoanResult() {
         </div>
         <div class="result-page__text">
           <p class="t-headline c-primary">${t.resultTitle}</p>
-          <p class="t-body-l c-secondary">${t.resultDesc}</p>
+          <p class="t-body-regular c-secondary">${t.resultDesc}</p>
         </div>
       </div>
 

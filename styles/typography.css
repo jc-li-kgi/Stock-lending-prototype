@@ -1,0 +1,67 @@
+/**
+ * 文字樣式｜依 One KGI Design Guideline › Typography
+ * 數值全部引用 One KGI Design Guideline/Typography/kgi-typography-tokens.css，這裡不寫死任何數字
+ *
+ *   .t-*  中文（tc token）   .n-*  英文 / 數字（en token）
+ *   Display - L   → .t-display-l / .n-display-l
+ *   Display - M   → .t-display-m / .n-display-m
+ *   Display - S   → .t-display-s / .n-display-s
+ *   Headline      → .t-headline / .n-headline
+ *   Title         → .t-title / .n-title
+ *   Subtitle - B  → .t-subtitle-bold / .n-subtitle-bold
+ *   Subtitle - R  → .t-subtitle-regular / .n-subtitle-regular
+ *   Body - B      → .t-body-bold / .n-body-bold
+ *   Body - R      → .t-body-regular / .n-body-regular
+ *   Caption - R   → .t-caption-regular / .n-caption-regular
+ *
+ * 平台：
+ *   web / android → --kgi-font-auto-*（> 768px 用 Web、≤ 768px 用 mWeb，支援 rem 與加大字級）
+ *   ios           → --kgi-font-ios-*（iOS 原生數值，英數為 SF Pro 字重與行高）
+ * 字型（family）由 tokens.css 的 --font-base 依平台決定，這裡只管字級、字重、行高、字距
+ */
+
+/* ---------- web / android（預設） ---------- */
+.t-display-l { font-size: var(--kgi-font-auto-display-l-tc-size-rem); font-weight: var(--kgi-font-auto-display-l-tc-weight); line-height: var(--kgi-font-auto-display-l-tc-line-height); letter-spacing: var(--kgi-font-auto-display-l-tc-letter-spacing); }
+.t-display-m { font-size: var(--kgi-font-auto-display-m-tc-size-rem); font-weight: var(--kgi-font-auto-display-m-tc-weight); line-height: var(--kgi-font-auto-display-m-tc-line-height); letter-spacing: var(--kgi-font-auto-display-m-tc-letter-spacing); }
+.t-display-s { font-size: var(--kgi-font-auto-display-s-tc-size-rem); font-weight: var(--kgi-font-auto-display-s-tc-weight); line-height: var(--kgi-font-auto-display-s-tc-line-height); letter-spacing: var(--kgi-font-auto-display-s-tc-letter-spacing); }
+.t-headline { font-size: var(--kgi-font-auto-headline-tc-size-rem); font-weight: var(--kgi-font-auto-headline-tc-weight); line-height: var(--kgi-font-auto-headline-tc-line-height); letter-spacing: var(--kgi-font-auto-headline-tc-letter-spacing); }
+.t-title { font-size: var(--kgi-font-auto-title-tc-size-rem); font-weight: var(--kgi-font-auto-title-tc-weight); line-height: var(--kgi-font-auto-title-tc-line-height); letter-spacing: var(--kgi-font-auto-title-tc-letter-spacing); }
+.t-subtitle-bold { font-size: var(--kgi-font-auto-subtitle-bold-tc-size-rem); font-weight: var(--kgi-font-auto-subtitle-bold-tc-weight); line-height: var(--kgi-font-auto-subtitle-bold-tc-line-height); letter-spacing: var(--kgi-font-auto-subtitle-bold-tc-letter-spacing); }
+.t-subtitle-regular { font-size: var(--kgi-font-auto-subtitle-regular-tc-size-rem); font-weight: var(--kgi-font-auto-subtitle-regular-tc-weight); line-height: var(--kgi-font-auto-subtitle-regular-tc-line-height); letter-spacing: var(--kgi-font-auto-subtitle-regular-tc-letter-spacing); }
+.t-body-bold { font-size: var(--kgi-font-auto-body-bold-tc-size-rem); font-weight: var(--kgi-font-auto-body-bold-tc-weight); line-height: var(--kgi-font-auto-body-bold-tc-line-height); letter-spacing: var(--kgi-font-auto-body-bold-tc-letter-spacing); }
+.t-body-regular { font-size: var(--kgi-font-auto-body-regular-tc-size-rem); font-weight: var(--kgi-font-auto-body-regular-tc-weight); line-height: var(--kgi-font-auto-body-regular-tc-line-height); letter-spacing: var(--kgi-font-auto-body-regular-tc-letter-spacing); }
+.t-caption-regular { font-size: var(--kgi-font-auto-caption-regular-tc-size-rem); font-weight: var(--kgi-font-auto-caption-regular-tc-weight); line-height: var(--kgi-font-auto-caption-regular-tc-line-height); letter-spacing: var(--kgi-font-auto-caption-regular-tc-letter-spacing); }
+
+.n-display-l { font-size: var(--kgi-font-auto-display-l-en-size-rem); font-weight: var(--kgi-font-auto-display-l-en-weight); line-height: var(--kgi-font-auto-display-l-en-line-height); letter-spacing: var(--kgi-font-auto-display-l-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-display-m { font-size: var(--kgi-font-auto-display-m-en-size-rem); font-weight: var(--kgi-font-auto-display-m-en-weight); line-height: var(--kgi-font-auto-display-m-en-line-height); letter-spacing: var(--kgi-font-auto-display-m-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-display-s { font-size: var(--kgi-font-auto-display-s-en-size-rem); font-weight: var(--kgi-font-auto-display-s-en-weight); line-height: var(--kgi-font-auto-display-s-en-line-height); letter-spacing: var(--kgi-font-auto-display-s-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-headline { font-size: var(--kgi-font-auto-headline-en-size-rem); font-weight: var(--kgi-font-auto-headline-en-weight); line-height: var(--kgi-font-auto-headline-en-line-height); letter-spacing: var(--kgi-font-auto-headline-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-title { font-size: var(--kgi-font-auto-title-en-size-rem); font-weight: var(--kgi-font-auto-title-en-weight); line-height: var(--kgi-font-auto-title-en-line-height); letter-spacing: var(--kgi-font-auto-title-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-subtitle-bold { font-size: var(--kgi-font-auto-subtitle-bold-en-size-rem); font-weight: var(--kgi-font-auto-subtitle-bold-en-weight); line-height: var(--kgi-font-auto-subtitle-bold-en-line-height); letter-spacing: var(--kgi-font-auto-subtitle-bold-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-subtitle-regular { font-size: var(--kgi-font-auto-subtitle-regular-en-size-rem); font-weight: var(--kgi-font-auto-subtitle-regular-en-weight); line-height: var(--kgi-font-auto-subtitle-regular-en-line-height); letter-spacing: var(--kgi-font-auto-subtitle-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-body-bold { font-size: var(--kgi-font-auto-body-bold-en-size-rem); font-weight: var(--kgi-font-auto-body-bold-en-weight); line-height: var(--kgi-font-auto-body-bold-en-line-height); letter-spacing: var(--kgi-font-auto-body-bold-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-body-regular { font-size: var(--kgi-font-auto-body-regular-en-size-rem); font-weight: var(--kgi-font-auto-body-regular-en-weight); line-height: var(--kgi-font-auto-body-regular-en-line-height); letter-spacing: var(--kgi-font-auto-body-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+.n-caption-regular { font-size: var(--kgi-font-auto-caption-regular-en-size-rem); font-weight: var(--kgi-font-auto-caption-regular-en-weight); line-height: var(--kgi-font-auto-caption-regular-en-line-height); letter-spacing: var(--kgi-font-auto-caption-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+
+/* ---------- iOS ---------- */
+:root[data-platform="ios"] .t-display-l { font-size: var(--kgi-font-ios-display-l-tc-size); font-weight: var(--kgi-font-ios-display-l-tc-weight); line-height: var(--kgi-font-ios-display-l-tc-line-height); letter-spacing: var(--kgi-font-ios-display-l-tc-letter-spacing); }
+:root[data-platform="ios"] .t-display-m { font-size: var(--kgi-font-ios-display-m-tc-size); font-weight: var(--kgi-font-ios-display-m-tc-weight); line-height: var(--kgi-font-ios-display-m-tc-line-height); letter-spacing: var(--kgi-font-ios-display-m-tc-letter-spacing); }
+:root[data-platform="ios"] .t-display-s { font-size: var(--kgi-font-ios-display-s-tc-size); font-weight: var(--kgi-font-ios-display-s-tc-weight); line-height: var(--kgi-font-ios-display-s-tc-line-height); letter-spacing: var(--kgi-font-ios-display-s-tc-letter-spacing); }
+:root[data-platform="ios"] .t-headline { font-size: var(--kgi-font-ios-headline-tc-size); font-weight: var(--kgi-font-ios-headline-tc-weight); line-height: var(--kgi-font-ios-headline-tc-line-height); letter-spacing: var(--kgi-font-ios-headline-tc-letter-spacing); }
+:root[data-platform="ios"] .t-title { font-size: var(--kgi-font-ios-title-tc-size); font-weight: var(--kgi-font-ios-title-tc-weight); line-height: var(--kgi-font-ios-title-tc-line-height); letter-spacing: var(--kgi-font-ios-title-tc-letter-spacing); }
+:root[data-platform="ios"] .t-subtitle-bold { font-size: var(--kgi-font-ios-subtitle-bold-tc-size); font-weight: var(--kgi-font-ios-subtitle-bold-tc-weight); line-height: var(--kgi-font-ios-subtitle-bold-tc-line-height); letter-spacing: var(--kgi-font-ios-subtitle-bold-tc-letter-spacing); }
+:root[data-platform="ios"] .t-subtitle-regular { font-size: var(--kgi-font-ios-subtitle-regular-tc-size); font-weight: var(--kgi-font-ios-subtitle-regular-tc-weight); line-height: var(--kgi-font-ios-subtitle-regular-tc-line-height); letter-spacing: var(--kgi-font-ios-subtitle-regular-tc-letter-spacing); }
+:root[data-platform="ios"] .t-body-bold { font-size: var(--kgi-font-ios-body-bold-tc-size); font-weight: var(--kgi-font-ios-body-bold-tc-weight); line-height: var(--kgi-font-ios-body-bold-tc-line-height); letter-spacing: var(--kgi-font-ios-body-bold-tc-letter-spacing); }
+:root[data-platform="ios"] .t-body-regular { font-size: var(--kgi-font-ios-body-regular-tc-size); font-weight: var(--kgi-font-ios-body-regular-tc-weight); line-height: var(--kgi-font-ios-body-regular-tc-line-height); letter-spacing: var(--kgi-font-ios-body-regular-tc-letter-spacing); }
+:root[data-platform="ios"] .t-caption-regular { font-size: var(--kgi-font-ios-caption-regular-tc-size); font-weight: var(--kgi-font-ios-caption-regular-tc-weight); line-height: var(--kgi-font-ios-caption-regular-tc-line-height); letter-spacing: var(--kgi-font-ios-caption-regular-tc-letter-spacing); }
+
+:root[data-platform="ios"] .n-display-l { font-size: var(--kgi-font-ios-display-l-en-size); font-weight: var(--kgi-font-ios-display-l-en-weight); line-height: var(--kgi-font-ios-display-l-en-line-height); letter-spacing: var(--kgi-font-ios-display-l-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-display-m { font-size: var(--kgi-font-ios-display-m-en-size); font-weight: var(--kgi-font-ios-display-m-en-weight); line-height: var(--kgi-font-ios-display-m-en-line-height); letter-spacing: var(--kgi-font-ios-display-m-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-display-s { font-size: var(--kgi-font-ios-display-s-en-size); font-weight: var(--kgi-font-ios-display-s-en-weight); line-height: var(--kgi-font-ios-display-s-en-line-height); letter-spacing: var(--kgi-font-ios-display-s-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-headline { font-size: var(--kgi-font-ios-headline-en-size); font-weight: var(--kgi-font-ios-headline-en-weight); line-height: var(--kgi-font-ios-headline-en-line-height); letter-spacing: var(--kgi-font-ios-headline-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-title { font-size: var(--kgi-font-ios-title-en-size); font-weight: var(--kgi-font-ios-title-en-weight); line-height: var(--kgi-font-ios-title-en-line-height); letter-spacing: var(--kgi-font-ios-title-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-subtitle-bold { font-size: var(--kgi-font-ios-subtitle-bold-en-size); font-weight: var(--kgi-font-ios-subtitle-bold-en-weight); line-height: var(--kgi-font-ios-subtitle-bold-en-line-height); letter-spacing: var(--kgi-font-ios-subtitle-bold-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-subtitle-regular { font-size: var(--kgi-font-ios-subtitle-regular-en-size); font-weight: var(--kgi-font-ios-subtitle-regular-en-weight); line-height: var(--kgi-font-ios-subtitle-regular-en-line-height); letter-spacing: var(--kgi-font-ios-subtitle-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-body-bold { font-size: var(--kgi-font-ios-body-bold-en-size); font-weight: var(--kgi-font-ios-body-bold-en-weight); line-height: var(--kgi-font-ios-body-bold-en-line-height); letter-spacing: var(--kgi-font-ios-body-bold-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-body-regular { font-size: var(--kgi-font-ios-body-regular-en-size); font-weight: var(--kgi-font-ios-body-regular-en-weight); line-height: var(--kgi-font-ios-body-regular-en-line-height); letter-spacing: var(--kgi-font-ios-body-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }
+:root[data-platform="ios"] .n-caption-regular { font-size: var(--kgi-font-ios-caption-regular-en-size); font-weight: var(--kgi-font-ios-caption-regular-en-weight); line-height: var(--kgi-font-ios-caption-regular-en-line-height); letter-spacing: var(--kgi-font-ios-caption-regular-en-letter-spacing); font-feature-settings: "lnum" 1, "pnum" 1; }

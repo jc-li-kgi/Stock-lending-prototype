@@ -1,47 +1,41 @@
-/* 設計 Token：對應 Figma 變數，改色只改這裡 */
+/**
+ * App 層 Token
+ *
+ * 顏色、間距、圓角、陰影、字級一律來自「One KGI Design Guideline」資料夾（index.html 先載入）：
+ *   Color/colors.css            --color-*
+ *   Spacing/spacing.css         --spacing-*
+ *   Radius/radius-tokens.css    --radius-*
+ *   Shadow/shadow.css           --shadow-*
+ *   Typography/kgi-typography-tokens.css  --kgi-font-*
+ *
+ * 這個檔案只放 Guideline 沒有、但 App 需要的東西：字型堆疊、互動狀態色、版面寬度。
+ * 不要在這裡重新定義 Guideline 已有的顏色或數值。
+ */
+
 :root {
-  /* Surface */
-  --surface-blue: #f2f6ff;
-  --surface-white: #ffffff;
+  /* ---------- 互動狀態色（Guideline › Color › color-state-utils.ts 規則預先算好） ----------
+     Brightness ≥ 87% → −5%；其他 → +10%                                                  */
+  --color-container-general-active-primary-hover: #004EC6;    /* #0044AD (B 68%) → +10% */
+  --color-container-general-active-secondary-hover: #D1DEF2;  /* #DCEAFF (B 100%) → −5% */
+  --color-surface-white-hover: #F2F2F2;                        /* #FFFFFF (B 100%) → −5% */
 
-  /* Content（文字） */
-  --content-primary: #041c43;
-  --content-secondary: #4f607b;
-  --content-secondary-alt: #4c5466;
-  --content-tertiary: #8994a5;
-  --content-active: #0044ad;
-  --content-on-active: #ffffff;
-  --content-black: #000000;
+  /* ---------- 遮罩（Guideline：Surface/Blue-75「遮罩背景」） ---------- */
+  --color-overlay: color-mix(in srgb, var(--color-surface-blue-75) 75%, transparent);
 
-  /* Container */
-  --container-active: #0044ad;
-  --container-active-secondary: #dceaff;
-  --divider: #e2e2e2;
-  --red-400: #dd4f2c;
-
-  /* Effect */
-  --shadow-popover: 0 4px 16px 0 rgba(0, 68, 173, 0.08);
-
-  /* Radius */
-  --radius-s: 3px;
-  --radius-m: 4px;
-  --radius-l: 6px;
-  --radius-xl: 8px;
-
-  /* Font family：英數字型放前面、中文字型放後面，
-     瀏覽器會自動用英數字型顯示英數，遇到中文再改用中文字型 */
+  /* ---------- 字型堆疊：英數字型在前、中文字型在後，瀏覽器自動混排 ----------
+     Guideline › Typography › 3. 字體 Font Family                                  */
   --font-latin: "Montserrat";
   --font-cjk: "Noto Sans TC";
   --font-base: var(--font-latin), var(--font-cjk), sans-serif;
-  --font-num: var(--font-base); /* 數字專用（目前與 base 相同，保留以便日後單獨調整） */
 
-  /* App 寬度（桌機預覽時置中） */
-  --app-max-width: 430px;
+  /* ---------- 版面 ---------- */
+  --app-max-width: 430px;      /* 桌機預覽時置中的手機寬度 */
+  --bottom-nav-height: 73px;   /* 底部導覽高度（不含安全區） */
 }
 
 /* ---------- 各平台字型（由 src/boot/platform.js 設定 data-platform） ---------- */
 
-/* 網頁：思源黑體 + Montserrat（預設，同 :root） */
+/* 網頁：思源黑體 + Montserrat */
 :root[data-platform="web"] {
   --font-latin: "Montserrat";
   --font-cjk: "Noto Sans TC";

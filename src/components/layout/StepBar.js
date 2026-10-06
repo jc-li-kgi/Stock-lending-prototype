@@ -5,7 +5,7 @@ import { html } from '../../lib/preact.js';
 export function StepBar({ index, total, label }) {
   return html`
     <div class="step-bar">
-      <div class="step-bar__text t-body">
+      <div class="step-bar__text t-body-regular">
         <div class="step-bar__current">
           <span class="nowrap">第 ${index + 1} 步</span>
           <span>${label}</span>

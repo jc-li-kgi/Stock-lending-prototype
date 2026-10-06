@@ -6,8 +6,12 @@
 //
 // 測試用強制切換：網址加 ?platform=ios / android / web，auto = 恢復自動偵測
 // 例：#/moderator?platform=android（會記在這台裝置的瀏覽器）
+//
+// 加大字級（One KGI Design Guideline › Typography）：?textScale=large / standard
+// 會在 <html> 加上 data-kgi-text-scale="large"，字級 token 自動換成大字級數值
 (function () {
   var KEY = 'proto-platform';
+  var SCALE_KEY = 'proto-text-scale';
   var FONTS = {
     web: 'family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700',
     android: 'family=Roboto:wght@300;400;500;700&family=Noto+Sans+TC:wght@400;500;700',
@@ -36,6 +40,16 @@
 
   var platform = readOverride() || detect();
   document.documentElement.setAttribute('data-platform', platform);
+
+  // 加大字級
+  var scale = null;
+  try {
+    var sm = (location.search + '&' + (location.hash.split('?')[1] || '')).match(/[?&]textScale=(\w+)/);
+    if (sm && sm[1] === 'large') localStorage.setItem(SCALE_KEY, 'large');
+    else if (sm) localStorage.removeItem(SCALE_KEY);
+    scale = localStorage.getItem(SCALE_KEY);
+  } catch (e) { /* 私密瀏覽模式時忽略 */ }
+  if (scale === 'large') document.documentElement.setAttribute('data-kgi-text-scale', 'large');
 
   var families = FONTS[platform];
   if (families) {

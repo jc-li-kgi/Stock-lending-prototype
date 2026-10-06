@@ -3,7 +3,7 @@ import { html } from '../../lib/preact.js';
 import { Icon } from '../ui/Icon.js';
 
 /** 左標題、右數值；onInfo 有值時在標題旁顯示 (i) */
-export function DetailRow({ label, value, onInfo, labelClass = 't-body', valueClass = 'n-body' }) {
+export function DetailRow({ label, value, onInfo, labelClass = 't-body-regular', valueClass = 'n-body-regular' }) {
   return html`
     <div class="detail-row">
       <div class=${'detail-row__label ' + labelClass}>

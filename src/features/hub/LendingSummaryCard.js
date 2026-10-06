@@ -21,7 +21,7 @@ export function LendingSummaryCard() {
     <section class="card card--shadow summary-card">
       <div class="summary-card__head">
         <div>
-          <p class="t-body c-primary">${t.ratio}</p>
+          <p class="t-body-regular c-primary">${t.ratio}</p>
           <p class="n-title c-primary">${pct(maintenanceRatio(account)).replace(' ', '')}</p>
         </div>
         <button class="icon-btn" onClick=${() => showToast(COPY.common.notAvailable)} aria-label="維持率通知">
@@ -32,8 +32,8 @@ export function LendingSummaryCard() {
       ${rows.map(
         ([label, value]) => html`
           <div class="detail-row">
-            <span class="detail-row__label t-body">${label}</span>
-            <span class="detail-row__value n-body">${value}</span>
+            <span class="detail-row__label t-body-regular">${label}</span>
+            <span class="detail-row__value n-body-regular">${value}</span>
           </div>
         `
       )}

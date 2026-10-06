@@ -1,56 +1,58 @@
-/* ===== 借款流程 ===== */
+/* ===== 借款流程｜情境：流程申請 ===== */
 .loan-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--spacing-24); /* Level 1：頁首與整體內容 24；Level 2：流程申請 區塊間距 24 */
 }
 
-/* 第 1 步：上方摘要卡 */
+/* 第 1 步：上方摘要卡（Level 3：流程申請 詳情概覽卡 24×24；Level 2：純資訊條列 20） */
 .loan-summary {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin: 0 16px;
-  padding: 16px;
+  gap: var(--spacing-20);
+  margin: 0 var(--spacing-16);
+  padding: var(--spacing-24);
 }
 
-.loan-body { display: flex; flex-direction: column; gap: 40px; }
-.loan-cards { display: flex; flex-direction: column; gap: 12px; }
+.loan-body { display: flex; flex-direction: column; gap: var(--spacing-32); } /* Level 2：表單區塊與按鈕 32 */
+.loan-cards { display: flex; flex-direction: column; gap: var(--spacing-12); } /* Level 2：卡片組間距 12 */
 
+/* 表單卡（Level 2：操作欄位間距 24；Level 3：流程申請 卡片內距 24×24） */
 .loan-form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 24px 16px;
+  gap: var(--spacing-24);
+  padding: var(--spacing-24);
 }
 
-/* 第 2 步：確認卡 */
-.loan-body--confirm { gap: 32px; }
+/* 第 2 步：確認卡（Level 3：詳情概覽卡 24×24；Level 2：純資訊條列 20；卡片 radius-medium） */
 .confirm-card {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin: 0 16px;
-  padding: 24px 16px;
-  border-radius: var(--radius-xl);
+  gap: var(--spacing-20);
+  margin: 0 var(--spacing-16);
+  padding: var(--spacing-24);
 }
-.confirm-amount { display: flex; flex-direction: column; gap: 12px; }
+.confirm-amount {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-4); /* 金額區與條列之間 = 不同資訊段落 24（20 + 4） */
+}
 .confirm-amount__currency {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  margin-bottom: -4px;
+  gap: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-8) - var(--spacing-12)); /* 幣別與金額 8 */
+  color: var(--color-content-general-primary);
 }
-.confirm-amount__flag { border-radius: 50%; border: 0.4px solid var(--divider); }
-.confirm-amount__code { font-size: 15px; line-height: 1; color: #000; }
-.confirm-amount__name { font-size: 14px; line-height: 1; color: #000; }
-.confirm-amount__value { text-align: center; }
-.confirm-card .detail-row { gap: 16px; }
+.confirm-amount__flag { border-radius: var(--radius-full); border: 0.4px solid var(--color-container-general-divider); }
+.confirm-amount__value { text-align: center; color: var(--color-content-general-primary); }
 
 /* 確認頁按鈕寬 325（Figma） */
 .confirm-actions { align-items: center; }
-.confirm-actions__btn { max-width: 325px; font-size: 18px; }
+.confirm-actions__btn { max-width: 325px; }
 
 /* 完成頁 */
 .result-page { display: flex; flex-direction: column; }
@@ -61,8 +63,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
-  padding: 0 16px 24px;
+  gap: var(--spacing-24);
+  padding: 0 var(--spacing-16) var(--spacing-24);
 }
 .result-page__image {
   width: 160px;
@@ -74,8 +76,7 @@
 .result-page__text {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 0 43px;
+  gap: var(--spacing-12); /* Level 3：Headline 配 Subtitle 12 */
+  padding: 0 var(--spacing-40);
   text-align: center;
 }
-.result-page__actions { gap: 16px; }

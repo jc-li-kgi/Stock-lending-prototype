@@ -23,21 +23,21 @@ export function PickerField({ label, value, options, onChange, placeholder = 'è«
 
   return html`
     <div class="field">
-      ${label && html`<p class="t-body-b c-primary">${label}</p>`}
+      ${label && html`<p class="t-body-bold c-primary">${label}</p>`}
       <button class="field__picker" onClick=${() => setOpen(true)}>
-        <span class=${'t-subtitle ' + (selected ? 'c-primary' : 'c-tertiary')}>${selected?.label ?? placeholder}</span>
+        <span class=${'t-subtitle-regular ' + (selected ? 'c-primary' : 'c-tertiary')}>${selected?.label ?? placeholder}</span>
         <span class="field__picker-icon"><${Icon} name="pull.svg" size=${16} /></span>
       </button>
       <span class=${'field__line' + (error ? ' field__line--error' : '')} />
-      ${error && html`<p class="t-caption field__error">${error}</p>`}
+      ${error && html`<p class="t-caption-regular field__error">${error}</p>`}
 
       <${Sheet} open=${open} title=${sheetTitle ?? label} onClose=${() => setOpen(false)}>
         ${items.map(
           (o) => html`
             <button class=${'sheet__option' + (o.value === value ? ' sheet__option--selected' : '')} onClick=${() => pick(o)}>
               <span>
-                <span class="t-subtitle">${o.label}</span>
-                ${o.desc && html`<span class="sheet__option-desc t-caption c-secondary">${o.desc}</span>`}
+                <span class="t-subtitle-regular">${o.label}</span>
+                ${o.desc && html`<span class="sheet__option-desc t-caption-regular c-secondary">${o.desc}</span>`}
               </span>
               ${o.value === value && html`<span>âœ“</span>`}
             </button>

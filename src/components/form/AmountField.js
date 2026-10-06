@@ -30,13 +30,13 @@ export function AmountField({ label, value, onChange, min, max, step = 1, prefix
   return html`
     <div class="field">
       <div class="field__title">
-        <p class="t-body-b c-primary">${label}</p>
-        ${action && html`<${Button} variant="text" class="n-body" onClick=${action.onClick}>${action.label}<//>`}
+        <p class="t-body-bold c-primary">${label}</p>
+        ${action && html`<${Button} variant="text" typo="n-body-regular" onClick=${action.onClick}>${action.label}<//>`}
       </div>
 
       <div class="amount-input">
         <button class="icon-btn amount-input__btn" onClick=${() => change(-step)} disabled=${value <= min} aria-label="減少">
-          <${Icon} name="minus.svg" width=${16.25} height=${1.25} />
+          <${Icon} name="minus.svg" width=${16.25} height=${1.25} tint />
         </button>
         <label class="amount-input__value n-title">
           ${prefix && html`<span>${prefix}</span>`}
@@ -52,13 +52,13 @@ export function AmountField({ label, value, onChange, min, max, step = 1, prefix
           ${suffix && html`<span>${suffix}</span>`}
         </label>
         <button class="icon-btn amount-input__btn" onClick=${() => change(step)} disabled=${value >= max} aria-label="增加">
-          <${Icon} name="add.svg" width=${16.25} height=${16.25} />
+          <${Icon} name="add.svg" width=${16.25} height=${16.25} tint />
         </button>
       </div>
       <span class=${'field__line' + (error ? ' field__line--error' : '')} />
 
-      ${error && html`<p class="t-caption field__error">${error}</p>`}
-      ${hints.length > 0 && html`<div class="t-caption c-secondary">${hints.map((h) => html`<p>${h}</p>`)}</div>`}
+      ${error && html`<p class="t-caption-regular field__error">${error}</p>`}
+      ${hints.length > 0 && html`<div class="t-caption-regular c-secondary">${hints.map((h) => html`<p>${h}</p>`)}</div>`}
     </div>
   `;
 }

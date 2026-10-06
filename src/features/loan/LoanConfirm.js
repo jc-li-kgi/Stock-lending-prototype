@@ -39,13 +39,13 @@ export function LoanConfirm() {
       <div class="loan-body loan-body--confirm">
         <section class="card confirm-card">
           <div class="confirm-amount">
-            <p class="t-body c-secondary">${t.amount}</p>
+            <p class="t-body-regular c-secondary">${t.amount}</p>
             <div class="confirm-amount__currency">
               <img class="confirm-amount__flag" src="assets/icons/flag-twd.png" width="16" height="16" alt="" />
-              <span class="confirm-amount__code">TWD</span>
-              <span class="confirm-amount__name">${t.currency}</span>
+              <span class="n-body-regular">TWD</span>
+              <span class="t-body-regular">${t.currency}</span>
             </div>
-            <p class="n-display c-black confirm-amount__value">${num(draft.amount)}</p>
+            <p class="n-display-s confirm-amount__value">${num(draft.amount)}</p>
           </div>
 
           <${DetailRow} label=${t.refRate} value=${rate(LOAN_RULES.rate)} />

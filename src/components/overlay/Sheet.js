@@ -7,7 +7,7 @@ export function Sheet({ open, title, onClose, children }) {
     <div class="sheet-mask" onClick=${onClose}>
       <div class="sheet" onClick=${(e) => e.stopPropagation()} role="dialog" aria-label=${title}>
         <div class="sheet__handle" />
-        ${title && html`<p class="sheet__title t-subtitle-b c-primary">${title}</p>`}
+        ${title && html`<p class="sheet__title t-subtitle-bold c-primary">${title}</p>`}
         ${children}
       </div>
     </div>
@@ -18,7 +18,7 @@ export function Sheet({ open, title, onClose, children }) {
 export function InfoSheet({ info, onClose }) {
   return html`
     <${Sheet} open=${!!info} title=${info?.title} onClose=${onClose}>
-      <p class="sheet__body t-body">${info?.body}</p>
+      <p class="sheet__body t-body-regular">${info?.body}</p>
     <//>
   `;
 }

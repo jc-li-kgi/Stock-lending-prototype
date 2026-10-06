@@ -16,7 +16,7 @@ export function PageHeader({ title, onBack, showShare = true }) {
             <${Icon} name="chevron-back.svg" />
           </button>`
         : html`<span class="page-header__slot" />`}
-      <p class="page-header__title t-subtitle-b c-primary">${title}</p>
+      <p class="page-header__title t-subtitle-bold c-primary">${title}</p>
       ${showShare
         ? html`<button class="icon-btn page-header__slot" onClick=${() => showToast(COPY.common.notAvailable)} aria-label="分享">
             <${Icon} name="share.svg" />

@@ -1,4 +1,5 @@
 // 費用卡（借款費用、還款費用…）｜Figma：每月投入金額（借款費用區塊）
+// Guideline：標題→內容 12、詳情條列 20、流程申請卡片內距 24×24
 import { html, useState } from '../../lib/preact.js';
 import { DetailRow } from './DetailRow.js';
 import { InfoSheet } from '../overlay/Sheet.js';
@@ -19,11 +20,13 @@ export function FeeCard({ title, rows, note }) {
 
   return html`
     <section class="card fee-card">
-      ${title && html`<p class="t-body-b c-primary">${title}</p>`}
-      ${rows.map(
-        (r) => html`<${DetailRow} label=${r.label} value=${r.value} onInfo=${r.info && (() => setInfo(r.info))} />`
-      )}
-      ${note && html`<p class="t-body c-secondary">${note}</p>`}
+      ${title && html`<p class="t-body-bold c-primary">${title}</p>`}
+      <div class="fee-card__rows">
+        ${rows.map(
+          (r) => html`<${DetailRow} label=${r.label} value=${r.value} onInfo=${r.info && (() => setInfo(r.info))} />`
+        )}
+        ${note && html`<p class="t-body-regular c-secondary">${note}</p>`}
+      </div>
       <${InfoSheet} info=${info} onClose=${() => setInfo(null)} />
     </section>
   `;

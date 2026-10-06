@@ -46,7 +46,7 @@ export function LoanAmount() {
 
       <section class="card card--shadow loan-summary">
         <div class="detail-row">
-          <span class="detail-row__label t-body-b c-primary">${t.ratio}</span>
+          <span class="detail-row__label t-body-bold c-primary">${t.ratio}</span>
           <span class="detail-row__value n-title">${pct(maintenanceRatio(account))}</span>
         </div>
         <${DetailRow} label=${t.remaining} value=${twd(remainingCredit(account))} />
@@ -77,9 +77,9 @@ export function LoanAmount() {
 
             <${DetailRow}
               label=${t.ratioAfter}
-              labelClass="t-body-b c-primary"
+              labelClass="t-body-bold c-primary"
               value=${pct(maintenanceRatio(account, amount))}
-              valueClass="n-subtitle-b"
+              valueClass="n-subtitle-bold"
               onInfo=${() => setInfo(t.ratioSheet)}
             />
           </section>

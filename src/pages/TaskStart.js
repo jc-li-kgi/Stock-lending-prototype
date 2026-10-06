@@ -17,7 +17,7 @@ export function TaskStart({ query }) {
   if (scenario) return null;
   return html`
     <div class="page moderator-page">
-      <p class="t-body">找不到任務「${query.task}」。</p>
+      <p class="t-body-regular">找不到任務「${query.task}」。</p>
       <${Button} variant="text" href="#/moderator">回任務列表<//>
     </div>
   `;

@@ -1,11 +1,14 @@
-/* ===== 共用元件樣式 ===== */
+/* ===== 共用元件樣式 =====
+ * 顏色 / 間距 / 圓角 / 陰影全部使用 One KGI Design Guideline token。
+ * 文字大小不寫在這裡，請在元件 markup 上加 .t-* / .n-* class（見 typography.css）。
+ */
 
 /* ---------- PageHeader：返回 / 標題 / 右側 icon ---------- */
 .page-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
+  gap: var(--spacing-16);
+  padding: var(--spacing-12) var(--spacing-16);
 }
 .page-header__title { flex: 1; text-align: center; }
 .page-header__slot { width: 24px; height: 24px; flex-shrink: 0; }
@@ -14,35 +17,42 @@
 .step-bar {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 0 16px;
+  gap: var(--spacing-12);
+  padding: 0 var(--spacing-16);
 }
 .step-bar__text { display: flex; justify-content: space-between; align-items: flex-start; }
-.step-bar__current { display: flex; gap: 8px; color: var(--content-active); }
-.step-bar__total { color: var(--content-secondary-alt); }
+.step-bar__current { display: flex; gap: var(--spacing-8); color: var(--color-content-general-active); }
+.step-bar__total { color: var(--color-content-general-secondary); }
 .step-bar__track { display: flex; }
-.step-bar__seg { flex: 1; height: 2px; background: var(--content-tertiary); opacity: 0.2; }
-.step-bar__seg--on { background: var(--content-active); opacity: 1; }
+.step-bar__seg { flex: 1; height: 2px; background: var(--color-content-general-tertiary); opacity: 0.2; }
+.step-bar__seg--on { background: var(--color-content-general-active); opacity: 1; }
 
-/* ---------- Card ---------- */
+/* ---------- Card（Guideline：卡片一律 radius-medium；疊在 Surface Blue 上用 Basic 陰影） ---------- */
 .card {
-  background: var(--surface-white);
-  border-radius: var(--radius-l);
+  background: var(--color-container-card-white);
+  border-radius: var(--radius-medium);
 }
-.card--shadow { box-shadow: var(--shadow-popover); }
+.card--shadow { box-shadow: var(--shadow-basic); }
 
-/* ---------- FeeCard ---------- */
+/* ---------- FeeCard（流程申請 › 詳情概覽卡：內距 24×24；標題→內容 12；詳情條列 20） ---------- */
 .fee-card {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 24px 16px;
+  gap: var(--spacing-12);
+  padding: var(--spacing-24);
 }
+.fee-card__rows { display: flex; flex-direction: column; gap: var(--spacing-20); }
 
 /* ---------- DetailRow：左標題 右數值 ---------- */
-.detail-row { display: flex; gap: 8px; align-items: flex-start; }
-.detail-row__label { flex: 1; display: flex; align-items: center; gap: 4px; color: var(--content-secondary); }
-.detail-row__value { text-align: right; color: var(--content-primary); white-space: nowrap; }
+.detail-row { display: flex; gap: var(--spacing-8); align-items: flex-start; }
+.detail-row__label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4); /* 圖示與標題水平間距 */
+  color: var(--color-content-general-secondary);
+}
+.detail-row__value { text-align: right; color: var(--color-content-general-primary); white-space: nowrap; }
 
 /* ---------- Buttons ---------- */
 .btn-primary {
@@ -50,74 +60,99 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 12px 16px;
-  background: var(--container-active);
-  color: var(--content-on-active);
-  font-size: 17px;
-  line-height: 1.6;
-  font-weight: 500;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-none);
+  background: var(--color-container-general-active-primary);
+  color: var(--color-content-general-light-active);
 }
-.btn-primary:active { filter: brightness(0.9); }
+.btn-primary:active { background: var(--color-container-general-active-primary-hover); }
+.btn-primary:disabled {
+  background: var(--color-container-general-disabled);
+  color: var(--color-content-general-disabled);
+  cursor: default;
+}
 
 .btn-text {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  color: var(--content-active);
-  font-size: 15px;
-  line-height: 1.5;
+  gap: var(--spacing-4);
+  color: var(--color-content-general-active);
 }
-.btn--block { width: 100%; padding: 12px 16px; }
+.btn-text:disabled { color: var(--color-content-general-disabled); cursor: default; }
+.btn--block { width: 100%; padding: var(--spacing-12) var(--spacing-16); }
 
 .btn-capsule {
-  padding: 8px 20px;
-  border-radius: 20px;
-  background: var(--container-active-secondary);
-  color: var(--content-active);
-  font-size: 15px;
-  line-height: 1.5;
+  padding: var(--spacing-8) var(--spacing-20);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-active-secondary);
+  color: var(--color-content-general-active-button-capsule);
   white-space: nowrap;
 }
-.btn-capsule:active { filter: brightness(0.95); }
+.btn-capsule:active { background: var(--color-container-general-active-secondary-hover); }
+
+@media (hover: hover) {
+  .btn-primary:not(:disabled):hover { background: var(--color-container-general-active-primary-hover); }
+  .btn-capsule:hover { background: var(--color-container-general-active-secondary-hover); }
+}
 
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-/* 頁面底部按鈕區（含 iPhone 安全區） */
+/* 可換色的 icon（用 mask，顏色跟著 currentColor 走，停用時可變灰） */
+.icon-tint {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* 頁面底部按鈕區（Guideline Level 1：流程申請 頁尾與內容 48px；含 iPhone 安全區） */
 .bottom-actions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 16px calc(32px + env(safe-area-inset-bottom));
+  gap: var(--spacing-16);
+  padding: 0 var(--spacing-16) calc(var(--spacing-48) + env(safe-area-inset-bottom));
 }
 
-/* ---------- Form：PickerField / AmountField ---------- */
-.field { display: flex; flex-direction: column; gap: 8px; }
-.field__title { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+/* ---------- Form：PickerField / AmountField（Guideline：標題與輸入框 8px） ---------- */
+.field { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.field__title { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-20); }
 .field__picker {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-top: 4px;
-  margin-bottom: -4px; /* 與底線間距 4px */
+  gap: var(--spacing-8);
+  padding-top: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-4) - var(--spacing-8)); /* 與底線間距 4px（抵銷 .field 的 8px） */
   text-align: left;
 }
 .field__picker > span:first-child { flex: 1; }
-.field__picker-icon { padding: 4px; }
-.field__line { display: block; height: 1px; background: var(--divider); margin-top: -4px; }
-.field__line--error { background: var(--red-400); }
-.field__error { color: var(--red-400); margin-top: -4px; }
+.field__picker-icon { padding: var(--spacing-4); }
+.field__line {
+  display: block;
+  height: 1px;
+  background: var(--color-container-general-divider);
+  margin-top: calc(var(--spacing-4) - var(--spacing-8));
+}
+.field__line--error { background: var(--color-content-semantic-negative); }
+.field__error { color: var(--color-content-semantic-negative); margin-top: calc(var(--spacing-4) - var(--spacing-8)); }
 
-.amount-input { display: flex; align-items: center; gap: 12px; padding-top: 4px; margin-bottom: -4px; }
-.amount-input__btn { width: 20px; height: 20px; }
-.amount-input__btn:disabled { opacity: 0.3; cursor: default; }
+.amount-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding-top: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-4) - var(--spacing-8));
+}
+.amount-input__btn { width: 20px; height: 20px; color: var(--color-content-general-primary); }
+.amount-input__btn:disabled { color: var(--color-content-general-disabled); cursor: default; }
 .amount-input__value {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 0.3em;
-  color: var(--content-primary);
+  gap: 0.3em; /* 一個空白字寬，「TWD」與金額之間 */
+  color: var(--color-content-general-primary);
 }
 .amount-input__value input {
   border: 0;
@@ -130,7 +165,7 @@
   min-width: 0;
 }
 
-/* ---------- BottomNav ---------- */
+/* ---------- BottomNav（Guideline：Top & bottom navigation 用 PopOver 陰影） ---------- */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -141,9 +176,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 25px calc(12px + env(safe-area-inset-bottom));
-  background: var(--surface-white);
-  border-top: 1px solid var(--divider);
+  padding: var(--spacing-12) var(--spacing-24) calc(var(--spacing-12) + env(safe-area-inset-bottom));
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-popover);
   z-index: 10;
 }
 .bottom-nav__item {
@@ -151,24 +186,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-4);
   opacity: 0.4;
-  color: var(--content-primary);
+  color: var(--color-content-general-primary);
   white-space: nowrap;
 }
-.bottom-nav__item--active { opacity: 1; color: var(--content-active); font-weight: 500; }
+.bottom-nav__item--active { opacity: 1; color: var(--color-content-general-active); }
 .bottom-nav__icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
 
 /* 「選股」icon：三根柱 + 折線（Figma 為組合圖層） */
 .nav-fund { position: relative; width: 20px; height: 20px; }
-.nav-fund__bar { position: absolute; width: 3.226px; background: var(--content-primary); }
+.nav-fund__bar { position: absolute; width: 3.226px; background: var(--color-content-general-primary); }
 .nav-fund__line { position: absolute; left: 2.37px; top: 2.13px; }
 
-/* ---------- Sheet（底部彈窗） ---------- */
+/* ---------- Sheet 底部彈窗（Guideline：Bottom Sheet Overlay 用 PopOver 陰影） ---------- */
 .sheet-mask {
   position: fixed;
   inset: 0;
-  background: rgba(4, 28, 67, 0.4);
+  background: var(--color-overlay);
   z-index: 50;
   display: flex;
   align-items: flex-end;
@@ -178,43 +213,51 @@
 .sheet {
   width: 100%;
   max-width: var(--app-max-width);
-  background: var(--surface-white);
-  border-radius: 12px 12px 0 0;
-  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-surface-white);
+  border-radius: var(--radius-medium) var(--radius-medium) var(--radius-none) var(--radius-none);
+  box-shadow: var(--shadow-popover);
+  padding: var(--spacing-8) var(--spacing-16) calc(var(--spacing-24) + env(safe-area-inset-bottom));
   animation: slide-up 0.25s ease;
 }
-.sheet__handle { width: 36px; height: 4px; border-radius: 2px; background: var(--divider); margin: 0 auto 12px; }
-.sheet__title { text-align: center; padding: 4px 0 16px; }
-.sheet__body { color: var(--content-secondary); }
+.sheet__handle {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-divider);
+  margin: 0 auto var(--spacing-12);
+}
+.sheet__title { text-align: center; padding: var(--spacing-4) 0 var(--spacing-16); }
+.sheet__body { color: var(--color-content-general-secondary); }
 .sheet__option {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--divider);
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-container-general-divider);
   text-align: left;
 }
 .sheet__option:last-child { border-bottom: 0; }
-.sheet__option--selected { color: var(--content-active); }
+.sheet__option--selected { color: var(--color-content-general-active); }
 .sheet__option-desc { display: block; }
 
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-/* ---------- Toast ---------- */
+/* ---------- Toast（Guideline：Snackbar／Toast 用 PopOver 陰影） ---------- */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(120px + env(safe-area-inset-bottom));
+  bottom: calc(var(--bottom-nav-height) + var(--spacing-48) + env(safe-area-inset-bottom));
   transform: translateX(-50%);
   max-width: 80%;
-  padding: 10px 16px;
-  border-radius: var(--radius-xl);
-  background: rgba(4, 28, 67, 0.88);
-  color: #fff;
-  font-size: 15px;
-  line-height: 1.5;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-content-general-primary);
+  color: var(--color-content-general-light-active);
+  box-shadow: var(--shadow-popover);
   text-align: center;
   z-index: 60;
   animation: fade-in 0.2s ease;

@@ -15,15 +15,15 @@ export function MoreServices({ showZoneLink = true }) {
   return html`
     <section class="more-services">
       <div class="more-services__head">
-        <p class="t-subtitle-b c-primary">${t.moreServices}</p>
+        <p class="t-subtitle-bold c-primary">${t.moreServices}</p>
         ${showZoneLink &&
-        html`<${Button} variant="text" onClick=${() => showToast(COPY.common.notAvailable)}>${t.goZone}<//>`}
+        html`<${Button} variant="text" typo="n-body-regular" onClick=${() => showToast(COPY.common.notAvailable)}>${t.goZone}<//>`}
       </div>
       <div class="card more-services__list">
         ${t.services.map(
           (label, i) => html`
             <button class="more-services__item" onClick=${() => go(TARGETS[i])}>
-              <span class="t-subtitle c-primary">${label}</span>
+              <span class="t-subtitle-regular c-primary">${label}</span>
               <${Icon} name="chevron-forward.svg" size=${16} />
             </button>
           `

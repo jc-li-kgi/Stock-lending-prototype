@@ -41,8 +41,8 @@ export function AccountShell() {
         <div class="product-tabs" ref=${tabsRef}>
           ${t.productTabs.map((tab) =>
             tab === '授信管理'
-              ? html`<span class="product-tabs__item product-tabs__item--active t-body">${tab}</span>`
-              : html`<button class="product-tabs__item t-body" onClick=${notAvailable}>${tab}</button>`
+              ? html`<span class="product-tabs__item product-tabs__item--active t-body-regular">${tab}</span>`
+              : html`<button class="product-tabs__item t-body-regular" onClick=${notAvailable}>${tab}</button>`
           )}
         </div>
       </div>
@@ -51,20 +51,20 @@ export function AccountShell() {
         <div class="account-overview">
           <div class="account-overview__meta">
             <button class="account-picker" onClick=${notAvailable}>
-              <span class="account-picker__badge">證</span>
-              <span class="account-picker__name">${account.id} ${account.name}</span>
+              <span class="account-picker__badge t-body-bold">證</span>
+              <span class="account-picker__name t-body-bold">${account.id} ${account.name}</span>
               <${Icon} name="chevron-pull.svg" />
             </button>
 
             <div class="text-tabs">
               ${t.creditTabs.map((tab, i) =>
                 i === 0
-                  ? html`<span class="text-tabs__item text-tabs__item--active t-body">${tab}<i /></span>`
-                  : html`<button class="text-tabs__item t-body" onClick=${notAvailable}>${tab}</button>`
+                  ? html`<span class="text-tabs__item text-tabs__item--active t-body-regular">${tab}<i /></span>`
+                  : html`<button class="text-tabs__item t-body-regular" onClick=${notAvailable}>${tab}</button>`
               )}
             </div>
 
-            <p class="n-caption c-secondary account-overview__time">${t.updatedAt} ${dateTime()}</p>
+            <p class="n-caption-regular c-secondary account-overview__time">${t.updatedAt} ${dateTime()}</p>
           </div>
 
           <div class="account-overview__card">
