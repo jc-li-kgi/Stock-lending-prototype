@@ -5,9 +5,22 @@ import { useStore, resetAll } from '../store.js';
 import { SCENARIOS } from '../scenarios/index.js';
 import { Button } from '../components/index.js';
 
+const PLATFORMS = [
+  ['auto', '自動偵測'],
+  ['ios', 'iOS'],
+  ['android', 'Android'],
+  ['web', '網頁'],
+];
+
+/** 切換字型平台：需重新載入頁面，platform.js 才會載入對應字型 */
+function switchPlatform(value) {
+  location.href = location.pathname + '?platform=' + value + '#/moderator';
+}
+
 export function Moderator() {
   const taskId = useStore((s) => s.taskId);
-  const base = location.href.split('#')[0];
+  const base = location.origin + location.pathname;
+  const platform = document.documentElement.dataset.platform;
 
   return html`
     <div class="page moderator-page">
@@ -24,6 +37,17 @@ export function Moderator() {
           </div>
         `
       )}
+
+      <div class="card moderator-task">
+        <p class="t-subtitle-b">字型平台：${platform}</p>
+        <p class="t-body c-secondary">中文 / 英數字型會依平台切換。這裡可強制切換，方便在電腦上預覽。</p>
+        <div class="moderator-platforms">
+          ${PLATFORMS.map(
+            ([value, label]) => html`<${Button} variant="capsule" onClick=${() => switchPlatform(value)}>${label}<//>`
+          )}
+        </div>
+        <p class="t-body">中文字 English 1,234,567.89</p>
+      </div>
 
       <${Button} variant="text" onClick=${resetAll}>清除所有測試資料<//>
     </div>

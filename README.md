@@ -20,6 +20,18 @@ python3 -m http.server 8080
 - 主持人頁：`#/moderator`，或在帳務頁**長按「帳務」標題 1.5 秒**
 - 未實作的按鈕會跳「此功能未開放於本次測試」提示
 
+## 字型
+
+依裝置自動切換（`src/boot/platform.js` 偵測，`styles/tokens.css` 設定）：
+
+| 平台 | 中文 | 英文 / 數字 | 來源 |
+|---|---|---|---|
+| 網頁 | 思源黑體 Noto Sans TC | Montserrat | Google Fonts |
+| iOS | 蘋方 PingFang TC | SF Pro | 系統內建 |
+| Android | 思源黑體 Noto Sans TC | Roboto | Google Fonts |
+
+在電腦上預覽其他平台：主持人頁的「字型平台」切換，或網址加 `?platform=ios`（`auto` 恢復自動）。
+
 ## 常見修改對照
 
 | 想改什麼 | 改這裡 |
@@ -30,7 +42,7 @@ python3 -m http.server 8080
 | 步驟順序 / 組新流程 | `src/flows/flows.js` |
 | 利率、上下限、手續費、公式 | `src/lib/calc.js` |
 | 股價、成數 | `src/mock/stocks.js` |
-| 顏色、字型 | `styles/tokens.css` |
+| 顏色、字型 | `styles/tokens.css`（字型偵測在 `src/boot/platform.js`） |
 | 共用元件長相（按鈕、輸入框、費用卡…） | `styles/components.css`，元件用法寫在各元件檔開頭 |
 
 ## 結構

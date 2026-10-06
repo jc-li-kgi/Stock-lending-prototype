@@ -28,10 +28,33 @@
   --radius-l: 6px;
   --radius-xl: 8px;
 
-  /* Font family */
-  --font-tc: "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
-  --font-num: "Montserrat", "PingFang TC", "Noto Sans TC", sans-serif;
+  /* Font family：英數字型放前面、中文字型放後面，
+     瀏覽器會自動用英數字型顯示英數，遇到中文再改用中文字型 */
+  --font-latin: "Montserrat";
+  --font-cjk: "Noto Sans TC";
+  --font-base: var(--font-latin), var(--font-cjk), sans-serif;
+  --font-num: var(--font-base); /* 數字專用（目前與 base 相同，保留以便日後單獨調整） */
 
   /* App 寬度（桌機預覽時置中） */
   --app-max-width: 430px;
+}
+
+/* ---------- 各平台字型（由 src/boot/platform.js 設定 data-platform） ---------- */
+
+/* 網頁：思源黑體 + Montserrat（預設，同 :root） */
+:root[data-platform="web"] {
+  --font-latin: "Montserrat";
+  --font-cjk: "Noto Sans TC";
+}
+
+/* iOS：蘋方 + SF Pro（系統字型） */
+:root[data-platform="ios"] {
+  --font-latin: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display";
+  --font-cjk: "PingFang TC";
+}
+
+/* Android：思源黑體 + Roboto */
+:root[data-platform="android"] {
+  --font-latin: "Roboto";
+  --font-cjk: "Noto Sans TC", "Noto Sans CJK TC";
 }

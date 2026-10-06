@@ -8,6 +8,7 @@
 .moderator-page h1 { margin: 0; }
 .moderator-task { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
 .moderator-task__url { word-break: break-all; }
+.moderator-platforms { display: flex; flex-wrap: wrap; gap: 8px; }
 .moderator-task__go { align-self: flex-end; text-decoration: none; }
 
 .records-list { display: flex; flex-direction: column; gap: 12px; padding: 8px 16px 32px; }
