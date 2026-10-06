@@ -1,0 +1,56 @@
+/**
+ * One KGI Design Guideline 覆寫：mWeb 字級調整（2026-10-06）
+ *
+ * 這裡覆寫 Guideline 的 mWeb 字級 token（不直接改 One KGI Design Guideline/ 資料夾，
+ * 避免 Guideline 更新時被覆蓋）。若 Guideline 正式採用這些數值，刪除本檔即可。
+ *
+ * 只影響 mWeb（≤ 768px 的網頁、Android）；Web 桌機版與 iOS 數值不變。
+ * --kgi-font-auto-* 引用 mWeb token，所以 typography.css 的 class 會自動套用。
+ *
+ *   字級  Body 系列（Regular / Bold）     15px → 16px
+ *         Caption 系列                   13px → 14px
+ *         Subtitle 系列（Regular / Bold） 17px → 18px
+ *   字重  Body - R / Subtitle - R 英文    Regular 400 → Medium 500
+ *
+ * 加大字級（data-kgi-text-scale="large"）維持 Guideline 原值，只套用字重調整。
+ */
+
+/* ---------- 字級：標準字級 ---------- */
+:root:not([data-kgi-text-scale="large"]) {
+  /* Body - R */
+  --kgi-font-mweb-body-regular-tc-size: 16px;
+  --kgi-font-mweb-body-regular-tc-size-rem: 1rem;
+  --kgi-font-mweb-body-regular-en-size: 16px;
+  --kgi-font-mweb-body-regular-en-size-rem: 1rem;
+
+  /* Body - B */
+  --kgi-font-mweb-body-bold-tc-size: 16px;
+  --kgi-font-mweb-body-bold-tc-size-rem: 1rem;
+  --kgi-font-mweb-body-bold-en-size: 16px;
+  --kgi-font-mweb-body-bold-en-size-rem: 1rem;
+
+  /* Caption - R */
+  --kgi-font-mweb-caption-regular-tc-size: 14px;
+  --kgi-font-mweb-caption-regular-tc-size-rem: 0.875rem;
+  --kgi-font-mweb-caption-regular-en-size: 14px;
+  --kgi-font-mweb-caption-regular-en-size-rem: 0.875rem;
+
+  /* Subtitle - R */
+  --kgi-font-mweb-subtitle-regular-tc-size: 18px;
+  --kgi-font-mweb-subtitle-regular-tc-size-rem: 1.125rem;
+  --kgi-font-mweb-subtitle-regular-en-size: 18px;
+  --kgi-font-mweb-subtitle-regular-en-size-rem: 1.125rem;
+
+  /* Subtitle - B */
+  --kgi-font-mweb-subtitle-bold-tc-size: 18px;
+  --kgi-font-mweb-subtitle-bold-tc-size-rem: 1.125rem;
+  --kgi-font-mweb-subtitle-bold-en-size: 18px;
+  --kgi-font-mweb-subtitle-bold-en-size-rem: 1.125rem;
+}
+
+/* ---------- 字重：標準 + 加大字級都套用 ---------- */
+:root,
+:root[data-kgi-text-scale="large"] {
+  --kgi-font-mweb-body-regular-en-weight: 500;
+  --kgi-font-mweb-subtitle-regular-en-weight: 500;
+}

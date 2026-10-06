@@ -1,0 +1,64 @@
+# 股票借貸 Prototype — 開發規則
+
+易用性測試用的手機 prototype（凱基證券 股票借貸）。免建置靜態網站：Preact + htm（`src/lib/preact.js`），部署在 GitHub Pages。
+使用者是設計師，回覆一律用繁體中文。專案結構與維運說明見 `README.md`。
+
+## 設計規範：One KGI Design Guideline（必須遵守）
+
+`One KGI Design Guideline/` 是顏色、間距、圓角、陰影、字級的唯一來源，由 `index.html` 載入。
+
+- **不准寫死數值**：`styles/` 與元件裡不得出現 hex 色碼、rgba、px 間距、圓角、陰影、font-size、font-weight。一律用 token：
+  - 顏色 `var(--color-*)`（用語意 token，例如 `--color-content-general-secondary`，不用 base palette，紅色徽章等特例除外）
+  - 間距 `var(--spacing-N)`，N 只有 0/2/4/8/12/16/20/24/28/32/40/48/60/80
+  - 圓角 `var(--radius-none|xs|small|medium|full)`（0/1/3/6/100px）；卡片一律 `medium`，膠囊按鈕 / Tag 用 `full`
+  - 陰影：藍底（Surface Blue）上的卡片用 `--shadow-basic`；白底上的浮層、Bottom Sheet、Toast、導覽列用 `--shadow-popover`；未選取 / 停用用 `--shadow-light`
+- **文字只能用 class**：`styles/typography.css` 的 `.t-*`（中文）、`.n-*`（英文 / 數字），不要在 CSS 寫 font-size。
+  - 層級：`display-l/m/s`、`headline`（頁面主標）、`title`（區塊標題 / 大數字）、`subtitle-bold`（卡片標題、頁首標題、主要按鈕）、`subtitle-regular`（清單項目、輸入值）、`body-bold`（欄位標題、重點）、`body-regular`（內文、標籤、Tab）、`caption-regular`（輔助說明、欄位下方提示）
+  - 金額、百分比、日期、帳號用 `.n-*`；中文標籤用 `.t-*`
+- **Guideline 沒有的值**：先找最接近的 token，並在回覆中告知使用者，不要自創。已決定的例子：
+  - Guideline 沒有 4px 圓角 → 用 `--radius-small`（3px）
+  - KGIB（凱基銀行）專用字級（16px 內文、18px 按鈕等）不用於本專案 → 改用證券的對應層級
+  - Figma 稿與 Guideline 衝突時以 Guideline 為準，並列出差異請使用者確認
+- **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：mWeb 字級 Body 16 / Caption 14 / Subtitle 18、Body-R 與 Subtitle-R 英數字重 500。
+- `styles/tokens.css` 只放 Guideline 沒有的東西：互動狀態色、字型堆疊、版面寬度。
+- 按下 / hover 色依 `Color/color-state-utils.ts` 規則預先算好放 `tokens.css`；停用狀態用 `--color-content-general-disabled` / `--color-container-general-disabled`。
+
+### 間距情境（Spacing Guideline）
+
+- 帳務頁、總覽類 = **資訊瀏覽**：區塊間距 32、頁尾 40、詳情卡內距 16×16
+- 借款、匯入擔保品、還款等步驟流程 = **流程申請**：區塊間距 24、頁尾 48、詳情卡內距 24×24
+- 共通：頁首與內容 24、卡片組 12、詳情條列 20、操作欄位（輸入框）24、標題→內容 12、欄位標題→輸入框 8、內容→按鈕 32、圖示與文字 4
+- 頁面左右邊界目前維持 16px（Guideline「區塊內邊距 24/24」尚待使用者確認）
+
+## 字型與平台
+
+- `src/boot/platform.js` 偵測平台並設定 `<html data-platform>`：web（思源黑體 + Montserrat）、ios（蘋方 + SF Pro）、android（思源黑體 + Roboto）
+- 字級：web / android 用 `--kgi-font-auto-*`（≤768px 為 mWeb），iOS 用 `--kgi-font-ios-*`
+- 加大字級：`<html data-kgi-text-scale="large">`，主持人頁可切換
+
+## 程式結構規則
+
+- **優先用現有元件**（`src/components/index.js` 統一 import）：Button、Icon、DetailRow、FeeCard、PickerField、AmountField、PageHeader、StepBar、BottomNav、Sheet、InfoSheet、Toast。2 個以上功能會用到的畫面才抽成新元件，放進 `ui/`、`form/`、`layout/`、`overlay/` 其中之一，並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
+- `Button` 用 `variant`（primary / text / capsule）與 `typo`（換文字層級）；需要換色的 icon 用 `<Icon tint />`。
+- 新功能放 `src/features/<功能>/`；功能之間不互相 import，只透過 `store.js` 讀寫資料。
+- 步驟順序寫在 `src/flows/flows.js`；頁面用 `flowPosition` / `nextStep` / `prevStep`，不要寫死下一頁。
+- 測試情境放 `src/scenarios/`（一個任務一個檔，並在 `index.js` 註冊）。
+- 文案放 `src/content/copy.js`；公式與業務規則放 `src/lib/calc.js`；股價放 `src/mock/stocks.js`。
+- 新頁面要在 `src/routes.js` 註冊。
+- 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。
+- 不安裝建置工具或 npm 套件（電腦沒有 Node.js）。
+
+## 從 Figma 實作畫面
+
+- 用 Figma MCP 的 `get_design_context` 取得設計（fileKey `yeHCNA10BcV7ypNB2qZIqt`）。
+- 只拿 Figma 的結構與內容；數值換成最接近的 Guideline token，不照抄 Figma 的 px / hex。
+- 不實作 iOS 狀態列與 Home Indicator（真機會顯示）。
+- icon 下載到 `assets/icons/`，不要引用 Figma 暫存網址。
+- 沒有設計稿的畫面（彈窗、錯誤提示等）可以先補，但完成時要告知使用者哪些是自行補的。
+
+## 驗證
+
+- 本機預覽：`.claude/launch.json` 的 `prototype`（`python3 -m http.server 8080`）。
+- 在 375px 寬度實際操作流程，用 `getComputedStyle` 確認字級、顏色、間距符合 token；確認 console 沒有錯誤、沒有橫向捲動。
+- 瀏覽器可能快取舊 CSS / JS，驗證前先強制重新載入。
+- 只在使用者要求時 commit / push。

@@ -41,6 +41,7 @@ python3 -m http.server 8080
 - Guideline 沒有的（互動狀態色、字型堆疊、版面寬度）才放 `styles/tokens.css`
 - Guideline 更新時，直接覆蓋 `One KGI Design Guideline/` 資料夾即可
 - 加大字級：主持人頁切換，或網址加 `?textScale=large`
+- 與 Guideline 不同的調整集中在 `styles/kgi-overrides.css`（目前：mWeb 字級放大、Body/Subtitle-R 英數改 Medium）
 
 ## 字型
 
