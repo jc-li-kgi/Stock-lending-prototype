@@ -1,0 +1,31 @@
+// 主持人頁：任務列表、目前狀態、重置
+// 進入方式：網址 #/moderator，或在帳務頁長按「帳務」標題 1.5 秒
+import { html } from '../lib/preact.js';
+import { useStore, resetAll } from '../store.js';
+import { SCENARIOS } from '../scenarios/index.js';
+import { Button } from '../components/index.js';
+
+export function Moderator() {
+  const taskId = useStore((s) => s.taskId);
+  const base = location.href.split('#')[0];
+
+  return html`
+    <div class="page moderator-page">
+      <h1 class="t-headline">測試任務</h1>
+      <p class="t-caption c-secondary">目前任務：${taskId || '無'}</p>
+
+      ${SCENARIOS.map(
+        (s) => html`
+          <div class="card moderator-task">
+            <p class="t-subtitle-b">${s.id}｜${s.title}</p>
+            <p class="t-body c-secondary">${s.instruction}</p>
+            <p class="t-caption c-tertiary moderator-task__url">${base}#/start?task=${s.id}</p>
+            <${Button} variant="capsule" class="moderator-task__go" href=${`#/start?task=${s.id}`}>開始任務<//>
+          </div>
+        `
+      )}
+
+      <${Button} variant="text" onClick=${resetAll}>清除所有測試資料<//>
+    </div>
+  `;
+}

@@ -1,0 +1,21 @@
+/* ===== 主持人頁 / 紀錄頁（暫用版面） ===== */
+.moderator-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 16px;
+}
+.moderator-page h1 { margin: 0; }
+.moderator-task { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+.moderator-task__url { word-break: break-all; }
+.moderator-task__go { align-self: flex-end; text-decoration: none; }
+
+.records-list { display: flex; flex-direction: column; gap: 12px; padding: 8px 16px 32px; }
+.records-item { display: flex; flex-direction: column; gap: 4px; padding: 16px; }
+.records-item__head { display: flex; justify-content: space-between; align-items: center; }
+.records-item__status {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--container-active-secondary);
+  color: var(--content-active);
+}

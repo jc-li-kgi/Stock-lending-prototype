@@ -1,0 +1,81 @@
+/* ===== 借款流程 ===== */
+.loan-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* 第 1 步：上方摘要卡 */
+.loan-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 16px;
+  padding: 16px;
+}
+
+.loan-body { display: flex; flex-direction: column; gap: 40px; }
+.loan-cards { display: flex; flex-direction: column; gap: 12px; }
+
+.loan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 16px;
+}
+
+/* 第 2 步：確認卡 */
+.loan-body--confirm { gap: 32px; }
+.confirm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 16px;
+  padding: 24px 16px;
+  border-radius: var(--radius-xl);
+}
+.confirm-amount { display: flex; flex-direction: column; gap: 12px; }
+.confirm-amount__currency {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: -4px;
+}
+.confirm-amount__flag { border-radius: 50%; border: 0.4px solid var(--divider); }
+.confirm-amount__code { font-size: 15px; line-height: 1; color: #000; }
+.confirm-amount__name { font-size: 14px; line-height: 1; color: #000; }
+.confirm-amount__value { text-align: center; }
+.confirm-card .detail-row { gap: 16px; }
+
+/* 確認頁按鈕寬 325（Figma） */
+.confirm-actions { align-items: center; }
+.confirm-actions__btn { max-width: 325px; font-size: 18px; }
+
+/* 完成頁 */
+.result-page { display: flex; flex-direction: column; }
+.result-page__content {
+  flex: 1;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 0 16px 24px;
+}
+.result-page__image {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result-page__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 43px;
+  text-align: center;
+}
+.result-page__actions { gap: 16px; }

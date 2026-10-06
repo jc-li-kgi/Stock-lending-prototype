@@ -1,0 +1,37 @@
+/* 設計 Token：對應 Figma 變數，改色只改這裡 */
+:root {
+  /* Surface */
+  --surface-blue: #f2f6ff;
+  --surface-white: #ffffff;
+
+  /* Content（文字） */
+  --content-primary: #041c43;
+  --content-secondary: #4f607b;
+  --content-secondary-alt: #4c5466;
+  --content-tertiary: #8994a5;
+  --content-active: #0044ad;
+  --content-on-active: #ffffff;
+  --content-black: #000000;
+
+  /* Container */
+  --container-active: #0044ad;
+  --container-active-secondary: #dceaff;
+  --divider: #e2e2e2;
+  --red-400: #dd4f2c;
+
+  /* Effect */
+  --shadow-popover: 0 4px 16px 0 rgba(0, 68, 173, 0.08);
+
+  /* Radius */
+  --radius-s: 3px;
+  --radius-m: 4px;
+  --radius-l: 6px;
+  --radius-xl: 8px;
+
+  /* Font family */
+  --font-tc: "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+  --font-num: "Montserrat", "PingFang TC", "Noto Sans TC", sans-serif;
+
+  /* App 寬度（桌機預覽時置中） */
+  --app-max-width: 430px;
+}

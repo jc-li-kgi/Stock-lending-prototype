@@ -1,0 +1,221 @@
+/* ===== 共用元件樣式 ===== */
+
+/* ---------- PageHeader：返回 / 標題 / 右側 icon ---------- */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+}
+.page-header__title { flex: 1; text-align: center; }
+.page-header__slot { width: 24px; height: 24px; flex-shrink: 0; }
+
+/* ---------- StepBar：第 N 步 / 共 M 步 ---------- */
+.step-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px;
+}
+.step-bar__text { display: flex; justify-content: space-between; align-items: flex-start; }
+.step-bar__current { display: flex; gap: 8px; color: var(--content-active); }
+.step-bar__total { color: var(--content-secondary-alt); }
+.step-bar__track { display: flex; }
+.step-bar__seg { flex: 1; height: 2px; background: var(--content-tertiary); opacity: 0.2; }
+.step-bar__seg--on { background: var(--content-active); opacity: 1; }
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface-white);
+  border-radius: var(--radius-l);
+}
+.card--shadow { box-shadow: var(--shadow-popover); }
+
+/* ---------- FeeCard ---------- */
+.fee-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 16px;
+}
+
+/* ---------- DetailRow：左標題 右數值 ---------- */
+.detail-row { display: flex; gap: 8px; align-items: flex-start; }
+.detail-row__label { flex: 1; display: flex; align-items: center; gap: 4px; color: var(--content-secondary); }
+.detail-row__value { text-align: right; color: var(--content-primary); white-space: nowrap; }
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--container-active);
+  color: var(--content-on-active);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+.btn-primary:active { filter: brightness(0.9); }
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--content-active);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.btn--block { width: 100%; padding: 12px 16px; }
+
+.btn-capsule {
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: var(--container-active-secondary);
+  color: var(--content-active);
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.btn-capsule:active { filter: brightness(0.95); }
+
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* 頁面底部按鈕區（含 iPhone 安全區） */
+.bottom-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px calc(32px + env(safe-area-inset-bottom));
+}
+
+/* ---------- Form：PickerField / AmountField ---------- */
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field__title { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.field__picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  margin-bottom: -4px; /* 與底線間距 4px */
+  text-align: left;
+}
+.field__picker > span:first-child { flex: 1; }
+.field__picker-icon { padding: 4px; }
+.field__line { display: block; height: 1px; background: var(--divider); margin-top: -4px; }
+.field__line--error { background: var(--red-400); }
+.field__error { color: var(--red-400); margin-top: -4px; }
+
+.amount-input { display: flex; align-items: center; gap: 12px; padding-top: 4px; margin-bottom: -4px; }
+.amount-input__btn { width: 20px; height: 20px; }
+.amount-input__btn:disabled { opacity: 0.3; cursor: default; }
+.amount-input__value {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.3em;
+  color: var(--content-primary);
+}
+.amount-input__value input {
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  min-width: 0;
+}
+
+/* ---------- BottomNav ---------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px calc(12px + env(safe-area-inset-bottom));
+  background: var(--surface-white);
+  border-top: 1px solid var(--divider);
+  z-index: 10;
+}
+.bottom-nav__item {
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.4;
+  color: var(--content-primary);
+  white-space: nowrap;
+}
+.bottom-nav__item--active { opacity: 1; color: var(--content-active); font-weight: 500; }
+.bottom-nav__icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+
+/* 「選股」icon：三根柱 + 折線（Figma 為組合圖層） */
+.nav-fund { position: relative; width: 20px; height: 20px; }
+.nav-fund__bar { position: absolute; width: 3.226px; background: var(--content-primary); }
+.nav-fund__line { position: absolute; left: 2.37px; top: 2.13px; }
+
+/* ---------- Sheet（底部彈窗） ---------- */
+.sheet-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 28, 67, 0.4);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade-in 0.2s ease;
+}
+.sheet {
+  width: 100%;
+  max-width: var(--app-max-width);
+  background: var(--surface-white);
+  border-radius: 12px 12px 0 0;
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+  animation: slide-up 0.25s ease;
+}
+.sheet__handle { width: 36px; height: 4px; border-radius: 2px; background: var(--divider); margin: 0 auto 12px; }
+.sheet__title { text-align: center; padding: 4px 0 16px; }
+.sheet__body { color: var(--content-secondary); }
+.sheet__option {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--divider);
+  text-align: left;
+}
+.sheet__option:last-child { border-bottom: 0; }
+.sheet__option--selected { color: var(--content-active); }
+.sheet__option-desc { display: block; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(120px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: 10px 16px;
+  border-radius: var(--radius-xl);
+  background: rgba(4, 28, 67, 0.88);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  z-index: 60;
+  animation: fade-in 0.2s ease;
+}

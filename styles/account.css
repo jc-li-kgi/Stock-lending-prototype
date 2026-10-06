@@ -1,0 +1,105 @@
+/* ===== 帳務頁（授信管理） ===== */
+.account-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: calc(110px + env(safe-area-inset-bottom)); /* 讓出底部導覽列 */
+}
+
+.account-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+}
+.account-header__title { flex: 1; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+
+/* 產品頁籤（可橫向捲動） */
+.product-tabs {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 50px;
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.product-tabs::-webkit-scrollbar { display: none; }
+.product-tabs__item { flex-shrink: 0; color: var(--content-secondary); white-space: nowrap; }
+.product-tabs__item--active {
+  padding: 8px 16px;
+  border-radius: var(--radius-m);
+  background: var(--container-active);
+  color: var(--content-on-active);
+}
+
+.account-content { display: flex; flex-direction: column; gap: 24px; }
+.account-overview { display: flex; flex-direction: column; gap: 16px; }
+.account-overview__meta { display: flex; flex-direction: column; gap: 12px; }
+.account-overview__time { padding: 0 16px; }
+.account-overview__card { padding: 0 16px; }
+
+/* 帳號選擇 */
+.account-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  margin: 0 16px;
+  padding: 8px 8px 8px 16px;
+  background: var(--surface-white);
+  border-radius: var(--radius-m);
+  text-align: left;
+}
+.account-picker__badge {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-s);
+  background: var(--red-400);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.account-picker__name { flex: 1; font-size: 15px; line-height: 1.5; font-weight: 500; color: var(--content-primary); }
+
+/* 文字頁籤 */
+.text-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 4px 16px 0;
+}
+.text-tabs__item {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-bottom: 11px;
+  color: var(--content-secondary);
+  white-space: nowrap;
+}
+.text-tabs__item--active { color: var(--content-active); padding-bottom: 0; }
+.text-tabs__item--active i { display: block; height: 2px; background: var(--container-active); }
+
+/* 摘要卡 */
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+.summary-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 4px; }
+.summary-card__head > div { display: flex; flex-direction: column; gap: 4px; }
+.summary-card__actions { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+
+/* 更多服務 */
+.more-services { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; }
+.more-services__head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.more-services__head .btn-text { font-family: var(--font-num); line-height: 1.4; }
+.more-services__list { display: flex; flex-direction: column; gap: 20px; padding: 20px 16px; }
+.more-services__item { display: flex; align-items: center; gap: 8px; text-align: left; }
+.more-services__item span { flex: 1; }
