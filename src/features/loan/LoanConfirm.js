@@ -54,8 +54,8 @@ export function LoanConfirm() {
           <${DetailRow} label=${t.startDate} value=${date(start)} />
           <${DetailRow} label=${t.dueDate} value=${date(addMonths(start, LOAN_RULES.termMonths))} />
           <${DetailRow} label=${t.applyDate} value=${date(start)} />
-          <${DetailRow} label=${t.purpose} value=${draft.purpose} />
-          <${DetailRow} label=${t.payout} value=${html`<p>${bank.name}</p><p>${bank.number}</p>`} />
+          <${DetailRow} label=${t.purpose} value=${draft.purpose} valueClass="t-body-regular" />
+          <${DetailRow} label=${t.payout} value=${html`<p class="t-body-regular">${bank.name}</p><p class="n-body-regular">${bank.number}</p>`} />
         </section>
 
         <div class="bottom-actions confirm-actions">

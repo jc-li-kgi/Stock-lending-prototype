@@ -14,7 +14,8 @@
   - 陰影：藍底（Surface Blue）上的卡片用 `--shadow-basic`；白底上的浮層、Bottom Sheet、Toast、導覽列用 `--shadow-popover`；未選取 / 停用用 `--shadow-light`
 - **文字只能用 class**：`styles/typography.css` 的 `.t-*`（中文）、`.n-*`（英文 / 數字），不要在 CSS 寫 font-size。
   - 層級：`display-l/m/s`、`headline`（頁面主標）、`title`（區塊標題 / 大數字）、`subtitle-bold`（卡片標題、頁首標題、主要按鈕）、`subtitle-regular`（清單項目、輸入值）、`body-bold`（欄位標題、重點）、`body-regular`（內文、標籤、Tab）、`caption-regular`（輔助說明、欄位下方提示）
-  - 金額、百分比、日期、帳號用 `.n-*`；中文標籤用 `.t-*`
+  - 金額、百分比、日期、帳號用 `.n-*`；中文標籤用 `.t-*`；中英混排（如「可借款金額 TWD 10,000」）用 `.t-*`
+  - **只要文字內容是中文就用 `.t-*`，即使 Figma 標成 EN 樣式**（Figma 套錯時以內容語言為準，並告知使用者）。原因：字重、行高套在整段文字上，中文用了 `.n-*` 會吃到英數字重（例如 Web 的 Body-R 英數 500）
 - **Guideline 沒有的值**：先找最接近的 token，並在回覆中告知使用者，不要自創。已決定的例子：
   - Guideline 沒有 4px 圓角 → 用 `--radius-small`（3px）
   - KGIB（凱基銀行）專用字級（16px 內文、18px 按鈕等）不用於本專案 → 改用證券的對應層級

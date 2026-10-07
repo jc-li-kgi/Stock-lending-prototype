@@ -2,7 +2,8 @@
 import { html } from '../../lib/preact.js';
 import { Icon } from '../ui/Icon.js';
 
-/** 左標題、右數值；onInfo 有值時在標題旁顯示 (i) */
+/** 左標題、右數值；onInfo 有值時在標題旁顯示 (i)
+ *  value 預設是英數樣式（金額、日期）；值是中文時傳 valueClass="t-body-regular" */
 export function DetailRow({ label, value, onInfo, labelClass = 't-body-regular', valueClass = 'n-body-regular' }) {
   return html`
     <div class="detail-row">

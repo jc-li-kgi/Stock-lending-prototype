@@ -31,7 +31,7 @@ export function AmountField({ label, value, onChange, min, max, step = 1, prefix
     <div class="field">
       <div class="field__title">
         <p class="t-body-bold c-primary">${label}</p>
-        ${action && html`<${Button} variant="text" typo="n-body-regular" onClick=${action.onClick}>${action.label}<//>`}
+        ${action && html`<${Button} variant="text" onClick=${action.onClick}>${action.label}<//>`}
       </div>
 
       <div class="amount-input">

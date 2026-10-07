@@ -64,7 +64,7 @@ export function AccountShell() {
               )}
             </div>
 
-            <p class="n-caption-regular c-secondary account-overview__time">${t.updatedAt} ${dateTime()}</p>
+            <p class="t-caption-regular c-secondary account-overview__time">${t.updatedAt} ${dateTime()}</p>
           </div>
 
           <div class="account-overview__card">

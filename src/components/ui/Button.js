@@ -18,7 +18,7 @@ const VARIANT_TYPO = {
  * <Button>下一步</Button>
  * <Button variant="text" block>完成</Button>
  * <Button variant="capsule" href="#/xxx">連結</Button>
- * <Button variant="text" typo="n-body-regular">額度限制</Button>   ← 換文字層級
+ * <Button variant="text" typo="n-body-regular">TWD 1,000</Button>   ← 換文字層級（英數內容才用 n-*）
  */
 export function Button({ variant = 'primary', typo, block = false, href, class: extra = '', children, ...rest }) {
   const cls = [VARIANT_CLASS[variant], typo ?? VARIANT_TYPO[variant], block && 'btn--block', extra].filter(Boolean).join(' ');

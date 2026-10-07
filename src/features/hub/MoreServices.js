@@ -17,7 +17,7 @@ export function MoreServices({ showZoneLink = true }) {
       <div class="more-services__head">
         <p class="t-subtitle-bold c-primary">${t.moreServices}</p>
         ${showZoneLink &&
-        html`<${Button} variant="text" typo="n-body-regular" onClick=${() => showToast(COPY.common.notAvailable)}>${t.goZone}<//>`}
+        html`<${Button} variant="text" onClick=${() => showToast(COPY.common.notAvailable)}>${t.goZone}<//>`}
       </div>
       <div class="card more-services__list">
         ${t.services.map(
