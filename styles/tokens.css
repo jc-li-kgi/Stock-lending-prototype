@@ -22,33 +22,11 @@
   /* ---------- 遮罩（Guideline：Surface/Blue-75「遮罩背景」） ---------- */
   --color-overlay: color-mix(in srgb, var(--color-surface-blue-75) 75%, transparent);
 
-  /* ---------- 字型堆疊：英數字型在前、中文字型在後，瀏覽器自動混排 ----------
-     Guideline › Typography › 3. 字體 Font Family                                  */
-  --font-latin: "Montserrat";
-  --font-cjk: "Noto Sans TC";
-  --font-base: var(--font-latin), var(--font-cjk), sans-serif;
+  /* ---------- 字型：網頁字型（Guideline › Typography › 3. 字體） ----------
+     英數 Montserrat 在前、中文 思源黑體在後，瀏覽器自動混排；所有裝置相同      */
+  --font-base: "Montserrat", "Noto Sans TC", sans-serif;
 
   /* ---------- 版面 ---------- */
   --app-max-width: 430px;      /* 桌機預覽時置中的手機寬度 */
   --bottom-nav-height: 73px;   /* 底部導覽高度（不含安全區） */
-}
-
-/* ---------- 各平台字型（由 src/boot/platform.js 設定 data-platform） ---------- */
-
-/* 網頁：思源黑體 + Montserrat */
-:root[data-platform="web"] {
-  --font-latin: "Montserrat";
-  --font-cjk: "Noto Sans TC";
-}
-
-/* iOS：蘋方 + SF Pro（系統字型） */
-:root[data-platform="ios"] {
-  --font-latin: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display";
-  --font-cjk: "PingFang TC";
-}
-
-/* Android：思源黑體 + Roboto */
-:root[data-platform="android"] {
-  --font-latin: "Roboto";
-  --font-cjk: "Noto Sans TC", "Noto Sans CJK TC";
 }

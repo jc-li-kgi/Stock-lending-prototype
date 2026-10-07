@@ -19,7 +19,7 @@
   - Guideline 沒有 4px 圓角 → 用 `--radius-small`（3px）
   - KGIB（凱基銀行）專用字級（16px 內文、18px 按鈕等）不用於本專案 → 改用證券的對應層級
   - Figma 稿與 Guideline 衝突時以 Guideline 為準，並列出差異請使用者確認
-- **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：Web（mWeb）、iOS、Android 字級 Body 16 / Caption 14 / Subtitle 18；字重調整（Body-R 與 Subtitle-R 英數 500）只套用在 Web，iOS 與 Android 不變。
+- **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：手機版（≤768px）Body 16 / Caption 14 / Subtitle 18，Body-R 與 Subtitle-R 英數字重 500。
 - `styles/tokens.css` 只放 Guideline 沒有的東西：互動狀態色、字型堆疊、版面寬度。
 - 按下 / hover 色依 `Color/color-state-utils.ts` 規則預先算好放 `tokens.css`；停用狀態用 `--color-content-general-disabled` / `--color-container-general-disabled`。
 
@@ -30,11 +30,12 @@
 - 共通：頁首與內容 24、卡片組 12、詳情條列 20、操作欄位（輸入框）24、標題→內容 12、欄位標題→輸入框 8、內容→按鈕 32、圖示與文字 4
 - 頁面左右邊界目前維持 16px（Guideline「區塊內邊距 24/24」尚待使用者確認）
 
-## 字型與平台
+## 字型與響應式字級
 
-- `src/boot/platform.js` 偵測平台並設定 `<html data-platform>`：web（思源黑體 + Montserrat）、ios（蘋方 + SF Pro）、android（思源黑體 + Roboto）
-- 字級：web / android 用 `--kgi-font-auto-*`（≤768px 為 mWeb），iOS 用 `--kgi-font-ios-*`
-- 不提供手動切換平台或字級；要在電腦上檢查 iOS / Android，用瀏覽器的裝置模擬（改 User Agent）
+- 這是網頁，一律依 Guideline 的**網頁規則**，不模擬 iOS / Android App、不偵測裝置平台。
+- 字型：所有裝置都是思源黑體（Noto Sans TC）+ Montserrat，在 `index.html` 從 Google Fonts 載入，堆疊在 `tokens.css` 的 `--font-base`。
+- 字級：`typography.css` 只用 `--kgi-font-auto-*`；畫面寬度 > 768px 為 Web、≤ 768px 為 mWeb（含 `kgi-overrides.css` 的調整）。單位 rem。
+- 不提供手動切換字型或字級。
 
 ## 程式結構規則
 

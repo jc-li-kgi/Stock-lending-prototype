@@ -40,18 +40,14 @@ python3 -m http.server 8080
 - `styles/` 裡**不寫死**顏色、間距、圓角、陰影數值，一律用 Guideline token
 - Guideline 沒有的（互動狀態色、字型堆疊、版面寬度）才放 `styles/tokens.css`
 - Guideline 更新時，直接覆蓋 `One KGI Design Guideline/` 資料夾即可
-- 與 Guideline 不同的調整集中在 `styles/kgi-overrides.css`（目前：Web / iOS / Android 字級放大；Body/Subtitle-R 英數改 Medium 只限 Web）
+- 與 Guideline 不同的調整集中在 `styles/kgi-overrides.css`（目前：手機版 Body 16 / Caption 14 / Subtitle 18，Body/Subtitle-R 英數改 Medium）
 
 ## 字型
 
-依裝置自動切換（`src/boot/platform.js` 偵測，`styles/tokens.css` 設定）：
+依 Guideline 的網頁規則，所有裝置相同（`index.html` 載入、`styles/tokens.css` 設定）：
 
-| 平台 | 中文 | 英文 / 數字 | 來源 |
-|---|---|---|---|
-| 網頁 | 思源黑體 Noto Sans TC | Montserrat | Google Fonts |
-| iOS | 蘋方 PingFang TC | SF Pro | 系統內建 |
-| Android | 思源黑體 Noto Sans TC | Roboto | Google Fonts |
-
+- 中文：思源黑體 Noto Sans TC、英文 / 數字：Montserrat（Google Fonts）
+- 字級依畫面寬度切換：> 768px 用 Web、≤ 768px 用 mWeb（手機）
 
 ## 常見修改對照
 
@@ -64,7 +60,7 @@ python3 -m http.server 8080
 | 利率、上下限、手續費、公式 | `src/lib/calc.js` |
 | 股價、成數 | `src/mock/stocks.js` |
 | 顏色、間距、圓角、陰影、字級 | `One KGI Design Guideline/`（App 補充在 `styles/tokens.css`） |
-| 字型 | `styles/tokens.css`（偵測在 `src/boot/platform.js`） |
+| 字型 | `index.html`（載入）、`styles/tokens.css`（堆疊） |
 | 共用元件長相（按鈕、輸入框、費用卡…） | `styles/components.css`，元件用法寫在各元件檔開頭 |
 
 ## 結構
