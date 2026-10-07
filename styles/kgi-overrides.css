@@ -15,12 +15,11 @@
  *
  * - Web 桌機版（> 768px）數值不變
  * - iOS 英數原本就是 Body 16 / Caption 14 / Subtitle 18（SF Pro 比中文大 1px），只需調整中文
- * - 加大字級（data-kgi-text-scale="large"）字級維持 Guideline 原值
  * - 平台由 src/boot/platform.js 設定 <html data-platform>
  */
 
-/* ---------- 字級：mWeb（web、android 共用），標準字級 ---------- */
-:root:not([data-kgi-text-scale="large"]) {
+/* ---------- 字級：mWeb（web、android 共用） ---------- */
+:root {
   /* Body - R */
   --kgi-font-mweb-body-regular-tc-size: 16px;
   --kgi-font-mweb-body-regular-tc-size-rem: 1rem;
@@ -52,8 +51,8 @@
   --kgi-font-mweb-subtitle-bold-en-size-rem: 1.125rem;
 }
 
-/* ---------- 字級：iOS（中文），標準字級 ---------- */
-:root:not([data-kgi-text-scale="large"]) {
+/* ---------- 字級：iOS（中文） ---------- */
+:root {
   --kgi-font-ios-body-regular-tc-size: 16px;
   --kgi-font-ios-body-bold-tc-size: 16px;
   --kgi-font-ios-caption-regular-tc-size: 14px;
@@ -62,16 +61,14 @@
   /* 英數：Guideline 原值已是 16 / 14 / 18，不需覆寫 */
 }
 
-/* ---------- 字重：只有 Web（標準 + 加大字級都套用） ---------- */
-:root,
-:root[data-kgi-text-scale="large"] {
+/* ---------- 字重：只有 Web ---------- */
+:root {
   --kgi-font-mweb-body-regular-en-weight: 500;
   --kgi-font-mweb-subtitle-regular-en-weight: 500;
 }
 
 /* Android 與 Web 共用 mWeb token，但字重維持 Guideline 原值 Regular 400 */
-:root[data-platform="android"],
-:root[data-platform="android"][data-kgi-text-scale="large"] {
+:root[data-platform="android"] {
   --kgi-font-mweb-body-regular-en-weight: 400;
   --kgi-font-mweb-subtitle-regular-en-weight: 400;
 }

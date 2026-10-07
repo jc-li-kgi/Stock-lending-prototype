@@ -15,7 +15,7 @@
  *   Caption - R   → .t-caption-regular / .n-caption-regular
  *
  * 平台：
- *   web / android → --kgi-font-auto-*（> 768px 用 Web、≤ 768px 用 mWeb，支援 rem 與加大字級）
+ *   web / android → --kgi-font-auto-*（> 768px 用 Web、≤ 768px 用 mWeb，支援 rem）
  *   ios           → --kgi-font-ios-*（iOS 原生數值，英數為 SF Pro 字重與行高）
  * 字型（family）由 tokens.css 的 --font-base 依平台決定，這裡只管字級、字重、行高、字距
  */

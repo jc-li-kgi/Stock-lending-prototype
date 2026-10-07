@@ -34,7 +34,7 @@
 
 - `src/boot/platform.js` 偵測平台並設定 `<html data-platform>`：web（思源黑體 + Montserrat）、ios（蘋方 + SF Pro）、android（思源黑體 + Roboto）
 - 字級：web / android 用 `--kgi-font-auto-*`（≤768px 為 mWeb），iOS 用 `--kgi-font-ios-*`
-- 加大字級：`<html data-kgi-text-scale="large">`，主持人頁可切換
+- 不提供手動切換平台或字級；要在電腦上檢查 iOS / Android，用瀏覽器的裝置模擬（改 User Agent）
 
 ## 程式結構規則
 

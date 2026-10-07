@@ -40,7 +40,6 @@ python3 -m http.server 8080
 - `styles/` 裡**不寫死**顏色、間距、圓角、陰影數值，一律用 Guideline token
 - Guideline 沒有的（互動狀態色、字型堆疊、版面寬度）才放 `styles/tokens.css`
 - Guideline 更新時，直接覆蓋 `One KGI Design Guideline/` 資料夾即可
-- 加大字級：主持人頁切換，或網址加 `?textScale=large`
 - 與 Guideline 不同的調整集中在 `styles/kgi-overrides.css`（目前：Web / iOS / Android 字級放大；Body/Subtitle-R 英數改 Medium 只限 Web）
 
 ## 字型
@@ -53,7 +52,6 @@ python3 -m http.server 8080
 | iOS | 蘋方 PingFang TC | SF Pro | 系統內建 |
 | Android | 思源黑體 Noto Sans TC | Roboto | Google Fonts |
 
-在電腦上預覽其他平台：主持人頁的「字型平台」切換，或網址加 `?platform=ios`（`auto` 恢復自動）。
 
 ## 常見修改對照
 
