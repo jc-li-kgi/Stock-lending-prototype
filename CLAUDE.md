@@ -19,7 +19,7 @@
   - Guideline 沒有 4px 圓角 → 用 `--radius-small`（3px）
   - KGIB（凱基銀行）專用字級（16px 內文、18px 按鈕等）不用於本專案 → 改用證券的對應層級
   - Figma 稿與 Guideline 衝突時以 Guideline 為準，並列出差異請使用者確認
-- **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：mWeb 字級 Body 16 / Caption 14 / Subtitle 18、Body-R 與 Subtitle-R 英數字重 500。
+- **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：Web（mWeb）、iOS、Android 字級 Body 16 / Caption 14 / Subtitle 18；字重調整（Body-R 與 Subtitle-R 英數 500）只套用在 Web，iOS 與 Android 不變。
 - `styles/tokens.css` 只放 Guideline 沒有的東西：互動狀態色、字型堆疊、版面寬度。
 - 按下 / hover 色依 `Color/color-state-utils.ts` 規則預先算好放 `tokens.css`；停用狀態用 `--color-content-general-disabled` / `--color-container-general-disabled`。
 
