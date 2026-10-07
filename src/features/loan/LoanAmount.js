@@ -55,7 +55,7 @@ export function LoanAmount() {
 
       <div class="loan-body">
         <div class="loan-cards">
-          <section class="card loan-form">
+          <section class="card card--full loan-form">
             <${PickerField}
               label=${t.purpose}
               placeholder=${t.purposePlaceholder}
@@ -85,6 +85,7 @@ export function LoanAmount() {
           </section>
 
           <${FeeCard}
+            full
             title=${t.feeTitle}
             rows=${[
               { label: t.refRate, value: `${+(LOAN_RULES.rate * 100).toFixed(2)}%` },

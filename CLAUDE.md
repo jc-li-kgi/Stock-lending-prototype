@@ -10,7 +10,8 @@
 - **不准寫死數值**：`styles/` 與元件裡不得出現 hex 色碼、rgba、px 間距、圓角、陰影、font-size、font-weight。一律用 token：
   - 顏色 `var(--color-*)`（用語意 token，例如 `--color-content-general-secondary`，不用 base palette，紅色徽章等特例除外）
   - 間距 `var(--spacing-N)`，N 只有 0/2/4/8/12/16/20/24/28/32/40/48/60/80
-  - 圓角 `var(--radius-none|xs|small|medium|full)`（0/1/3/6/100px）；卡片一律 `medium`，膠囊按鈕 / Tag 用 `full`
+  - 圓角 `var(--radius-none|xs|small|medium|full)`（0/1/3/6/100px）；卡片用 `medium`，膠囊按鈕 / Tag 用 `full`
+  - **滿版卡片（貼齊畫面左右）不用圓角**：加 `.card--full`（FeeCard 傳 `full`）；左右有留邊的卡片才用 `.card`（6px）
   - 陰影：藍底（Surface Blue）上的卡片用 `--shadow-basic`；白底上的浮層、Bottom Sheet、Toast、導覽列用 `--shadow-popover`；未選取 / 停用用 `--shadow-light`
 - **文字只能用 class**：`styles/typography.css` 的 `.t-*`（中文）、`.n-*`（英文 / 數字），不要在 CSS 寫 font-size。
   - 層級：`display-l/m/s`、`headline`（頁面主標）、`title`（區塊標題 / 大數字）、`subtitle-bold`（卡片標題、頁首標題、主要按鈕）、`subtitle-regular`（清單項目、輸入值）、`body-bold`（欄位標題、重點）、`body-regular`（內文、標籤、Tab）、`caption-regular`（輔助說明、欄位下方提示）

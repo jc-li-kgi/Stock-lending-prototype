@@ -27,10 +27,18 @@
 .step-bar__seg { flex: 1; height: 2px; background: var(--color-content-general-tertiary); opacity: 0.2; }
 .step-bar__seg--on { background: var(--color-content-general-active); opacity: 1; }
 
-/* ---------- Card（Guideline：卡片一律 radius-medium；疊在 Surface Blue 上用 Basic 陰影） ---------- */
+/* ---------- Card ----------
+ * .card          一般卡片：左右留邊，圓角 radius-medium（Guideline：卡片一律 6px）
+ * .card--full    滿版卡片：貼齊畫面左右，不用圓角（專案規範）
+ * .card--shadow  疊在 Surface Blue 上的陰影（Guideline：Basic）
+ */
 .card {
   background: var(--color-container-card-white);
   border-radius: var(--radius-medium);
+}
+.card--full {
+  width: 100%;
+  border-radius: var(--radius-none);
 }
 .card--shadow { box-shadow: var(--shadow-basic); }
 

@@ -14,12 +14,13 @@ import { InfoSheet } from '../overlay/Sheet.js';
  *   note="費用僅供參考…"
  * />
  * row 有 info 時，標題旁會出現 ⓘ，點了開說明彈窗
+ * full：滿版（貼齊畫面左右、無圓角）
  */
-export function FeeCard({ title, rows, note }) {
+export function FeeCard({ title, rows, note, full = false }) {
   const [info, setInfo] = useState(null);
 
   return html`
-    <section class="card fee-card">
+    <section class=${'card fee-card' + (full ? ' card--full' : '')}>
       ${title && html`<p class="t-body-bold c-primary">${title}</p>`}
       <div class="fee-card__rows">
         ${rows.map(
