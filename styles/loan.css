@@ -33,50 +33,6 @@
   margin: 0 var(--spacing-16);
   padding: var(--spacing-24);
 }
-.confirm-amount {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  margin-bottom: var(--spacing-4); /* 金額區與條列之間 = 不同資訊段落 24（20 + 4） */
-}
-.confirm-amount__currency {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-4);
-  margin-bottom: calc(var(--spacing-8) - var(--spacing-12)); /* 幣別與金額 8 */
-  color: var(--color-content-general-primary);
-}
-.confirm-amount__flag { border-radius: var(--radius-full); border: 0.4px solid var(--color-container-general-divider); }
-.confirm-amount__value { text-align: center; color: var(--color-content-general-primary); }
-
 /* 確認頁按鈕寬 325（Figma） */
 .confirm-actions { align-items: center; }
 .confirm-actions__btn { max-width: 325px; }
-
-/* 完成頁 */
-.result-page { display: flex; flex-direction: column; }
-.result-page__content {
-  flex: 1;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-24);
-  padding: 0 var(--spacing-16) var(--spacing-24);
-}
-.result-page__image {
-  width: 160px;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.result-page__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12); /* Level 3：Headline 配 Subtitle 12 */
-  padding: 0 var(--spacing-40);
-  text-align: center;
-}

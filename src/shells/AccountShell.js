@@ -1,6 +1,6 @@
 // 入口一：證券主頁 → 帳務 →「授信管理」頁籤
 import { html, useRef, useEffect } from '../lib/preact.js';
-import { Icon, BottomNav } from '../components/index.js';
+import { Icon, BottomNav, AccountPicker, TextTabs } from '../components/index.js';
 import { useStore, showToast } from '../store.js';
 import { navigate } from '../router.js';
 import { dateTime } from '../lib/format.js';
@@ -50,19 +50,15 @@ export function AccountShell() {
       <main class="account-content">
         <div class="account-overview">
           <div class="account-overview__meta">
-            <button class="account-picker" onClick=${notAvailable}>
-              <span class="account-picker__badge t-body-bold">證</span>
-              <span class="account-picker__name t-body-bold">${account.id} ${account.name}</span>
-              <${Icon} name="chevron-pull.svg" />
-            </button>
-
-            <div class="text-tabs">
-              ${t.creditTabs.map((tab, i) =>
-                i === 0
-                  ? html`<span class="text-tabs__item text-tabs__item--active t-body-regular">${tab}<i /></span>`
-                  : html`<button class="text-tabs__item t-body-regular" onClick=${notAvailable}>${tab}</button>`
-              )}
+            <div class="account-overview__picker">
+              <${AccountPicker} account=${account} onClick=${notAvailable} />
             </div>
+
+            <${TextTabs}
+              tabs=${t.creditTabs.map((label, i) => ({ key: i, label }))}
+              active=${0}
+              onChange=${notAvailable}
+            />
 
             <p class="t-caption-regular c-secondary account-overview__time">${t.updatedAt} ${dateTime()}</p>
           </div>

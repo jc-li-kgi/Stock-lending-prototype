@@ -1,7 +1,7 @@
 // 流程定義：每個流程 = 依序的步驟 + 完成頁
 // 調整步驟順序、或組合新流程（例如未開戶 = 開戶 + 匯入擔保品 + 借款），只改這裡
 import { getState, setState } from '../store.js';
-import { navigate } from '../router.js';
+import { navigate, parseHash } from '../router.js';
 
 export const FLOWS = {
   existingLoan: {
@@ -10,6 +10,14 @@ export const FLOWS = {
       { path: '/loan/confirm', label: '確認資料' },
     ],
     done: '/loan/result',
+  },
+
+  collateralIn: {
+    steps: [
+      { path: '/collateral-in/select', label: '匯入擔保品' },
+      { path: '/collateral-in/confirm', label: '確認資料' },
+    ],
+    done: '/collateral-in/result',
   },
 
   // 之後新增，例如：
@@ -34,13 +42,29 @@ export function entryHome() {
   return ENTRY_HOME[getState().entry] || '/account';
 }
 
-export function startFlow(flowId) {
-  setState({ flow: flowId });
-  navigate(FLOWS[flowId].steps[0].path);
+/**
+ * 開始流程；會記住從哪一頁進來，完成或在第 1 步返回時回到那一頁
+ *   query     帶給第 1 步的參數，例如 startFlow('collateralIn', { query: { code: '2330' } })
+ *   returnTo  指定結束後回到哪一頁（預設 = 目前頁面）
+ */
+export function startFlow(flowId, { query, returnTo } = {}) {
+  const from = returnTo || location.hash.slice(1) || entryHome();
+  setState({ flow: flowId, flowReturn: from });
+  const qs = query ? '?' + new URLSearchParams(query) : '';
+  navigate(FLOWS[flowId].steps[0].path + qs);
 }
 
+/** 流程結束後回去的頁面 */
+export function flowReturnPath() {
+  return getState().flowReturn || entryHome();
+}
+
+/** 目前流程；直接開網址時依路徑推斷 */
 function currentFlow() {
-  return FLOWS[getState().flow] || FLOWS.existingLoan;
+  const flow = FLOWS[getState().flow];
+  if (flow) return flow;
+  const { path } = parseHash();
+  return Object.values(FLOWS).find((f) => f.steps.some((s) => s.path === path) || f.done === path) || FLOWS.existingLoan;
 }
 
 /** 目前頁面在流程中的位置，給 StepBar 用 */
@@ -62,10 +86,12 @@ export function nextStep(path) {
 export function prevStep(path) {
   const { steps } = currentFlow();
   const index = steps.findIndex((s) => s.path === path);
-  navigate(index > 0 ? steps[index - 1].path : entryHome());
+  navigate(index > 0 ? steps[index - 1].path : flowReturnPath());
 }
 
-export function exitFlow(to = entryHome()) {
-  setState({ flow: null });
-  navigate(to);
+/** 結束流程；to 不給時回到進入流程前的頁面 */
+export function exitFlow(to) {
+  const target = to || flowReturnPath();
+  setState({ flow: null, flowReturn: null });
+  navigate(target);
 }

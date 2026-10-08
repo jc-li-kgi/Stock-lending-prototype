@@ -70,8 +70,109 @@ export const COPY = {
     viewRecords: '查看借款紀錄',
   },
 
+  collateral: {
+    title: '匯入擔保品',
+    sortTitle: '排序方式',
+    groups: {
+      eligible: { title: '可借貸' },
+      ratioOnly: { title: '僅可用於提升維持率', desc: '無法借款，借款後，可以匯入提高擔保品市值，提升維持率' },
+      ineligible: { title: '無法作為擔保品', desc: '非上市櫃、處置股、流動性低，無法轉為擔保品' },
+    },
+    availableLots: '可擔保張數',
+    perLot: '每張可借 (TWD)',
+    ratio: '可借貸成數',
+    importLots: '匯入張數',
+    lotUnit: '張',
+    reason: '原因：',
+    notes: '注意事項',
+    notesSheet: {
+      title: '注意事項',
+      body: '擔保品匯入後將由集保帳戶轉入擔保品專戶，匯入期間無法賣出。可借額度依每日收盤價與可借貸成數重新計算，實際額度以撥款當時為準。',
+    },
+    total: '可借額度總計',
+    totalSheet: {
+      title: '可借額度總計',
+      body: '可借額度 = 匯入張數 × 每張可借金額。每張可借金額 = 每張市值 × 可借貸成數。',
+    },
+    breakdownTitle: '匯入明細',
+    noneSelected: '尚未選擇擔保品',
+    // 第 2 步
+    marketValue: '匯入擔保品總市值',
+    importDate: '匯入日',
+    channel: '申請管道',
+    channelValue: 'APP',
+    detailTitle: '擔保品匯入明細',
+    submit: '確認送出',
+    // 完成頁
+    resultTitle: '匯入成功',
+    resultDesc: '可以隨時動用借款，靈活操作',
+    borrowNow: '立即借款',
+    viewCollateral: '查看擔保品',
+  },
+
+  zone: {
+    heroTitle: '股票借貸，存股變現金',
+    heroDesc: '免賣股、股息照領，用途不受限，靈活運用長期持股，放大資產效益！',
+    tabs: [{ key: 'overview', label: '總覽' }, { key: 'simulate', label: '試算' }],
+    remaining: '剩餘可借額度',
+    ratio: '整戶維持率',
+    borrowed: '已借款金額',
+    limit: '可借總額度',
+    actions: ['還款', '查看借還款紀錄', '管理擔保品', '更多'],
+    importableTitle: '尚可匯入擔保品',
+    viewAll: '查看全部',
+    importableHint: '匯入後，可借總額提升',
+  },
+
+  holdings: {
+    colName: ['商品名稱', '代碼'],
+    colLots: '剩餘可匯入張數',
+    colAmount: '預估可借總額',
+    amountSheet: {
+      title: '預估可借總額',
+      body: '預估可借總額 = 剩餘可匯入張數 × 每張可借金額，依今日收盤價計算，僅供參考。',
+    },
+    importBtn: '匯入',
+    empty: '目前沒有可匯入的庫存',
+  },
+
   records: {
-    title: '借還款紀錄',
+    title: '股票借貸明細',
+    tabs: [
+      { key: 'loans', label: '借還款紀錄' },
+      { key: 'collateral', label: '擔保品' },
+      { key: 'statement', label: '對帳單' },
+    ],
+    // 借還款紀錄
+    loanTabs: [{ key: 'borrow', label: '借款' }, { key: 'repay', label: '還款' }],
+    periodFilter: '近一年',
+    statusFilter: '借款狀態',
+    colBalance: ['未償還金額', '借款狀態'],
+    colDue: '到期日',
+    dueSoon: '即將到期',
+    extend: '展延',
+    repay: '還款',
     empty: '目前沒有借款紀錄',
+    emptyRepay: '目前沒有還款紀錄',
+    // 擔保品
+    collateralTabs: [
+      { key: 'pledged', label: '已擔保' },
+      { key: 'unpledged', label: '未擔保' },
+      { key: 'history', label: '歷史紀錄' },
+    ],
+    unpledgedHint: '僅顯示可匯入擔保的庫存',
+    unpledgedHintSheet: {
+      title: '可匯入擔保的庫存',
+      body: '僅列出可借貸的庫存。處置股、流動性低等無法作為擔保品的股票不會顯示。',
+    },
+    searchPlaceholder: '搜尋產品關鍵字或代碼',
+    importCollateral: '匯入擔保品',
+    colPledgedLots: '已擔保張數',
+    colPledgedLoan: '可借金額',
+    emptyPledged: '目前沒有擔保品',
+    emptyHistory: '目前沒有擔保品紀錄',
+    emptySearch: '查無符合的股票',
+    // 對帳單
+    statementNotAvailable: '對帳單未開放於本次測試',
   },
 };

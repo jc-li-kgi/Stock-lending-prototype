@@ -1,5 +1,5 @@
 // 所有計算公式集中在這裡（借款、試算共用）
-import { STOCKS } from '../mock/stocks.js';
+import { STOCKS, LOT_SIZE } from '../mock/stocks.js';
 
 /* 借款規則：調整利率、上下限只改這裡 */
 export const LOAN_RULES = {
@@ -14,23 +14,61 @@ export const LOAN_RULES = {
 /* 借款目的選項 */
 export const LOAN_PURPOSES = ['資金周轉', '投資理財', '個人消費', '其他'];
 
-/* ---------- 擔保品 ---------- */
+/* ---------- 股票 / 擔保品（數量單位：張） ---------- */
 
-function stockOf(code) {
-  return STOCKS[code] || { price: 0, ratio: 0, name: code };
+export function stockOf(code) {
+  return STOCKS[code] || { name: code, price: 0, ratio: 0, type: 'ineligible', reason: '查無資料' };
+}
+
+/** 每張市值 */
+export function lotValue(code) {
+  return stockOf(code).price * LOT_SIZE;
+}
+
+/** 每張可借金額 = 每張市值 × 成數 */
+export function perLotLoan(code) {
+  // 用 round 避免浮點誤差（例如 180000 × 0.7 = 125999.99999）
+  return Math.round(lotValue(code) * stockOf(code).ratio);
+}
+
+/** 一組 { code, lots } 的總市值 */
+export function marketValueOf(items) {
+  return items.reduce((sum, c) => sum + c.lots * lotValue(c.code), 0);
+}
+
+/** 一組 { code, lots } 的可借額度 */
+export function loanableOf(items) {
+  return items.reduce((sum, c) => sum + c.lots * perLotLoan(c.code), 0);
 }
 
 /** 擔保品市值 */
 export function collateralValue(account) {
-  return account.collateral.reduce((sum, c) => sum + c.qty * stockOf(c.code).price, 0);
+  return marketValueOf(account.collateral);
 }
 
-/** 可借總額 = Σ 市值 × 成數 */
+/** 可借總額 = Σ 擔保品市值 × 成數 */
 export function creditLimit(account) {
-  return Math.floor(
-    account.collateral.reduce((sum, c) => sum + c.qty * stockOf(c.code).price * stockOf(c.code).ratio, 0)
-  );
+  return loanableOf(account.collateral);
 }
+
+/** 庫存依擔保資格分組：eligible / ratioOnly / ineligible */
+export function groupHoldings(account) {
+  const groups = { eligible: [], ratioOnly: [], ineligible: [] };
+  account.holdings.forEach((h) => groups[stockOf(h.code).type].push(h));
+  return groups;
+}
+
+/** 尚可匯入（可借貸）的庫存，匯入後可借總額可提升多少 */
+export function importablePotential(account) {
+  return loanableOf(groupHoldings(account).eligible);
+}
+
+/* 庫存排序方式 */
+export const HOLDING_SORTS = [
+  { value: 'perLotDesc', label: '每張可借金額高至低', fn: (a, b) => perLotLoan(b.code) - perLotLoan(a.code) },
+  { value: 'perLotAsc', label: '每張可借金額低至高', fn: (a, b) => perLotLoan(a.code) - perLotLoan(b.code) },
+  { value: 'lotsDesc', label: '可擔保張數多至少', fn: (a, b) => b.lots - a.lots },
+];
 
 /* ---------- 借款 ---------- */
 
@@ -74,6 +112,14 @@ export function interestFor(amount, months = LOAN_RULES.termMonths) {
 }
 
 /* ---------- 日期 ---------- */
+
+/** 距離今天幾天（負數 = 已過期） */
+export function daysUntil(isoDate) {
+  return Math.round((new Date(isoDate) - new Date(today())) / 86400000);
+}
+
+/** 即將到期的天數門檻 */
+export const DUE_SOON_DAYS = 30;
 
 export function today() {
   return new Date().toISOString().slice(0, 10);

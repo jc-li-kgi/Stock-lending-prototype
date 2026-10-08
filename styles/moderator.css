@@ -1,4 +1,4 @@
-/* ===== 主持人頁 / 紀錄頁（暫用版面） ===== */
+/* ===== 主持人頁 ===== */
 .moderator-page {
   display: flex;
   flex-direction: column;
@@ -9,19 +9,3 @@
 .moderator-task { display: flex; flex-direction: column; gap: var(--spacing-8); padding: var(--spacing-16); }
 .moderator-task__url { word-break: break-all; }
 .moderator-task__go { align-self: flex-end; text-decoration: none; }
-
-/* 紀錄頁（卡片組 12；卡片 16×16） */
-.records-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-12);
-  padding: var(--spacing-8) var(--spacing-16) var(--spacing-40);
-}
-.records-item { display: flex; flex-direction: column; gap: var(--spacing-4); padding: var(--spacing-16); }
-.records-item__head { display: flex; justify-content: space-between; align-items: center; }
-.records-item__status {
-  padding: var(--spacing-2) var(--spacing-8);
-  border-radius: var(--radius-full); /* Guideline：Tag 用 radius-full */
-  background: var(--color-container-general-active-secondary);
-  color: var(--color-content-general-active);
-}

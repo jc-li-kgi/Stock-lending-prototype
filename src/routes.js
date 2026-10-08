@@ -1,9 +1,13 @@
 // 路由表：網址 → 頁面
 import { AccountShell } from './shells/AccountShell.js';
+import { LendingZoneShell } from './shells/LendingZoneShell.js';
 import { LoanAmount } from './features/loan/LoanAmount.js';
 import { LoanConfirm } from './features/loan/LoanConfirm.js';
 import { LoanResult } from './features/loan/LoanResult.js';
-import { LoanRecords } from './features/records/LoanRecords.js';
+import { CollateralSelect } from './features/collateral/CollateralSelect.js';
+import { CollateralConfirm } from './features/collateral/CollateralConfirm.js';
+import { CollateralResult } from './features/collateral/CollateralResult.js';
+import { LendingRecords } from './pages/LendingRecords.js';
 import { TaskStart } from './pages/TaskStart.js';
 import { Moderator } from './pages/Moderator.js';
 
@@ -12,15 +16,21 @@ export const ROUTES = {
   '/moderator': Moderator,
 
   // 入口
-  '/account': AccountShell,
+  '/account': AccountShell,         // 帳務 › 授信管理
+  '/lending-zone': LendingZoneShell, // 股票借貸專區
 
   // 借款
   '/loan/amount': LoanAmount,
   '/loan/confirm': LoanConfirm,
   '/loan/result': LoanResult,
 
-  // 紀錄
-  '/records/loans': LoanRecords,
+  // 匯入擔保品
+  '/collateral-in/select': CollateralSelect,
+  '/collateral-in/confirm': CollateralConfirm,
+  '/collateral-in/result': CollateralResult,
+
+  // 股票借貸明細（?tab=loans|collateral|statement）
+  '/records': LendingRecords,
 };
 
 // 不需要情境資料就能開的頁面

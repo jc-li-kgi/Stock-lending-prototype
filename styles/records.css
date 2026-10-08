@@ -1,0 +1,73 @@
+/* ===== 股票借貸明細｜情境：資訊瀏覽 ===== */
+.records-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding-bottom: calc(var(--spacing-40) + env(safe-area-inset-bottom));
+}
+
+.records-section { display: flex; flex-direction: column; gap: var(--spacing-16); }
+.records-section__controls { display: flex; flex-direction: column; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+.records-filters { display: flex; gap: var(--spacing-8); flex-wrap: wrap; }
+.records-hint { display: inline-flex; align-items: center; gap: var(--spacing-4); align-self: flex-start; }
+.records-empty { padding: var(--spacing-40) var(--spacing-16); text-align: center; }
+
+/* 搜尋 */
+.records-search { display: flex; align-items: center; gap: var(--spacing-16); }
+.search-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 40px;
+  padding: 0 var(--spacing-16);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-white);
+}
+.search-field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-content-general-primary);
+}
+.search-field input::placeholder { color: var(--color-content-general-tertiary); }
+
+/* 借款列表 */
+.loan-list { display: flex; flex-direction: column; padding: 0 var(--spacing-16); }
+.loan-list__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: var(--spacing-8);
+  padding-right: 32px;
+  border-bottom: 1px solid var(--color-container-general-divider);
+}
+.loan-list__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-container-general-divider);
+}
+.loan-list__main { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); text-align: left; }
+.loan-list__due { display: inline-flex; align-items: center; gap: var(--spacing-8); }
+.loan-list__chevron { display: inline-flex; transform: rotate(180deg); transition: transform 0.2s ease; }
+.loan-list__chevron--open { transform: rotate(0deg); }
+.loan-list__detail { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.loan-list__actions { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); }
+.loan-list__buttons { display: flex; gap: var(--spacing-8); }
+
+/* 擔保品歷史紀錄 */
+.history-list { display: flex; flex-direction: column; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-container-card-white);
+  box-shadow: var(--shadow-basic);
+}
+.history-item__head { display: flex; align-items: center; justify-content: space-between; }

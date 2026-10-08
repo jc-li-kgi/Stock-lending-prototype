@@ -1,0 +1,72 @@
+/* ===== 股票借貸專區（總覽）｜情境：資訊瀏覽 ===== */
+.zone-page { padding-bottom: calc(var(--spacing-40) + env(safe-area-inset-bottom)); }
+
+.zone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-16);
+}
+
+.zone-content { display: flex; flex-direction: column; gap: var(--spacing-32); } /* Level 2：資訊瀏覽 區塊間距 32 */
+
+.zone-hero { display: flex; align-items: flex-start; gap: var(--spacing-8); padding: 0 var(--spacing-16); }
+.zone-hero__text { flex: 1; display: flex; flex-direction: column; gap: var(--spacing-8); } /* Level 3：Title 配 Subtitle 8 */
+.zone-hero__text h1 { margin: 0; }
+.zone-hero__image { flex-shrink: 0; }
+
+.zone-overview { display: flex; flex-direction: column; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+
+/* 快捷功能 */
+.quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-8); padding: 0 var(--spacing-8); }
+.quick-actions__item { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-8); text-align: center; }
+.quick-actions__circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-basic);
+  color: var(--color-content-general-primary);
+}
+
+/* 尚可匯入擔保品 */
+.zone-importable { display: flex; flex-direction: column; gap: var(--spacing-12); }
+.zone-importable__head { display: flex; flex-direction: column; gap: var(--spacing-8); padding: 0 var(--spacing-16); }
+.zone-importable__title { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-20); }
+
+/* ===== 擔保品列表（專區、明細共用） ===== */
+.holdings { display: flex; flex-direction: column; padding: 0 var(--spacing-16); }
+.holdings__head,
+.holdings__main {
+  display: grid;
+  /* 商品名稱吃剩下的寬度；張數、金額欄依表頭文字寬度，避免表頭折行 */
+  grid-template-columns: minmax(0, 1fr) var(--holdings-col-lots, 108px) var(--holdings-col-amount, 104px) 24px;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+.holdings__head--plain,
+.holdings__main--plain { grid-template-columns: minmax(0, 1fr) var(--holdings-col-lots, 108px) var(--holdings-col-amount, 104px); }
+.holdings__head > * { white-space: nowrap; }
+.holdings__head { padding-bottom: var(--spacing-8); border-bottom: 1px solid var(--color-container-general-divider); }
+.holdings__head .sort-head { color: inherit; text-align: left; }
+.holdings__col-lots { text-align: center; justify-self: center; }
+.holdings__col-amount { text-align: right; justify-self: end; display: inline-flex; align-items: center; gap: var(--spacing-4); }
+div.holdings__col-amount { display: block; }
+.holdings__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-container-general-divider);
+}
+.holdings__chevron { transform: rotate(180deg); transition: transform 0.2s ease; }
+.holdings__chevron--open { transform: rotate(0deg); }
+.holdings__detail { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.holdings__actions { display: flex; justify-content: flex-end; padding-right: 32px; }
+.holdings__empty { padding: var(--spacing-24) 0; text-align: center; }
+
+/* 小尺寸膠囊按鈕（列表內） */
+.btn-capsule--sm { padding: var(--spacing-4) var(--spacing-16); }

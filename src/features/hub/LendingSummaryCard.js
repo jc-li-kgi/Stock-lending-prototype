@@ -1,28 +1,44 @@
 // 股票借貸摘要卡：帳務頁、借貸專區共用
+//   variant="account"  帳務頁：大字是整戶維持率
+//   variant="zone"     借貸專區：大字是剩餘可借額度
 import { html } from '../../lib/preact.js';
 import { Icon, Button } from '../../components/index.js';
 import { useStore, showToast } from '../../store.js';
-import { collateralValue, loanBalance, remainingCredit, maintenanceRatio } from '../../lib/calc.js';
+import { collateralValue, creditLimit, loanBalance, remainingCredit, maintenanceRatio } from '../../lib/calc.js';
 import { twd, pct } from '../../lib/format.js';
 import { startFlow } from '../../flows/flows.js';
 import { COPY } from '../../content/copy.js';
 
-export function LendingSummaryCard() {
+export function LendingSummaryCard({ variant = 'account' }) {
   const account = useStore((s) => s.account);
   const t = COPY.hub;
+  const z = COPY.zone;
+  const ratio = pct(maintenanceRatio(account)).replace(' ', '');
 
-  const rows = [
-    [t.collateralValue, twd(collateralValue(account))],
-    [t.borrowed, twd(loanBalance(account))],
-    [t.remaining, twd(remainingCredit(account))],
-  ];
+  const head =
+    variant === 'zone'
+      ? { label: z.remaining, value: twd(remainingCredit(account)) }
+      : { label: t.ratio, value: ratio };
+
+  const rows =
+    variant === 'zone'
+      ? [
+          [z.ratio, ratio],
+          [z.borrowed, twd(loanBalance(account))],
+          [z.limit, twd(creditLimit(account))],
+        ]
+      : [
+          [t.collateralValue, twd(collateralValue(account))],
+          [t.borrowed, twd(loanBalance(account))],
+          [t.remaining, twd(remainingCredit(account))],
+        ];
 
   return html`
     <section class="card card--shadow summary-card">
       <div class="summary-card__head">
         <div>
-          <p class="t-body-regular c-primary">${t.ratio}</p>
-          <p class="n-title c-primary">${pct(maintenanceRatio(account)).replace(' ', '')}</p>
+          <p class="t-body-regular c-primary">${head.label}</p>
+          <p class="n-title c-primary">${head.value}</p>
         </div>
         <button class="icon-btn" onClick=${() => showToast(COPY.common.notAvailable)} aria-label="維持率通知">
           <${Icon} name="notification.svg" />
@@ -39,7 +55,7 @@ export function LendingSummaryCard() {
       )}
 
       <div class="summary-card__actions">
-        <${Button} variant="text" onClick=${() => showToast(COPY.common.notAvailable)}>${t.raiseLimit}<//>
+        <${Button} variant="text" onClick=${() => startFlow('collateralIn')}>${t.raiseLimit}<//>
         <${Button} variant="capsule" onClick=${() => startFlow('existingLoan')}>${t.borrowAgain}<//>
       </div>
     </section>

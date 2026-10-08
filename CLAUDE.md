@@ -42,11 +42,18 @@
 
 ## 程式結構規則
 
-- **優先用現有元件**（`src/components/index.js` 統一 import）：Button、Icon、DetailRow、FeeCard、PickerField、AmountField、PageHeader、StepBar、BottomNav、Sheet、InfoSheet、Toast。2 個以上功能會用到的畫面才抽成新元件，放進 `ui/`、`form/`、`layout/`、`overlay/` 其中之一，並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
+- **優先用現有元件**（`src/components/index.js` 統一 import）：
+  - ui：Button、Icon、DetailRow、FeeCard、Checkbox、AmountHero（確認頁大金額）、AccountPicker、CollapsibleCard、FilterPill、Tag、SearchIcon
+  - form：PickerField、AmountField（金額）、QtyStepper（張數）
+  - layout：PageHeader、StepBar、BottomNav、TextTabs、SegmentedTabs、StickyFooter（置底按鈕區）、ResultPage（完成頁）
+  - overlay：Sheet、InfoSheet、Toast
+  2 個以上功能會用到的畫面才抽成新元件，放進 `ui/`、`form/`、`layout/`、`overlay/` 其中之一，並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
 - `Button` 用 `variant`（primary / text / capsule）與 `typo`（換文字層級）；需要換色的 icon 用 `<Icon tint />`。
-- 新功能放 `src/features/<功能>/`；功能之間不互相 import，只透過 `store.js` 讀寫資料。
+- 新功能放 `src/features/<功能>/`；功能之間不互相 import，只透過 `store.js` 讀寫資料。需要組合多個功能的頁面放 `src/shells/`（入口頁）或 `src/pages/`（例如股票借貸明細）。
 - 步驟順序寫在 `src/flows/flows.js`；頁面用 `flowPosition` / `nextStep` / `prevStep`，不要寫死下一頁。
-- 測試情境放 `src/scenarios/`（一個任務一個檔，並在 `index.js` 註冊）。
+- 測試情境放 `src/scenarios/`（一個任務一個檔，並在 `index.js` 註冊）；已開戶客戶共用 `base-account.js`。資料結構改版時，遞增 `store.js` 的 `KEY` 版本。
+- 股票數量一律用「張」（`lots`）；股價、成數、擔保資格（eligible / ratioOnly / ineligible）在 `src/mock/stocks.js`。
+- 開始流程用 `startFlow(flowId, { query, returnTo })`，結束或第 1 步返回會回到進入流程前的頁面。
 - 文案放 `src/content/copy.js`；公式與業務規則放 `src/lib/calc.js`；股價放 `src/mock/stocks.js`。
 - 新頁面要在 `src/routes.js` 註冊。
 - 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。

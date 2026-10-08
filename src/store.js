@@ -3,7 +3,7 @@
 import { useReducer, useEffect } from './lib/preact.js';
 import { LOAN_RULES, addMonths, today } from './lib/calc.js';
 
-const KEY = 'lending-proto-state-v1';
+const KEY = 'lending-proto-state-v2'; // 資料結構改版時遞增，避免讀到舊格式
 const listeners = new Set();
 
 let state = load();
@@ -17,7 +17,7 @@ function load() {
 }
 
 function emptyState() {
-  return { taskId: null, entry: null, flow: null, account: null, draft: {}, toast: null };
+  return { taskId: null, entry: null, flow: null, flowReturn: null, account: null, draft: {}, collateralDraft: {}, toast: null };
 }
 
 function save() {
@@ -87,6 +87,51 @@ export function clearDraft() {
 }
 
 /* ---------- 業務動作 ---------- */
+
+/* ---------- 匯入擔保品草稿：{ selected: { [code]: lots }, sort } ---------- */
+
+export function updateCollateralDraft(patch) {
+  setState((s) => ({ collateralDraft: { ...s.collateralDraft, ...patch } }));
+}
+
+export function clearCollateralDraft() {
+  setState({ collateralDraft: {} });
+}
+
+/** 匯入擔保品：庫存 → 擔保品，並新增一筆紀錄 */
+export function pledgeCollateral(items) {
+  const record = {
+    id: 'C' + Date.now().toString().slice(-6),
+    type: '匯入',
+    date: today(),
+    items,
+    status: '處理中',
+  };
+  setState((s) => {
+    const a = s.account;
+    const take = (list, code, lots, sign) => {
+      const found = list.find((x) => x.code === code);
+      if (found) return list.map((x) => (x.code === code ? { ...x, lots: x.lots + sign * lots } : x));
+      return sign > 0 ? [...list, { code, lots }] : list;
+    };
+    let holdings = a.holdings;
+    let collateral = a.collateral;
+    items.forEach(({ code, lots }) => {
+      holdings = take(holdings, code, lots, -1);
+      collateral = take(collateral, code, lots, +1);
+    });
+    return {
+      account: {
+        ...a,
+        holdings: holdings.filter((h) => h.lots > 0),
+        collateral,
+        collateralRecords: [record, ...(a.collateralRecords || [])],
+      },
+      collateralDraft: {},
+    };
+  });
+  return record;
+}
 
 export function borrow({ amount, purpose }) {
   const date = today();

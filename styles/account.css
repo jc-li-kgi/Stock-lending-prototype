@@ -37,51 +37,9 @@
 .account-content { display: flex; flex-direction: column; gap: var(--spacing-32); } /* Level 2：資訊瀏覽 區塊間距 32 */
 .account-overview { display: flex; flex-direction: column; gap: var(--spacing-16); }
 .account-overview__meta { display: flex; flex-direction: column; gap: var(--spacing-12); }
+.account-overview__picker,
 .account-overview__time { padding: 0 var(--spacing-16); }
 .account-overview__card { padding: 0 var(--spacing-16); }
-
-/* 帳號選擇 */
-.account-picker {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-8);
-  height: 40px;
-  margin: 0 var(--spacing-16);
-  padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-16);
-  background: var(--color-surface-white);
-  border-radius: var(--radius-small);
-  text-align: left;
-}
-.account-picker__badge {
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-small);
-  background: var(--color-red-400);
-  color: var(--color-content-general-light-active);
-  flex-shrink: 0;
-}
-.account-picker__name { flex: 1; color: var(--color-content-general-primary); }
-
-/* 文字頁籤 */
-.text-tabs {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--spacing-16);
-  padding: var(--spacing-4) var(--spacing-16) 0;
-}
-.text-tabs__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-8);
-  padding-bottom: calc(var(--spacing-8) + 2px); /* 與選中項底線（2px）等高 */
-  color: var(--color-content-general-secondary);
-  white-space: nowrap;
-}
-.text-tabs__item--active { color: var(--color-content-general-active); padding-bottom: 0; }
-.text-tabs__item--active i { display: block; height: 2px; background: var(--color-container-general-active-primary); }
 
 /* 摘要卡（Level 3：資訊瀏覽 詳情概覽卡 16×16；Level 2：純資訊條列 20） */
 .summary-card {

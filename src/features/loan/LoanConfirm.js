@@ -1,11 +1,11 @@
 // 借款 第 2 步：確認資料
 import { html, useEffect } from '../../lib/preact.js';
-import { PageHeader, StepBar, DetailRow, Button } from '../../components/index.js';
+import { PageHeader, StepBar, DetailRow, Button, AmountHero } from '../../components/index.js';
 import { useStore, borrow } from '../../store.js';
 import { navigate } from '../../router.js';
 import { flowPosition, nextStep, prevStep } from '../../flows/flows.js';
 import { LOAN_RULES, interestFor, today, addMonths } from '../../lib/calc.js';
-import { twd, num, rate, date } from '../../lib/format.js';
+import { twd, rate, date } from '../../lib/format.js';
 import { COPY } from '../../content/copy.js';
 
 const PATH = '/loan/confirm';
@@ -38,15 +38,7 @@ export function LoanConfirm() {
 
       <div class="loan-body loan-body--confirm">
         <section class="card confirm-card">
-          <div class="confirm-amount">
-            <p class="t-body-regular c-secondary">${t.amount}</p>
-            <div class="confirm-amount__currency">
-              <img class="confirm-amount__flag" src="assets/icons/flag-twd.png" width="16" height="16" alt="" />
-              <span class="n-body-regular">TWD</span>
-              <span class="t-body-regular">${t.currency}</span>
-            </div>
-            <p class="n-display-s confirm-amount__value">${num(draft.amount)}</p>
-          </div>
+          <${AmountHero} label=${t.amount} amount=${draft.amount} />
 
           <${DetailRow} label=${t.refRate} value=${rate(LOAN_RULES.rate)} />
           <${DetailRow} label=${t.estInterest} value=${twd(interestFor(draft.amount))} />

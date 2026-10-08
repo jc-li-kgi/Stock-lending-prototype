@@ -5,8 +5,8 @@ import { showToast } from '../../store.js';
 import { navigate } from '../../router.js';
 import { COPY } from '../../content/copy.js';
 
-// 對應 COPY.hub.services 的順序；null = 尚未實作
-const TARGETS = ['/records/loans', null, null];
+// 對應 COPY.hub.services 的順序
+const TARGETS = ['/records?tab=loans', '/records?tab=collateral', '/records?tab=statement'];
 
 export function MoreServices({ showZoneLink = true }) {
   const t = COPY.hub;
@@ -17,7 +17,7 @@ export function MoreServices({ showZoneLink = true }) {
       <div class="more-services__head">
         <p class="t-subtitle-bold c-primary">${t.moreServices}</p>
         ${showZoneLink &&
-        html`<${Button} variant="text" onClick=${() => showToast(COPY.common.notAvailable)}>${t.goZone}<//>`}
+        html`<${Button} variant="text" onClick=${() => navigate('/lending-zone')}>${t.goZone}<//>`}
       </div>
       <div class="card more-services__list">
         ${t.services.map(
