@@ -1,7 +1,7 @@
 // 入口二：股票借貸專區（總覽）
 // 證券主頁 → 股票借貸專區；或 帳務 › 授信管理 ›「前往專區」
 import { html, useState } from '../lib/preact.js';
-import { Icon, SegmentedTabs, Button } from '../components/index.js';
+import { Icon, SegmentedTabs, SectionHeader } from '../components/index.js';
 import { useStore, showToast } from '../store.js';
 import { navigate } from '../router.js';
 import { groupHoldings, importablePotential } from '../lib/calc.js';
@@ -49,13 +49,11 @@ export function LendingZoneShell() {
 
         <section class="zone-importable">
           <div class="zone-importable__head">
-            <div class="zone-importable__title">
-              <p class="t-subtitle-bold c-primary">${t.importableTitle}</p>
-              <${Button} variant="text" onClick=${() => navigate('/records?tab=collateral&sub=unpledged')}>${t.viewAll}<//>
-            </div>
-            <p class="t-body-regular c-secondary">
-              ${t.importableHint} <span class="n-body-bold c-primary">${twd(importablePotential(account))}</span>
-            </p>
+            <${SectionHeader}
+              title=${t.importableTitle}
+              action=${{ label: t.viewAll, onClick: () => navigate('/records?tab=collateral&sub=unpledged') }}
+              desc=${html`${t.importableHint} <span class="n-body-bold c-primary">${twd(importablePotential(account))}</span>`}
+            />
           </div>
           <${HoldingsTable} holdings=${groupHoldings(account).eligible} limit=${4} />
         </section>

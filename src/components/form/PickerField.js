@@ -2,6 +2,7 @@
 import { html, useState } from '../../lib/preact.js';
 import { Icon } from '../ui/Icon.js';
 import { Sheet } from '../overlay/Sheet.js';
+import { SheetOptions } from '../overlay/SheetOptions.js';
 
 /** options 可給字串陣列，或 { value, label, desc } 物件陣列 */
 function normalize(option) {
@@ -32,17 +33,7 @@ export function PickerField({ label, value, options, onChange, placeholder = '�
       ${error && html`<p class="t-caption-regular field__error">${error}</p>`}
 
       <${Sheet} open=${open} title=${sheetTitle ?? label} onClose=${() => setOpen(false)}>
-        ${items.map(
-          (o) => html`
-            <button class=${'sheet__option' + (o.value === value ? ' sheet__option--selected' : '')} onClick=${() => pick(o)}>
-              <span>
-                <span class="t-subtitle-regular">${o.label}</span>
-                ${o.desc && html`<span class="sheet__option-desc t-caption-regular c-secondary">${o.desc}</span>`}
-              </span>
-              ${o.value === value && html`<span>✓</span>`}
-            </button>
-          `
-        )}
+        <${SheetOptions} options=${items} value=${value} onSelect=${(v) => pick(items.find((o) => o.value === v))} />
       <//>
     </div>
   `;

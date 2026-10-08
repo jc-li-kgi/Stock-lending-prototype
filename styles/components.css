@@ -55,9 +55,6 @@
 .detail-row { display: flex; gap: var(--spacing-8); align-items: flex-start; }
 .detail-row__label {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-4); /* 圖示與標題水平間距 */
   color: var(--color-content-general-secondary);
 }
 .detail-row__value { text-align: right; color: var(--color-content-general-primary); white-space: nowrap; }
@@ -485,5 +482,120 @@
   text-align: center;
 }
 
-/* ---------- 列表表頭排序圖示 ---------- */
-.sort-head { display: inline-flex; align-items: flex-end; gap: var(--spacing-4); }
+
+
+/* ---------- InfoLabel 文字 + ⓘ（Guideline：圖示與標題水平間距 4） ---------- */
+.info-label { display: inline-flex; align-items: center; gap: var(--spacing-4); }
+
+/* ---------- DetailCard 確認資料卡（流程申請 詳情概覽卡 24×24；條列 20） ---------- */
+.detail-card { display: flex; flex-direction: column; gap: var(--spacing-20); padding: var(--spacing-24); }
+
+/* 卡片組：左右 16、卡片之間 12（Guideline：卡片組間距） */
+.card-stack { display: flex; flex-direction: column; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+
+/* ---------- SummaryCard 摘要卡 ---------- */
+.summary-card { display: flex; flex-direction: column; gap: var(--spacing-20); }
+.summary-card--overview { padding: var(--spacing-16); } /* 資訊瀏覽 詳情概覽卡 16×16 */
+.summary-card--flow { padding: var(--spacing-24); }     /* 流程申請 詳情概覽卡 24×24 */
+.summary-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacing-4); }
+.summary-card__head > div { display: flex; flex-direction: column; gap: var(--spacing-4); }
+.summary-card__actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--spacing-16); }
+
+/* ---------- SectionHeader 區塊標題（Guideline：主標題與副標題 8） ---------- */
+.section-header { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.section-header__row { display: flex; align-items: center; gap: var(--spacing-8); }
+.section-header__title { flex: 1; }
+
+/* ---------- StockName / AmountCell ---------- */
+.amount-cell { text-align: right; }
+
+/* ---------- ExpandToggle 展開箭頭（收起朝下、展開朝上） ---------- */
+.expand-toggle { display: inline-flex; transform: rotate(180deg); transition: transform 0.2s ease; }
+.expand-toggle--expanded { transform: rotate(0deg); }
+
+/* ---------- EmptyState ---------- */
+.empty-state { padding: var(--spacing-40) var(--spacing-16); text-align: center; }
+
+/* ---------- IconAction 圓形圖示捷徑（疊在 Surface Blue 上：Basic 陰影） ---------- */
+.icon-action { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-8); text-align: center; }
+.icon-action__circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-basic);
+  color: var(--color-content-general-primary);
+}
+
+/* ---------- SelectableItem 可勾選項目 ---------- */
+.selectable-item { display: flex; align-items: flex-start; gap: var(--spacing-8); }
+.selectable-item__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-8); }
+.selectable-item--disabled,
+.selectable-item--disabled .detail-row__label,
+.selectable-item--disabled .detail-row__value { color: var(--color-content-general-disabled); }
+
+/* ---------- SearchField 搜尋框 ---------- */
+.search-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 40px;
+  padding: 0 var(--spacing-16);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-white);
+}
+.search-field input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-content-general-primary);
+}
+.search-field input::placeholder { color: var(--color-content-general-tertiary); }
+
+/* ---------- TotalBar 置底總計列 ---------- */
+.total-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); padding: var(--spacing-12) 0; }
+.total-bar__value { display: inline-flex; align-items: center; gap: var(--spacing-4); }
+.total-bar__value:disabled { cursor: default; }
+
+/* ---------- FlowPage 流程頁（流程申請：頁首→內容 24、區塊 24、內容→按鈕 32） ---------- */
+.flow-page { display: flex; flex-direction: column; gap: var(--spacing-24); }
+.flow-page__body { display: flex; flex-direction: column; gap: var(--spacing-32); }
+.flow-page__content { display: flex; flex-direction: column; gap: var(--spacing-24); }
+
+/* ---------- ListTable 列表 ---------- */
+.list-table { display: flex; flex-direction: column; padding: 0 var(--spacing-16); }
+.list-table__head,
+.list-table__main {
+  display: grid;
+  grid-template-columns: var(--list-cols);
+  align-items: center;
+  gap: var(--spacing-4);
+}
+.list-table__head { padding-bottom: var(--spacing-8); border-bottom: 1px solid var(--color-container-general-divider); }
+.list-table__head > * { white-space: nowrap; }
+.list-table__head--end { align-items: end; }
+.list-table__main { width: 100%; text-align: left; }
+.list-table__cell--left { justify-self: start; text-align: left; }
+.list-table__cell--center { justify-self: center; text-align: center; }
+.list-table__cell--right { justify-self: end; text-align: right; }
+.list-table__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-container-general-divider);
+}
+.list-table__detail { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.list-table__footer { display: flex; align-items: center; gap: var(--spacing-8); }
+.list-table__footer--end { justify-content: flex-end; padding-right: calc(24px + var(--spacing-8)); } /* 與箭頭欄左緣對齊 */
+.list-table__footer--between { justify-content: space-between; }
+.sort-head { display: inline-flex; align-items: flex-end; gap: var(--spacing-4); color: inherit; text-align: left; }
+
+/* 小尺寸膠囊按鈕（列表內） */
+.btn-capsule--sm { padding: var(--spacing-4) var(--spacing-16); }

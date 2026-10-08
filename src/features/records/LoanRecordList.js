@@ -1,6 +1,6 @@
 // 借還款紀錄（股票借貸明細 › 借還款紀錄）
 import { html, useState } from '../../lib/preact.js';
-import { SegmentedTabs, FilterPill, Tag, Button, Icon, DetailRow } from '../../components/index.js';
+import { SegmentedTabs, FilterPill, Tag, Button, DetailRow, ListTable, ListRow, EmptyState } from '../../components/index.js';
 import { showToast } from '../../store.js';
 import { daysUntil, DUE_SOON_DAYS } from '../../lib/calc.js';
 import { twd, date, rate } from '../../lib/format.js';
@@ -28,64 +28,53 @@ export function LoanRecordList({ loans = [], repayments = [] }) {
         `}
       </div>
 
-      ${sub === 'repay' &&
-      (repayments.length === 0
-        ? html`<p class="records-empty t-body-regular c-secondary">${t.emptyRepay}</p>`
-        : null)}
+      ${sub === 'repay' && repayments.length === 0 && html`<${EmptyState} text=${t.emptyRepay} />`}
 
       ${sub === 'borrow' &&
       html`
-        <div class="loan-list">
-          <div class="loan-list__head t-caption-regular c-secondary">
-            <span>${t.colBalance[0]}<br />${t.colBalance[1]}</span>
-            <span>${t.colDue}</span>
-          </div>
-
-          ${rows.length === 0 && html`<p class="records-empty t-body-regular c-secondary">${t.empty}</p>`}
-
+        <${ListTable}
+          columns=${[
+            { label: html`${t.colBalance[0]}<br />${t.colBalance[1]}` },
+            { label: t.colDue, width: 'auto', align: 'right' },
+          ]}
+          expandable
+          headAlign="end"
+          empty=${t.empty}
+        >
           ${rows.map((l) => {
             const days = daysUntil(l.dueDate);
             const dueSoon = days >= 0 && days <= DUE_SOON_DAYS;
-            const expanded = open === l.id;
             return html`
-              <div class="loan-list__row">
-                <button class="loan-list__main" onClick=${() => setOpen(expanded ? null : l.id)} aria-expanded=${expanded}>
-                  <div>
+              <${ListRow}
+                align=${['left', 'right']}
+                cells=${[
+                  html`
                     <p class="n-body-regular c-primary">${twd(l.balance)}</p>
                     <p class="t-body-regular c-secondary">${l.status}</p>
-                  </div>
-                  <span class="loan-list__due">
-                    <span class="n-body-regular c-primary">${date(l.dueDate)}</span>
-                    <span class=${'loan-list__chevron' + (expanded ? ' loan-list__chevron--open' : '')}>
-                      <${Icon} name="chevron-up.svg" />
-                    </span>
-                  </span>
-                </button>
-
-                ${expanded &&
+                  `,
+                  html`<p class="n-body-regular c-primary">${date(l.dueDate)}</p>`,
+                ]}
+                expanded=${open === l.id}
+                onToggle=${() => setOpen(open === l.id ? null : l.id)}
+                detail=${html`
+                  <${DetailRow} label="借款金額" value=${twd(l.amount)} />
+                  <${DetailRow} label="借款日" value=${date(l.startDate)} />
+                  <${DetailRow} label="參考利率" value=${rate(l.rate)} />
+                  <${DetailRow} label="借款目的" value=${l.purpose} valueClass="t-body-regular" />
+                `}
+                footerAlign="between"
+                footer=${dueSoon &&
                 html`
-                  <div class="loan-list__detail">
-                    <${DetailRow} label="借款金額" value=${twd(l.amount)} />
-                    <${DetailRow} label="借款日" value=${date(l.startDate)} />
-                    <${DetailRow} label="參考利率" value=${rate(l.rate)} />
-                    <${DetailRow} label="借款目的" value=${l.purpose} valueClass="t-body-regular" />
+                  <${Tag} variant="warning">${t.dueSoon}<//>
+                  <div class="records-row-buttons">
+                    <${Button} variant="capsule" class="btn-capsule--sm" onClick=${notAvailable}>${t.extend}<//>
+                    <${Button} variant="capsule" class="btn-capsule--sm" onClick=${notAvailable}>${t.repay}<//>
                   </div>
                 `}
-
-                ${dueSoon &&
-                html`
-                  <div class="loan-list__actions">
-                    <${Tag} variant="warning">${t.dueSoon}<//>
-                    <div class="loan-list__buttons">
-                      <${Button} variant="capsule" class="btn-capsule--sm" onClick=${notAvailable}>${t.extend}<//>
-                      <${Button} variant="capsule" class="btn-capsule--sm" onClick=${notAvailable}>${t.repay}<//>
-                    </div>
-                  </div>
-                `}
-              </div>
+              />
             `;
           })}
-        </div>
+        <//>
       `}
     </div>
   `;

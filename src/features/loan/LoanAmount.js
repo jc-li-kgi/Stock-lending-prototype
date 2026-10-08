@@ -1,6 +1,6 @@
 // 借款 第 1 步：填寫借款金額
 import { html, useState } from '../../lib/preact.js';
-import { PageHeader, StepBar, DetailRow, InfoSheet, PickerField, AmountField, FeeCard, Button } from '../../components/index.js';
+import { FlowPage, SummaryCard, DetailRow, InfoSheet, PickerField, AmountField, FeeCard, Button } from '../../components/index.js';
 import { useStore, updateDraft } from '../../store.js';
 import { flowPosition, nextStep, prevStep } from '../../flows/flows.js';
 import {
@@ -38,70 +38,67 @@ export function LoanAmount() {
   };
 
   return html`
-    <div class="page loan-page">
-      <div>
-        <${PageHeader} title=${t.title} onBack=${() => prevStep(PATH)} />
-        <${StepBar} ...${flowPosition(PATH)} />
+    <${FlowPage}
+      title=${t.title}
+      step=${flowPosition(PATH)}
+      onBack=${() => prevStep(PATH)}
+      actions=${html`<${Button} onClick=${submit}>${COPY.common.next}<//>`}
+    >
+      <div class="loan-summary">
+        <${SummaryCard}
+          variant="flow"
+          label=${t.ratio}
+          value=${pct(maintenanceRatio(account))}
+          rows=${[
+            [t.remaining, twd(remainingCredit(account))],
+            [t.borrowed, twd(loanBalance(account))],
+          ]}
+        />
       </div>
 
-      <section class="card card--shadow loan-summary">
-        <div class="detail-row">
-          <span class="detail-row__label t-body-bold c-primary">${t.ratio}</span>
-          <span class="detail-row__value n-title">${pct(maintenanceRatio(account))}</span>
-        </div>
-        <${DetailRow} label=${t.remaining} value=${twd(remainingCredit(account))} />
-        <${DetailRow} label=${t.borrowed} value=${twd(loanBalance(account))} />
-      </section>
-
-      <div class="loan-body">
-        <div class="loan-cards">
-          <section class="card card--full loan-form">
-            <${PickerField}
-              label=${t.purpose}
-              placeholder=${t.purposePlaceholder}
-              value=${purpose}
-              options=${LOAN_PURPOSES}
-              onChange=${choosePurpose}
-              error=${purposeError && t.purposeError}
-            />
-
-            <${AmountField}
-              label=${t.amount}
-              prefix="TWD"
-              value=${amount}
-              onChange=${setAmount}
-              ...${range}
-              action=${{ label: t.limitLink, onClick: () => setInfo(t.limitSheet) }}
-              hints=${[t.rangeHint(num(range.min), num(range.max)), t.stepHint(num(range.step))]}
-            />
-
-            <${DetailRow}
-              label=${t.ratioAfter}
-              labelClass="t-body-bold c-primary"
-              value=${pct(maintenanceRatio(account, amount))}
-              valueClass="n-subtitle-bold"
-              onInfo=${() => setInfo(t.ratioSheet)}
-            />
-          </section>
-
-          <${FeeCard}
-            full
-            title=${t.feeTitle}
-            rows=${[
-              { label: t.refRate, value: `${+(LOAN_RULES.rate * 100).toFixed(2)}%` },
-              { label: t.halfYearInterest, value: twd(interestFor(amount)) },
-              { label: t.fee, value: twd(LOAN_RULES.fee), info: t.feeSheet },
-            ]}
-            note=${t.feeNote}
+      <div class="loan-cards">
+        <section class="card card--full loan-form">
+          <${PickerField}
+            label=${t.purpose}
+            placeholder=${t.purposePlaceholder}
+            value=${purpose}
+            options=${LOAN_PURPOSES}
+            onChange=${choosePurpose}
+            error=${purposeError && t.purposeError}
           />
-        </div>
 
-        <div class="bottom-actions">
-          <${Button} onClick=${submit}>${COPY.common.next}<//>
-        </div>
+          <${AmountField}
+            label=${t.amount}
+            prefix="TWD"
+            value=${amount}
+            onChange=${setAmount}
+            ...${range}
+            action=${{ label: t.limitLink, onClick: () => setInfo(t.limitSheet) }}
+            hints=${[t.rangeHint(num(range.min), num(range.max)), t.stepHint(num(range.step))]}
+          />
+
+          <${DetailRow}
+            label=${t.ratioAfter}
+            labelClass="t-body-bold c-primary"
+            value=${pct(maintenanceRatio(account, amount))}
+            valueClass="n-subtitle-bold"
+            info=${t.ratioSheet}
+          />
+        </section>
+
+        <${FeeCard}
+          full
+          title=${t.feeTitle}
+          rows=${[
+            { label: t.refRate, value: `${+(LOAN_RULES.rate * 100).toFixed(2)}%` },
+            { label: t.halfYearInterest, value: twd(interestFor(amount)) },
+            { label: t.fee, value: twd(LOAN_RULES.fee), info: t.feeSheet },
+          ]}
+          note=${t.feeNote}
+        />
       </div>
 
       <${InfoSheet} info=${info} onClose=${() => setInfo(null)} />
-    </div>
+    <//>
   `;
 }

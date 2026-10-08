@@ -1,6 +1,6 @@
 // 借款 第 2 步：確認資料
 import { html, useEffect } from '../../lib/preact.js';
-import { PageHeader, StepBar, DetailRow, Button, AmountHero } from '../../components/index.js';
+import { FlowPage, DetailCard, DetailRow, Button, AmountHero } from '../../components/index.js';
 import { useStore, borrow } from '../../store.js';
 import { navigate } from '../../router.js';
 import { flowPosition, nextStep, prevStep } from '../../flows/flows.js';
@@ -30,14 +30,15 @@ export function LoanConfirm() {
   };
 
   return html`
-    <div class="page loan-page">
-      <div>
-        <${PageHeader} title=${t.title} onBack=${() => prevStep(PATH)} />
-        <${StepBar} ...${flowPosition(PATH)} />
-      </div>
-
-      <div class="loan-body loan-body--confirm">
-        <section class="card confirm-card">
+    <${FlowPage}
+      title=${t.title}
+      step=${flowPosition(PATH)}
+      onBack=${() => prevStep(PATH)}
+      actionsClass="confirm-actions"
+      actions=${html`<${Button} class="confirm-actions__btn" onClick=${submit}>${COPY.common.confirm}<//>`}
+    >
+      <div class="card-stack">
+        <${DetailCard}>
           <${AmountHero} label=${t.amount} amount=${draft.amount} />
 
           <${DetailRow} label=${t.refRate} value=${rate(LOAN_RULES.rate)} />
@@ -48,12 +49,8 @@ export function LoanConfirm() {
           <${DetailRow} label=${t.applyDate} value=${date(start)} />
           <${DetailRow} label=${t.purpose} value=${draft.purpose} valueClass="t-body-regular" />
           <${DetailRow} label=${t.payout} value=${html`<p class="t-body-regular">${bank.name}</p><p class="n-body-regular">${bank.number}</p>`} />
-        </section>
-
-        <div class="bottom-actions confirm-actions">
-          <${Button} class="confirm-actions__btn" onClick=${submit}>${COPY.common.confirm}<//>
-        </div>
+        <//>
       </div>
-    </div>
+    <//>
   `;
 }

@@ -2,7 +2,7 @@
 //   variant="account"  帳務頁：大字是整戶維持率
 //   variant="zone"     借貸專區：大字是剩餘可借額度
 import { html } from '../../lib/preact.js';
-import { Icon, Button } from '../../components/index.js';
+import { SummaryCard, Button } from '../../components/index.js';
 import { useStore, showToast } from '../../store.js';
 import { collateralValue, creditLimit, loanBalance, remainingCredit, maintenanceRatio } from '../../lib/calc.js';
 import { twd, pct } from '../../lib/format.js';
@@ -34,30 +34,15 @@ export function LendingSummaryCard({ variant = 'account' }) {
         ];
 
   return html`
-    <section class="card card--shadow summary-card">
-      <div class="summary-card__head">
-        <div>
-          <p class="t-body-regular c-primary">${head.label}</p>
-          <p class="n-title c-primary">${head.value}</p>
-        </div>
-        <button class="icon-btn" onClick=${() => showToast(COPY.common.notAvailable)} aria-label="維持率通知">
-          <${Icon} name="notification.svg" />
-        </button>
-      </div>
-
-      ${rows.map(
-        ([label, value]) => html`
-          <div class="detail-row">
-            <span class="detail-row__label t-body-regular">${label}</span>
-            <span class="detail-row__value n-body-regular">${value}</span>
-          </div>
-        `
-      )}
-
-      <div class="summary-card__actions">
+    <${SummaryCard}
+      label=${head.label}
+      value=${head.value}
+      rows=${rows}
+      onBell=${() => showToast(COPY.common.notAvailable)}
+      actions=${html`
         <${Button} variant="text" onClick=${() => startFlow('collateralIn')}>${t.raiseLimit}<//>
         <${Button} variant="capsule" onClick=${() => startFlow('existingLoan')}>${t.borrowAgain}<//>
-      </div>
-    </section>
+      `}
+    />
   `;
 }

@@ -1,6 +1,6 @@
 // 更多服務清單：查看借還款紀錄 / 管理擔保品 / 查看對帳單
 import { html } from '../../lib/preact.js';
-import { Icon, Button } from '../../components/index.js';
+import { Icon, SectionHeader } from '../../components/index.js';
 import { showToast } from '../../store.js';
 import { navigate } from '../../router.js';
 import { COPY } from '../../content/copy.js';
@@ -14,11 +14,10 @@ export function MoreServices({ showZoneLink = true }) {
 
   return html`
     <section class="more-services">
-      <div class="more-services__head">
-        <p class="t-subtitle-bold c-primary">${t.moreServices}</p>
-        ${showZoneLink &&
-        html`<${Button} variant="text" onClick=${() => navigate('/lending-zone')}>${t.goZone}<//>`}
-      </div>
+      <${SectionHeader}
+        title=${t.moreServices}
+        action=${showZoneLink && { label: t.goZone, onClick: () => navigate('/lending-zone') }}
+      />
       <div class="card more-services__list">
         ${t.services.map(
           (label, i) => html`

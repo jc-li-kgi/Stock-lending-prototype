@@ -42,12 +42,12 @@
 
 ## 程式結構規則
 
-- **優先用現有元件**（`src/components/index.js` 統一 import）：
-  - ui：Button、Icon、DetailRow、FeeCard、Checkbox、AmountHero（確認頁大金額）、AccountPicker、CollapsibleCard、FilterPill、Tag、SearchIcon
-  - form：PickerField、AmountField（金額）、QtyStepper（張數）
-  - layout：PageHeader、StepBar、BottomNav、TextTabs、SegmentedTabs、StickyFooter（置底按鈕區）、ResultPage（完成頁）
-  - overlay：Sheet、InfoSheet、Toast
-  2 個以上功能會用到的畫面才抽成新元件，放進 `ui/`、`form/`、`layout/`、`overlay/` 其中之一，並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
+- **優先用現有元件**（`src/components/index.js` 統一 import；元件負責樣式，內容由參數帶入）：
+  - ui：Button、Icon、InfoLabel（文字＋ⓘ）、DetailRow、DetailCard（確認資料卡）、SummaryCard（摘要卡，overview / flow）、FeeCard、AmountHero（確認頁大金額）、AmountCell（列表金額欄）、StockName（股票名稱＋代碼）、SectionHeader（區塊標題＋連結＋說明）、CollapsibleCard、ExpandToggle、IconAction（圓形圖示捷徑）、EmptyState、AccountPicker、Checkbox、FilterPill、Tag、SearchIcon
+  - form：PickerField、AmountField（金額）、QtyStepper（張數）、SelectableItem（勾選項目）、SearchField
+  - layout：FlowPage（流程頁框架，流程每一步都用）、PageHeader、StepBar、BottomNav、TextTabs、SegmentedTabs、ListTable／ListRow（列表）、StickyFooter、TotalBar（置底總計）、ResultPage（完成頁）
+  - overlay：Sheet、InfoSheet、SheetOptions（彈窗選項）、Toast
+  - 2 個以上地方會用到的畫面才抽成新元件，放進對應資料夾並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
 - `Button` 用 `variant`（primary / text / capsule）與 `typo`（換文字層級）；需要換色的 icon 用 `<Icon tint />`。
 - 新功能放 `src/features/<功能>/`；功能之間不互相 import，只透過 `store.js` 讀寫資料。需要組合多個功能的頁面放 `src/shells/`（入口頁）或 `src/pages/`（例如股票借貸明細）。
 - 步驟順序寫在 `src/flows/flows.js`；頁面用 `flowPosition` / `nextStep` / `prevStep`，不要寫死下一頁。

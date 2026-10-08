@@ -1,7 +1,7 @@
 // 專區快捷功能（還款 / 查看借還款紀錄 / 管理擔保品 / 更多）
-// icon 由 Figma 渲染圖裁切（assets/icons/action-*.png），用 tint 跟著文字色
+// icon 由 Figma 渲染圖裁切（assets/icons/action-*.png）
 import { html } from '../../lib/preact.js';
-import { Icon } from '../../components/index.js';
+import { IconAction } from '../../components/index.js';
 import { showToast } from '../../store.js';
 import { navigate } from '../../router.js';
 import { COPY } from '../../content/copy.js';
@@ -19,10 +19,11 @@ export function QuickActions() {
     <nav class="quick-actions">
       ${ACTIONS.map(
         (a, i) => html`
-          <button class="quick-actions__item" onClick=${() => (a.to ? navigate(a.to) : showToast(COPY.common.notAvailable))}>
-            <span class="quick-actions__circle"><${Icon} name=${a.icon} tint /></span>
-            <span class="t-body-regular c-primary">${COPY.zone.actions[i]}</span>
-          </button>
+          <${IconAction}
+            icon=${a.icon}
+            label=${COPY.zone.actions[i]}
+            onClick=${() => (a.to ? navigate(a.to) : showToast(COPY.common.notAvailable))}
+          />
         `
       )}
     </nav>

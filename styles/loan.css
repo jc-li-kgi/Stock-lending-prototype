@@ -1,20 +1,4 @@
-/* ===== 借款流程｜情境：流程申請 ===== */
-.loan-page {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-24); /* Level 1：頁首與整體內容 24；Level 2：流程申請 區塊間距 24 */
-}
-
-/* 第 1 步：上方摘要卡（Level 3：流程申請 詳情概覽卡 24×24；Level 2：純資訊條列 20） */
-.loan-summary {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-20);
-  margin: 0 var(--spacing-16);
-  padding: var(--spacing-24);
-}
-
-.loan-body { display: flex; flex-direction: column; gap: var(--spacing-32); } /* Level 2：表單區塊與按鈕 32 */
+/* ===== 借款流程｜情境：流程申請（頁面框架見 FlowPage） ===== */
 .loan-cards { display: flex; flex-direction: column; gap: var(--spacing-12); } /* Level 2：卡片組間距 12 */
 
 /* 表單卡（Level 2：操作欄位間距 24；Level 3：流程申請 卡片內距 24×24） */
@@ -25,14 +9,9 @@
   padding: var(--spacing-24);
 }
 
-/* 第 2 步：確認卡（Level 3：詳情概覽卡 24×24；Level 2：純資訊條列 20；卡片 radius-medium） */
-.confirm-card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-20);
-  margin: 0 var(--spacing-16);
-  padding: var(--spacing-24);
-}
+/* 摘要卡左右留 16 */
+.loan-summary { padding: 0 var(--spacing-16); }
+
 /* 確認頁按鈕寬 325（Figma） */
 .confirm-actions { align-items: center; }
 .confirm-actions__btn { max-width: 325px; }

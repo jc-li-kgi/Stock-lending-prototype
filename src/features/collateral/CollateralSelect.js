@@ -2,8 +2,8 @@
 // 網址可帶 ?code=2330，預先勾選該檔（專區、明細頁的「匯入」按鈕會帶）
 import { html, useState } from '../../lib/preact.js';
 import {
-  PageHeader, StepBar, AccountPicker, FilterPill, SearchIcon, Checkbox, DetailRow, QtyStepper,
-  Button, StickyFooter, Sheet, InfoSheet, Icon,
+  FlowPage, AccountPicker, FilterPill, SearchIcon, Checkbox, SelectableItem, StockName, SectionHeader, DetailRow,
+  QtyStepper, Button, TotalBar, Sheet, SheetOptions, InfoSheet,
 } from '../../components/index.js';
 import { useStore, updateCollateralDraft, showToast } from '../../store.js';
 import { flowPosition, nextStep, prevStep } from '../../flows/flows.js';
@@ -54,23 +54,29 @@ export function CollateralSelect({ query }) {
     nextStep(PATH);
   };
 
-  const groupHead = (key, count, checkbox) => html`
+  const groupHead = (key, count, leading) => html`
     <div class="coll-group__head">
-      <div class="coll-group__title">
-        ${checkbox}
-        <p class="t-subtitle-bold c-primary">${t.groups[key].title} (${count})</p>
-      </div>
-      ${t.groups[key].desc && html`<p class="t-caption-regular c-secondary">${t.groups[key].desc}</p>`}
+      <${SectionHeader}
+        title=${`${t.groups[key].title} (${count})`}
+        leading=${leading}
+        desc=${t.groups[key].desc}
+        descClass="t-caption-regular"
+      />
     </div>
   `;
 
-  return html`
-    <div class="page coll-page">
-      <div>
-        <${PageHeader} title=${t.title} onBack=${() => prevStep(PATH)} />
-        <${StepBar} ...${flowPosition(PATH)} />
-      </div>
+  const lotsRow = (h) => html`<${DetailRow} label=${t.availableLots} value=${num(h.lots)} />`;
 
+  return html`
+    <${FlowPage}
+      title=${t.title}
+      step=${flowPosition(PATH)}
+      onBack=${() => prevStep(PATH)}
+      sticky=${html`
+        <${TotalBar} label=${t.total} info=${t.totalSheet} value=${twd(total)} onExpand=${() => setBreakdownOpen(true)} />
+        <${Button} disabled=${items.length === 0} onClick=${submit}>${COPY.common.next}<//>
+      `}
+    >
       <div class="coll-list">
         <div class="coll-toolbar">
           <${AccountPicker} account=${account} onClick=${notAvailable} />
@@ -89,31 +95,26 @@ export function CollateralSelect({ query }) {
             <div class="card card--full coll-card">
               ${eligible.map(
                 (h) => html`
-                  <div class="holding-item">
-                    <${Checkbox} checked=${!!selected[h.code]} onChange=${(on) => toggle(h.code, on)} label=${stockOf(h.code).name} />
-                    <div class="holding-item__body">
-                      <p class="t-body-bold c-primary">${stockOf(h.code).name} ${h.code}</p>
-                      <div class="holding-item__rows">
-                        <${DetailRow} label=${t.availableLots} value=${num(h.lots)} />
-                        <${DetailRow} label=${t.perLot} value=${num(perLotLoan(h.code))} />
-                        <${DetailRow} label=${t.ratio} value=${`${Math.round(stockOf(h.code).ratio * 100)}%`} />
-                        ${selected[h.code] &&
-                        html`
-                          <div class="holding-item__qty">
-                            <span class="t-body-regular c-secondary nowrap">${t.importLots}</span>
-                            <${QtyStepper}
-                              value=${selected[h.code]}
-                              min=${1}
-                              max=${h.lots}
-                              unit=${t.lotUnit}
-                              label=${t.importLots}
-                              onChange=${(n) => setLots(h.code, n)}
-                            />
-                          </div>
-                        `}
+                  <${SelectableItem} checked=${!!selected[h.code]} onChange=${(on) => toggle(h.code, on)} label=${stockOf(h.code).name}>
+                    <${StockName} inline name=${stockOf(h.code).name} code=${h.code} />
+                    ${lotsRow(h)}
+                    <${DetailRow} label=${t.perLot} value=${num(perLotLoan(h.code))} />
+                    <${DetailRow} label=${t.ratio} value=${`${Math.round(stockOf(h.code).ratio * 100)}%`} />
+                    ${selected[h.code] &&
+                    html`
+                      <div class="coll-qty">
+                        <span class="t-body-regular c-secondary nowrap">${t.importLots}</span>
+                        <${QtyStepper}
+                          value=${selected[h.code]}
+                          min=${1}
+                          max=${h.lots}
+                          unit=${t.lotUnit}
+                          label=${t.importLots}
+                          onChange=${(n) => setLots(h.code, n)}
+                        />
                       </div>
-                    </div>
-                  </div>
+                    `}
+                  <//>
                 `
               )}
             </div>
@@ -127,13 +128,10 @@ export function CollateralSelect({ query }) {
               <div class="card card--full coll-card coll-card--disabled">
                 ${groups.ratioOnly.map(
                   (h) => html`
-                    <div class="holding-item holding-item--disabled">
-                      <${Checkbox} disabled label=${stockOf(h.code).name} />
-                      <div class="holding-item__body">
-                        <p class="t-body-bold">${stockOf(h.code).name} ${h.code}</p>
-                        <${DetailRow} label=${t.availableLots} value=${num(h.lots)} />
-                      </div>
-                    </div>
+                    <${SelectableItem} disabled label=${stockOf(h.code).name}>
+                      <${StockName} inline name=${stockOf(h.code).name} code=${h.code} />
+                      ${lotsRow(h)}
+                    <//>
                   `
                 )}
               </div>
@@ -148,13 +146,10 @@ export function CollateralSelect({ query }) {
               <div class="card card--full coll-card coll-card--disabled">
                 ${groups.ineligible.map(
                   (h) => html`
-                    <div class="holding-item holding-item--disabled">
-                      <${Checkbox} disabled label=${stockOf(h.code).name} />
-                      <div class="holding-item__body">
-                        <p class="t-body-bold">${stockOf(h.code).name} ${h.code}</p>
-                        <p class="t-body-regular">${t.reason}${stockOf(h.code).reason}</p>
-                      </div>
-                    </div>
+                    <${SelectableItem} disabled label=${stockOf(h.code).name}>
+                      <${StockName} inline name=${stockOf(h.code).name} code=${h.code} />
+                      <p class="t-body-regular">${t.reason}${stockOf(h.code).reason}</p>
+                    <//>
                   `
                 )}
               </div>
@@ -165,32 +160,12 @@ export function CollateralSelect({ query }) {
         </div>
       </div>
 
-      <${StickyFooter}>
-        <div class="coll-total">
-          <button class="coll-total__label" onClick=${() => setInfo(t.totalSheet)}>
-            <span class="t-body-regular c-secondary">${t.total}</span>
-            <${Icon} name="info.svg" size=${16} />
-          </button>
-          <button class="coll-total__value" onClick=${() => setBreakdownOpen(true)} aria-label="查看匯入明細">
-            <span class="n-subtitle-bold c-primary">${twd(total)}</span>
-            <${Icon} name="chevron-up.svg" />
-          </button>
-        </div>
-        <${Button} disabled=${items.length === 0} onClick=${submit}>${COPY.common.next}<//>
-      <//>
-
       <${Sheet} open=${sortOpen} title=${t.sortTitle} onClose=${() => setSortOpen(false)}>
-        ${HOLDING_SORTS.map(
-          (s) => html`
-            <button
-              class=${'sheet__option' + (s.value === sort ? ' sheet__option--selected' : '')}
-              onClick=${() => { setSort(s.value); setSortOpen(false); }}
-            >
-              <span class="t-subtitle-regular">${s.label}</span>
-              ${s.value === sort && html`<span>✓</span>`}
-            </button>
-          `
-        )}
+        <${SheetOptions}
+          options=${HOLDING_SORTS}
+          value=${sort}
+          onSelect=${(v) => { setSort(v); setSortOpen(false); }}
+        />
       <//>
 
       <${Sheet} open=${breakdownOpen} title=${t.breakdownTitle} onClose=${() => setBreakdownOpen(false)}>
@@ -212,6 +187,6 @@ export function CollateralSelect({ query }) {
       <//>
 
       <${InfoSheet} info=${info} onClose=${() => setInfo(null)} />
-    </div>
+    <//>
   `;
 }
