@@ -23,6 +23,7 @@
   - Figma 稿與 Guideline 衝突時以 Guideline 為準，並列出差異請使用者確認
 - **與 Guideline 不同的調整**只能寫在 `styles/kgi-overrides.css`（覆寫 token，不改 Guideline 檔案）。目前內容：手機版（≤768px）Body 16 / Caption 14 / Subtitle 18，Body-R 與 Subtitle-R 英數字重 500。
 - `styles/tokens.css` 只放 Guideline 沒有的東西：互動狀態色、字型堆疊、版面寬度。
+- 工具 class（`.c-*` 文字顏色、`.nowrap`）放 `styles/utilities.css`，必須在 `index.html` 最後載入，才能覆蓋元件預設色。新增 CSS 檔要放在它前面。
 - 按下 / hover 色依 `Color/color-state-utils.ts` 規則預先算好放 `tokens.css`；停用狀態用 `--color-content-general-disabled` / `--color-container-general-disabled`。
 
 ### 間距情境（Spacing Guideline）

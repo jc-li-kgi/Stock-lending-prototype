@@ -1,0 +1,13 @@
+/* ===== 工具 class =====
+ * 這個檔案要「最後載入」（index.html 最下面），才能覆蓋元件的預設值，
+ * 例如 <span class="detail-row__label c-primary"> 會是主要色，而不是 detail-row__label 預設的次要色。
+ */
+
+/* ---------- 文字顏色（Guideline › Color › Content） ---------- */
+.c-primary   { color: var(--color-content-general-primary); }
+.c-secondary { color: var(--color-content-general-secondary); }
+.c-tertiary  { color: var(--color-content-general-tertiary); }
+.c-active    { color: var(--color-content-general-active); }
+.c-negative  { color: var(--color-content-semantic-negative); }
+
+.nowrap { white-space: nowrap; }

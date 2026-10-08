@@ -31,13 +31,4 @@ img { display: block; }
 }
 .page--white { background: var(--color-surface-white); }
 
-/* ---------- 文字顏色（Guideline › Color › Content） ---------- */
-.c-primary   { color: var(--color-content-general-primary); }
-.c-secondary { color: var(--color-content-general-secondary); }
-.c-tertiary  { color: var(--color-content-general-tertiary); }
-.c-active    { color: var(--color-content-general-active); }
-.c-negative  { color: var(--color-content-semantic-negative); }
-
-.nowrap { white-space: nowrap; }
-
 /* 文字樣式（.t-* / .n-*）在 typography.css */
