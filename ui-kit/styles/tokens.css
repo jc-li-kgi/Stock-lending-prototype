@@ -1,0 +1,56 @@
+/**
+ * App 層 Token
+ *
+ * 顏色、間距、圓角、陰影、字級一律來自「One KGI Design Guideline」資料夾（index.html 先載入）：
+ *   Color/colors.css            --color-*
+ *   Spacing/spacing.css         --spacing-*
+ *   Radius/radius-tokens.css    --radius-*
+ *   Shadow/shadow.css           --shadow-*
+ *   Typography/kgi-typography-tokens.css  --kgi-font-*
+ *
+ * 這個檔案只放 Guideline 沒有、但 App 需要的東西：字型堆疊、互動狀態色、版面寬度。
+ * 不要在這裡重新定義 Guideline 已有的顏色或數值。
+ */
+
+:root {
+  /* ---------- 互動狀態色（Guideline › Color › color-state-utils.ts 規則預先算好） ----------
+     Brightness ≥ 87% → −5%；其他 → +10%                                                  */
+  --color-container-general-active-primary-hover: #004EC6;    /* #0044AD (B 68%) → +10% */
+  --color-container-general-active-secondary-hover: #D1DEF2;  /* #DCEAFF (B 100%) → −5% */
+  --color-surface-white-hover: #F2F2F2;                        /* #FFFFFF (B 100%) → −5% */
+
+  /* ---------- 遮罩（Guideline：Surface/Blue-75「遮罩背景」） ---------- */
+  /* 選單選中項的淡藍底（Figma：container/general/option-selected-blue，Guideline 尚無此 token） */
+  --color-container-general-option-selected-blue: var(--color-sky-blue-0);
+  --overlay-blur: 4px;          /* 對話框遮罩的背景模糊（Figma Dialog 背景） */
+  --color-overlay: color-mix(in srgb, var(--color-surface-blue-75) 75%, transparent);
+
+  /* ---------- 字型：網頁字型（Guideline › Typography › 3. 字體） ----------
+     英數 Montserrat 在前、中文 思源黑體在後，瀏覽器自動混排；所有裝置相同      */
+  --font-base: "Montserrat", "Noto Sans TC", sans-serif;
+
+  /* ---------- Icon 尺寸與文字層級（Guideline › Icon：尺寸與間距應用） ----------
+     用在 text button、下拉選單、ⓘ 等「文字＋icon」；手機 ≤768px / 電腦 >768px（同字級斷點）
+       Caption   16 / 16   間距 4
+       Body      16 / 20   間距 4
+       Subtitle  20 / 24   前置 icon 間距 8、後置 icon（›、▼）間距 4                       */
+  --icon-size-caption: 16px;
+  --icon-size-body: 16px;
+  --icon-size-subtitle: 20px;
+  --icon-gap-caption: var(--spacing-4);
+  --icon-gap-body: var(--spacing-4);
+  --icon-gap-subtitle-leading: var(--spacing-8);
+  --icon-gap-subtitle-trailing: var(--spacing-4);
+
+  /* ---------- 版面 ---------- */
+  --app-max-width: 430px;      /* 桌機預覽時置中的手機寬度 */
+  --bottom-nav-height: 73px;   /* 底部導覽高度（不含安全區） */
+}
+
+/* 電腦版（>768px）：Body / Subtitle 的 icon 放大 */
+@media (min-width: 769px) {
+  :root {
+    --icon-size-body: 20px;
+    --icon-size-subtitle: 24px;
+  }
+}

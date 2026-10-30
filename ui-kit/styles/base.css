@@ -1,0 +1,34 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-navy-0); /* 桌機預覽時手機框外的底色 */
+  color: var(--color-content-general-primary);
+  font-family: var(--font-base);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+p { margin: 0; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+input { font: inherit; color: inherit; }
+img { display: block; }
+
+#app { min-height: 100vh; }
+
+/* 每一頁的外框：手機滿版，桌機置中 */
+.page {
+  position: relative;
+  max-width: var(--app-max-width);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding-top: env(safe-area-inset-top);
+  background: var(--color-surface-blue);
+  overflow-x: hidden;
+}
+.page--white { background: var(--color-surface-white); }
+
+/* 文字樣式（.t-* / .n-*）在 typography.css */

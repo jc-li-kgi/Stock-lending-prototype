@@ -102,6 +102,7 @@
 - 到期通知：有即將到期（`DUE_SOON_DAYS` 天內）的借款時，專區總覽、帳務 › 授信管理的摘要卡下方顯示「有 N 筆借款，即將到期」（`features/hub/DueSoonNotice`），點擊 → 股票借貸明細 › 借款（帳務帶 `back=/account`）。共用基本資料的借款都還沒到期；需要即將到期的任務（T6 現金還款、T7 借新還舊）自己覆寫 `loans`。
 - 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。
 - 不安裝建置工具或 npm 套件（電腦沒有 Node.js）。
+- **ui-kit/**（給其他專案用的元件與樣式包）由 `python3 scripts/build-ui-kit.py` 產生；**只有使用者要求「重新產生 ui-kit」時才執行**，改元件或樣式時不要主動重新產生。不要手動改 ui-kit/ 裡的檔案；元件依賴本專案的部分（文案、Toast、換頁、金額規則）在 ui-kit 裡改指向 `ui-kit/src/kit.js`（模板在 `scripts/ui-kit-template/`）。元件新增對 `copy.js` / `store.js` / `router.js` / `calc.js` 的依賴時，要同步更新 kit.js 模板，否則產生時會報錯。
 
 ## 從 Figma 實作畫面
 

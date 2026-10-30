@@ -18,7 +18,7 @@ const FundIcon = () => html`
   </span>
 `;
 
-const ITEMS = [
+export const BOTTOM_NAV_ITEMS = [
   { key: 'mine', label: '我的', to: '/home', icon: html`<${Icon} name="nav-rate.svg" size=${20} tint />` },
   { key: 'pick', label: '選股', icon: html`<${FundIcon} />` },
   { key: 'watch', label: '自選', icon: html`<${Icon} name="nav-watchlist.svg" width=${13.334} height=${16.666} tint />` },
@@ -27,20 +27,25 @@ const ITEMS = [
   { key: 'more', label: '更多', icon: html`<${Icon} name="nav-menu.svg" width=${16.6667} height=${11.25} tint />` },
 ];
 
-export function BottomNav({ active = 'account' }) {
-  const moderator = useLongPress(() => navigate('/moderator'), 2000);
+/**
+ * <BottomNav active="account" />
+ *   items           導覽項目（預設 BOTTOM_NAV_ITEMS：{ key, label, to, icon }，沒有 to = 未開放）
+ *   onMoreLongPress 長按「更多」2 秒要做的事（預設 → 主持人頁；傳 null 關閉）
+ */
+export function BottomNav({ active = 'account', items = BOTTOM_NAV_ITEMS, onMoreLongPress = () => navigate('/moderator') }) {
+  const moderator = useLongPress(() => onMoreLongPress?.(), 2000);
   const go = (item) => {
     if (item.key === 'more' && moderator.fired()) return; // 長按已觸發，不再顯示未開放
     if (item.key !== active) item.to ? navigate(item.to) : showToast(COPY.common.notAvailable);
   };
   return html`
     <nav class="bottom-nav">
-      ${ITEMS.map(
+      ${items.map(
         (item) => html`
           <button
             class=${'bottom-nav__item ' + (item.key === active ? 'bottom-nav__item--active t-body-bold' : 't-body-regular')}
             onClick=${() => go(item)}
-            ...${item.key === 'more' ? moderator.handlers : {}}
+            ...${item.key === 'more' && onMoreLongPress ? moderator.handlers : {}}
           >
             <span class="bottom-nav__icon">${item.icon}</span>
             <span>${item.label}</span>
