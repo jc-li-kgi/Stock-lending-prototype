@@ -3,7 +3,8 @@ import { html } from '../../lib/preact.js';
 
 /**
  * <NoticeBar>動用不受限，最快 1 小時撥款，隨借隨還</NoticeBar>
+ *   align="left"  文字置左（預設置中），例如試算結果的庫存不足提示
  */
-export function NoticeBar({ children }) {
-  return html`<p class="notice-bar t-caption-regular c-secondary">${children}</p>`;
+export function NoticeBar({ align = 'center', children }) {
+  return html`<p class=${'notice-bar t-caption-regular c-secondary' + (align === 'left' ? ' notice-bar--left' : '')}>${children}</p>`;
 }

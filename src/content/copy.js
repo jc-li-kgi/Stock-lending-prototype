@@ -31,7 +31,8 @@ export const COPY = {
     lotsPlaceholder: '請輸入數字',
     lotUnit: '張',
     customPick: '新增擔保品',
-    useHoldings: '使用庫存試算', // 本次測試不開放
+    useHoldings: '使用庫存試算', // 帶入所有可借貸的庫存（覆蓋目前的擔保品）
+    noHoldings: '目前沒有可擔保的庫存',
     submit: '試算',
     sheetTitle: '選擇可擔保標的',
     searchPlaceholder: '搜尋產品關鍵字或代碼',
@@ -57,6 +58,7 @@ export const COPY = {
     tipRatio: (r) => `維持率 ${r}%`,
     riskNote: '拖曳圓點，可查看市值下跌時的維持率。本試算以最高可借額度計算，實際借款金額越低，維持率越高。',
     itemsTitle: '預期匯入擔保品',
+    shortageNote: '庫存不足的標的，可以從其他券商匯撥到凱基，或下單買進後再匯入擔保品',
     note: '以上借款金額與收費，依實際申請計算為準',
     borrow: '立即借貸',
   },

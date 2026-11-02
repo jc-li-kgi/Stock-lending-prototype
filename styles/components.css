@@ -791,6 +791,7 @@
   background: var(--color-surface-yellow);
   text-align: center;
 }
+.notice-bar--left { text-align: left; }
 
 /* ---------- Carousel 橫向滑動卡片 ---------- */
 .carousel { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-16); }
