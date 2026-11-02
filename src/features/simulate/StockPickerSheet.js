@@ -1,5 +1,5 @@
 // 選擇可擔保標的（底部彈窗：搜尋 + 股票清單）｜Figma 2565:50433
-// 清單 = 所有可借貸的股票；有庫存的顯示庫存張數
+// 清單 = 所有可借貸的股票（含不在庫存、只供試算的標的）；有庫存的排前面並顯示庫存張數
 import { html, useState } from '../../lib/preact.js';
 import { Sheet, SearchField, EmptyState } from '../../components/index.js';
 import { useStore } from '../../store.js';
@@ -28,7 +28,7 @@ export function StockPickerSheet({ open, exclude = [], onSelect, onClose }) {
   return html`
     <${Sheet} open=${open} title=${t.sheetTitle} fullHeight onClose=${close}>
       <div class="sheet__content stock-picker__search">
-        <${SearchField} value=${keyword} onChange=${setKeyword} placeholder=${t.searchPlaceholder} />
+        <${SearchField} value=${keyword} onChange=${setKeyword} placeholder=${t.searchPlaceholder} typo="subtitle-regular" />
       </div>
       ${list.length === 0
         ? html`<${EmptyState} text=${t.emptySearch} />`
