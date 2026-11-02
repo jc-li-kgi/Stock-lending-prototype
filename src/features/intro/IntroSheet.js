@@ -105,7 +105,7 @@ function IntroContent({ onClose, onSimulate }) {
               html`
                 <div class="intro-entrance">
                   <p class="t-body-bold c-primary">${t.case1.ask}</p>
-                  <${Button} variant="capsule" onClick=${goSimulate}>${t.case1.cta}<//>
+                  <${Button} variant="capsule" onClick=${notAvailable}>${t.case1.cta}<//>
                 </div>
               `}
             </div>
