@@ -1,6 +1,6 @@
 // 可借貸額度試算：輸入擔保品與張數｜Figma 3131:188036 / 3131:187886
 // 放在股票借貸專區「試算」頁籤；「試算」按鈕由專區頁放在 BottomActions（canSimulate 判斷是否可按）
-// 下方兩個文字按鈕（Figma Text button/Columns）：新增擔保品 → 直接開選擇標的彈窗；使用庫存試算 → 本次測試不開放
+// 下方兩個文字按鈕（Figma Text button/Columns）：新增擔保品 → 直接開選擇標的彈窗；使用庫存試算 → 帶入所有可借貸的庫存與張數（取代目前的擔保品）
 import { html, useState } from '../../lib/preact.js';
 import { PickerField, NumberField, Button } from '../../components/index.js';
 import { useStore, updateSimDraft, showToast } from '../../store.js';
@@ -35,6 +35,11 @@ export function SimulateForm() {
   const setItem = (i, patch) => save(items.map((it, k) => (k === i ? { ...it, ...patch } : it)));
   const remove = (i) => save(items.filter((_, k) => k !== i));
   const held = (code) => holdings.find((h) => h.code === code)?.lots ?? 0;
+  const useHoldings = () => {
+    const eligible = holdings.filter((h) => stockOf(h.code).type === 'eligible');
+    if (!eligible.length) return showToast(t.noHoldings);
+    save(eligible.map((h) => ({ code: h.code, lots: h.lots })));
+  };
 
   return html`
     <div class="sim-form">
@@ -69,7 +74,7 @@ export function SimulateForm() {
       <div class="sim-form__actions">
         <${Button} variant="text" onClick=${() => setPicking('new')}>${t.customPick}<//>
         <span class="sim-form__divider" aria-hidden="true" />
-        <${Button} variant="text" onClick=${() => showToast(COPY.common.notAvailable)}>${t.useHoldings}<//>
+        <${Button} variant="text" onClick=${useHoldings}>${t.useHoldings}<//>
       </div>
 
       <${StockPickerSheet}

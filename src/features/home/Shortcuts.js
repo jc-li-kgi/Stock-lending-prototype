@@ -24,7 +24,7 @@ export function Shortcuts() {
           (s) => html`
             <button class="shortcut-btn" onClick=${s.lending ? () => navigate('/lending-zone') : notAvailable}>
               <img src=${`assets/icons/${s.icon}`} width="28" height="28" alt="" />
-              <span class="t-caption-regular c-primary">${s.label}</span>
+              <span class="t-body-regular c-primary">${s.label}</span>
             </button>
           `
         )}

@@ -1,7 +1,8 @@
 // 可借貸額度試算結果｜Figma 2631:58837（收合）、2631:57852（追繳風險評估展開）、3131:186975（預期匯入擔保品展開）
 // 情境：資訊瀏覽；下方兩張卡片預設收合
+// 預期匯入擔保品：有標的超過庫存或無庫存時，下方提示可從其他券商匯撥或下單買進（自行補的畫面，無設計稿）
 import { html, useEffect } from '../../lib/preact.js';
-import { PageHeader, InfoLabel, AmountHero, DetailRow, CollapsibleCard, Button, BottomActions } from '../../components/index.js';
+import { PageHeader, InfoLabel, AmountHero, DetailRow, CollapsibleCard, Button, BottomActions, NoticeBar } from '../../components/index.js';
 import { useStore, updateCollateralDraft } from '../../store.js';
 import { navigate } from '../../router.js';
 import { startFlow } from '../../flows/flows.js';
@@ -24,6 +25,8 @@ export function SimulateResult() {
   if (!canSimulate(items)) return null;
 
   const r = simulate(items);
+  const held = (code) => account.holdings.find((h) => h.code === code)?.lots ?? 0;
+  const hasShortage = items.some((i) => i.lots > held(i.code));
 
   // 立即借貸：未借款 → 首次借款（預先勾選有庫存的試算標的）；已借款 → 再借一筆
   const borrow = () => {
@@ -72,6 +75,7 @@ export function SimulateResult() {
           ${items.map(
             (i) => html`<${DetailRow} label=${`${stockOf(i.code).name} ${i.code}`} value=${`${num(i.lots)} ${t.lotUnit}`} valueClass="t-body-regular" />`
           )}
+          ${hasShortage && html`<${NoticeBar} align="left">${t.shortageNote}<//>`}
         <//>
 
         <p class="sim-result__note t-body-regular c-secondary">${t.note}</p>
