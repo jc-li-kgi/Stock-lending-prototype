@@ -60,8 +60,8 @@
 
 ## 字型與響應式字級
 
-- 這是網頁，一律依 Guideline 的**網頁規則**，不模擬 iOS / Android App、不偵測裝置平台。
-- 字型：所有裝置都是思源黑體（Noto Sans TC）+ Montserrat，在 `index.html` 從 Google Fonts 載入，堆疊在 `tokens.css` 的 `--font-base`。
+- 這是網頁，一律依 Guideline 的**網頁規則**，不模擬 iOS / Android App 的字級。
+- **字型（全站字體規範）**：Web 中文思源黑體（Noto Sans TC）、英數 Montserrat，在 `index.html` 從 Google Fonts 載入（`<html lang="zh-Hant-TW">` 必加）。全站只在根層（`base.css`）用 `tokens.css` 的 `--font-sans` 設定一次，英數字型第一順位、中文第二順位；**元件、頁面不要個別指定字體**。`--font-en`（純英數）、`--font-tc`（純中文）只在確定不混排時用。In-App WebView 由 App 在 `<html>` 加 `data-platform="ios|android"`，自動改用原生字型（iOS：SF Pro＋蘋方；Android：Roboto＋思源黑體）。
 - 字級：`typography.css` 只用 `--kgi-font-auto-*`；畫面寬度 > 768px 為 Web、≤ 768px 為 mWeb（含 `kgi-overrides.css` 的調整）。單位 rem。
 - 不提供手動切換字型或字級。
 
@@ -84,7 +84,7 @@
 - 帳戶 `opened = false` 代表尚未借款（未開戶）：專區顯示初始頁、帳務 › 授信管理顯示方案卡（`features/hub/LoanIntroCard`）＋認識並開立借貸戶，借款走 `newAccountLoan`（匯入擔保品 → 填寫借款金額 → 確認資料，最後一次送出 `firstLoan`）。專區初始頁的精選擔保品卡可點，進 `newAccountLoan` 並預先勾選該檔全部張數（`?code=`）。
 - 文案放 `src/content/copy.js`；公式與業務規則放 `src/lib/calc.js`；股價放 `src/mock/stocks.js`。
 - **產品資料以根目錄 `產品資料.md` 為準**（標的、收盤價、成數、利率、手續費、展延、維持率規則）。使用者說「依產品資料.md 更新」時：讀 md → 同步到 `stocks.js`、`calc.js` → 檢查測試任務金額（約 100 萬）與 `copy.js` 裡寫死的利率 / 手續費 / 成數 → 驗證畫面。程式改了這些數值時也要回寫 md。股票只能整張擔保（`lots`，1 張 = 1,000 股）；收盤價顯示兩位小數（`format.js` 的 `price`）。
-- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是長按底部導覽「更多」2 秒（`lib/useLongPress`）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 現金還款、T7 借新還舊（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
+- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是連續點兩下底部導覽「更多」（`BottomNav` 的 `onMoreDoubleTap`；只點一下仍顯示未開放）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 現金還款、T7 借新還舊（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
 - 任務連動（`scenarios/carry.js`）：T3 首次借款（`carryOut`）完成時，把擔保品、庫存、擔保品紀錄、借款存到 localStorage `lending-proto-carry-v1`（換任務不會清掉，「清除所有測試資料」或重新開始 T3 才清）。T4～T7 的 `carryIn` 帶入受測者的擔保品，已借款總額沿用他借的金額：T4、T5 就是那一筆（T5 另加已還清借款）；T6 拆 60% 快到期＋40%；T7 拆 50%＋25%（都展延 2 次、快到期）＋25%。可借額度放不下借款（T4 還要留 5 萬可再借）或沒有 T3 資料時，改用固定資料。T4 借的錢不帶到 T5～T7。
 - 任務完成：情境設 `completeOnFlows`（例如 T1 = `['newAccountLoan', 'existingLoan']`）時，`startFlow` 不進流程，改顯示「任務完成」對話框（`app.js`），按鈕回任務列表。
 - 所有任務都從證券主頁「我的」（`/home`，`shells/HomeShell.js`）開始：快捷功能「股票借貸」→ 專區，底部導覽「帳務」→ 授信管理。

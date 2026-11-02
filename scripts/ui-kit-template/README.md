@@ -13,7 +13,7 @@
 | `styles/` | 字級調整、元件樣式、文字顏色等工具 class |
 | `assets/icons/` | 所有 icon |
 | `src/components/` | 元件（`index.js` 統一 import） |
-| `src/lib/` | Preact + htm、金額 / 日期格式、長按 |
+| `src/lib/` | Preact + htm、金額 / 日期格式 |
 | `src/kit.js` | **新專案要改的設定**：元件預設文字、Toast、換頁、金額規則 |
 | `index.html`、`docs/` | 元件文件頁（網頁版，參考 shadcn/ui）：安裝與設定、字體規範、Icon 尺寸、每個元件的適用平台 / 手機預覽 / 程式碼。新專案不需要這兩個 |
 | `設計規範.md` | 設計規則（token、字級、icon 尺寸、底部按鈕、間距），貼進新專案的 CLAUDE.md |
@@ -35,5 +35,5 @@
 
 ## 要注意
 
-- 底部導覽 `BottomNav` 預設是證券 App 的 6 個項目，新專案請傳入自己的 `items`；長按「更多」的行為用 `onMoreLongPress` 設定（傳 `null` 關閉）。
+- 底部導覽 `BottomNav` 預設是證券 App 的 6 個項目，新專案請傳入自己的 `items`；連續點兩下「更多」的行為用 `onMoreDoubleTap` 設定（傳 `null` 關閉）。
 - 股票借貸專案更新元件後，這裡不會自動同步；需要時在股票借貸專案重新產生，再複製一次。

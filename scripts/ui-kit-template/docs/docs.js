@@ -73,10 +73,14 @@ function Demo({ page, code, children }) {
 
 /* ==================== 開始使用 ==================== */
 const HEAD_CODE = `
-<!-- 1. 網頁字型：中文 思源黑體、英數 Montserrat -->
+<!-- 0. html 設定語系（必加：避免中文出現簡體或日文字形） -->
+<html lang="zh-Hant-TW">
+
+<!-- 1. 網頁字型：預先連線 Google Fonts；載入 Montserrat（英數）與思源黑體（中文）
+        display=swap：字型下載完成前先用系統字，避免畫面空白 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" />
 
 <!-- 2. One KGI Design Guideline token（順序不能換） -->
 <link rel="stylesheet" href="One%20KGI%20Design%20Guideline/Color/colors.css" />
@@ -129,6 +133,36 @@ export const COPY = {
   },
 };
 export function navigate(path) { location.hash = path; } // 換頁方式（有自己的路由就改這裡）
+`;
+
+const FONT_CODE = `
+/* styles/tokens.css：字型只在根層定義一次（base.css 的 html, body 使用 --font-sans） */
+:root {
+  /* 一般情境：中英文混排時由瀏覽器逐字元判斷，自動分流至對應字體 */
+  --font-sans: "Montserrat", -apple-system, "Helvetica Neue", Arial,
+               "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  /* 英數 Montserrat → 英文系統字（Montserrat 載入失敗時的備援）
+     → 中文思源黑體 → Mac 備援蘋方 → Windows 備援正黑體 → 系統字 */
+
+  /* 僅限確定整個元素不會與中文混排的純英數情境（例如純數字金額、英文品牌字） */
+  --font-en: "Montserrat", -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* 僅限確定整個元素不會與英文混排的純中文情境 */
+  --font-tc: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+/* WebView iOS：跟隨原生字型（App 需在 <html> 加 data-platform="ios"） */
+html[data-platform="ios"] {
+  --font-sans: -apple-system, "PingFang TC", sans-serif;      /* 英數 SF Pro → 中文蘋方 → 系統字 */
+}
+
+/* WebView Android：跟隨原生字型（App 需在 <html> 加 data-platform="android"） */
+html[data-platform="android"] {
+  --font-sans: Roboto, "Noto Sans CJK TC", "Noto Sans TC", sans-serif; /* 英數 Roboto → 中文系統思源黑體 → 雲端思源黑體 → 系統字 */
+}
+
+/* base.css */
+html, body { font-family: var(--font-sans); }
 `;
 
 const TYPO_LEVELS = [
@@ -211,12 +245,22 @@ function GettingStarted() {
 
     <${Section} id="typography" title="字體規範" desc="所有裝置都用網頁字型；字級全部用 class，不在 CSS 寫 font-size / font-weight。">
       <ul class="docs-list t-body-regular">
-        <li><b>字型</b>：中文 思源黑體（Noto Sans TC）、英數 Montserrat，堆疊在 <code class="docs-inline-code">--font-base</code>：<code class="docs-inline-code">"Montserrat", "Noto Sans TC", sans-serif</code>。</li>
+        <li><b>設定原則</b>：全站只在根層設定一次字型（<code class="docs-inline-code">--font-sans</code>）：英數字型放第一順位、中文字型放第二順位，遇到中文時系統自動改用下一個字型。<b class="c-negative">元件、頁面請不要個別指定字體。</b></li>
         <li><b>中文用 <code class="docs-inline-code">.t-*</code>，金額、百分比、日期、帳號用 <code class="docs-inline-code">.n-*</code></b>；中英混排（例如「可借款金額 TWD 10,000」）用 <code class="docs-inline-code">.t-*</code>。只要內容是中文就用 .t-*，即使 Figma 標成 EN 樣式。</li>
         <li><b>響應式</b>：畫面寬度 ≤ 768px 為手機版（mWeb）、${'>'} 768px 為網頁版（Web），class 會自動切換，不需要另外寫。</li>
         <li><b>手機版調整</b>（styles/kgi-overrides.css）：Body 16、Caption 14、Subtitle 18；Body-R、Subtitle-R 英數字重 500。新專案要照 Guideline 原值就不要載入這個檔案。</li>
         <li><b>顏色</b>用 <code class="docs-inline-code">.c-*</code>：c-primary、c-secondary、c-tertiary、c-active、c-negative、c-warning、c-ascend（漲）、c-descend（跌）、c-disabled。</li>
       </ul>
+      <table class="docs-table t-body-regular">
+        <thead><tr><th>平台</th><th>中文</th><th>英文與數字</th></tr></thead>
+        <tbody>
+          <tr><td>Web</td><td>思源黑體（Noto Sans TC）</td><td>Montserrat</td></tr>
+          <tr><td>iOS 原生</td><td>蘋方（PingFang TC）</td><td>SF Pro</td></tr>
+          <tr><td>Android 原生</td><td>思源黑體（Noto Sans CJK TC）</td><td>Roboto</td></tr>
+          <tr><td>In-App WebView</td><td colspan="2">優先跟隨所在平台的原生字型（App 在 <code>${'<html>'}</code> 加 data-platform）</td></tr>
+        </tbody>
+      </table>
+      <${Code} code=${FONT_CODE} />
       <${TypographyTable} />
       <${Code} code=${`
 <p class="t-headline c-primary">股票借貸，存股變現金</p>
@@ -674,15 +718,15 @@ const COMPONENTS = [
   },
   {
     id: 'bottomnav', name: 'BottomNav', group: '版面', platform: 'mobileOnly',
-    desc: 'App 底部導覽（固定在畫面底部）。新專案傳入自己的 items；長按「更多」2 秒的行為用 onMoreLongPress 設定（null 關閉）。',
+    desc: 'App 底部導覽（固定在畫面底部）。新專案傳入自己的 items；連續點兩下「更多」的行為用 onMoreDoubleTap 設定（null 關閉）。',
     page: true,
     Preview: () => html`<div class="page"><div class="docs-pad" style="padding-top:var(--spacing-16)"><p class="t-body-regular c-secondary">頁面內容…</p></div>
-      <${BottomNav} active="mine" onMoreLongPress=${() => showToast('長按「更多」')} /></div>`,
+      <${BottomNav} active="mine" onMoreDoubleTap=${() => showToast('連續點兩下「更多」')} /></div>`,
     code: `
 <@{BottomNav}
   active="mine"
   items=@{[{ key: 'mine', label: '我的', to: '/home', icon: html\`<@{Icon} name="nav-rate.svg" size=@{20} tint />\` }, …]}
-  onMoreLongPress=@{null}
+  onMoreDoubleTap=@{null}
 />`,
   },
 

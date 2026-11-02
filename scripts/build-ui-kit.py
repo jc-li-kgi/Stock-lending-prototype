@@ -19,7 +19,7 @@ OUT = ROOT / 'ui-kit'
 # 要帶過去的樣式（元件與共用規則；各頁面專用的 css 不帶）
 STYLES = ['kgi-overrides.css', 'tokens.css', 'typography.css', 'base.css', 'components.css', 'utilities.css']
 # 元件會用到的底層程式
-LIBS = ['preact.js', 'format.js', 'useLongPress.js']
+LIBS = ['preact.js', 'format.js']
 # 元件裡依賴本專案的 import → 改成 ui-kit 自己的 kit.js
 IMPORT_MAP = {
     "'../../content/copy.js'": "'../../kit.js'",

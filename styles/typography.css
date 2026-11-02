@@ -15,7 +15,7 @@
  *   Caption - R   → .t-caption-regular / .n-caption-regular
  *
  * 響應式：使用 --kgi-font-auto-*，畫面寬度 > 768px 用 Web 數值、≤ 768px 用 mWeb 數值（單位 rem）
- * 所有裝置相同，不區分 iOS / Android。字型（family）見 tokens.css 的 --font-base
+ * 所有裝置相同，不區分 iOS / Android。字型（family）只在根層設定一次（tokens.css 的 --font-sans），這裡不指定字型
  */
 
 
