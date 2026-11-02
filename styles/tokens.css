@@ -25,9 +25,18 @@
   --overlay-blur: 4px;          /* 對話框遮罩的背景模糊（Figma Dialog 背景） */
   --color-overlay: color-mix(in srgb, var(--color-surface-blue-75) 75%, transparent);
 
-  /* ---------- 字型：網頁字型（Guideline › Typography › 3. 字體） ----------
-     英數 Montserrat 在前、中文 思源黑體在後，瀏覽器自動混排；所有裝置相同      */
-  --font-base: "Montserrat", "Noto Sans TC", sans-serif;
+  /* ---------- 字型（全站字體規範：因應平台變化字型規則） ----------
+     全站只在根層（base.css 的 html, body）設定一次：英數字型放第一順位、中文字型放第二順位，
+     遇到中文時瀏覽器自動改用下一個字型。元件、頁面不要個別指定字體。                          */
+
+  /* 一般情境：中英文混排時由瀏覽器逐字元判斷，自動分流至對應字體
+     英數 Montserrat → 英文系統字（Montserrat 載入失敗時的備援）→ 中文思源黑體 → Mac 備援蘋方 → Windows 備援正黑體 → 系統字 */
+  --font-sans: "Montserrat", -apple-system, "Helvetica Neue", Arial,
+               "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  /* 僅限確定整個元素不會與中文混排的純英數情境（例如純數字金額、英文品牌字） */
+  --font-en: "Montserrat", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  /* 僅限確定整個元素不會與英文混排的純中文情境 */
+  --font-tc: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 
   /* ---------- Icon 尺寸與文字層級（Guideline › Icon：尺寸與間距應用） ----------
      用在 text button、下拉選單、ⓘ 等「文字＋icon」；手機 ≤768px / 電腦 >768px（同字級斷點）
@@ -53,4 +62,14 @@
     --icon-size-body: 20px;
     --icon-size-subtitle: 24px;
   }
+}
+
+/* ---------- In-App WebView：優先跟隨所在平台的原生字型（App 需在 <html> 加 data-platform） ---------- */
+/* WebView iOS：英數 SF Pro → 中文蘋方 → 系統字 */
+html[data-platform="ios"] {
+  --font-sans: -apple-system, "PingFang TC", sans-serif;
+}
+/* WebView Android：英數 Roboto → 中文系統思源黑體 → 雲端思源黑體 → 系統字 */
+html[data-platform="android"] {
+  --font-sans: Roboto, "Noto Sans CJK TC", "Noto Sans TC", sans-serif;
 }

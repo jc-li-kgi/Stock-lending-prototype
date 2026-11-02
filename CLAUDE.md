@@ -60,20 +60,21 @@
 
 ## 字型與響應式字級
 
-- 這是網頁，一律依 Guideline 的**網頁規則**，不模擬 iOS / Android App、不偵測裝置平台。
-- 字型：所有裝置都是思源黑體（Noto Sans TC）+ Montserrat，在 `index.html` 從 Google Fonts 載入，堆疊在 `tokens.css` 的 `--font-base`。
+- 這是網頁，一律依 Guideline 的**網頁規則**，不模擬 iOS / Android App 的字級。
+- **字型（全站字體規範）**：Web 中文思源黑體（Noto Sans TC）、英數 Montserrat，在 `index.html` 從 Google Fonts 載入（`<html lang="zh-Hant-TW">` 必加）。全站只在根層（`base.css`）用 `tokens.css` 的 `--font-sans` 設定一次，英數字型第一順位、中文第二順位；**元件、頁面不要個別指定字體**。`--font-en`（純英數）、`--font-tc`（純中文）只在確定不混排時用。In-App WebView 由 App 在 `<html>` 加 `data-platform="ios|android"`，自動改用原生字型（iOS：SF Pro＋蘋方；Android：Roboto＋思源黑體）。
 - 字級：`typography.css` 只用 `--kgi-font-auto-*`；畫面寬度 > 768px 為 Web、≤ 768px 為 mWeb（含 `kgi-overrides.css` 的調整）。單位 rem。
 - 不提供手動切換字型或字級。
 
 ## 程式結構規則
 
 - **優先用現有元件**（`src/components/index.js` 統一 import；元件負責樣式，內容由參數帶入）：
-  - ui：Button、Icon、InfoLabel（文字＋ⓘ）、DetailRow、DetailCard（確認資料卡）、DetailPanel（列表展開明細卡；放在白卡裡加 `tone="blue"`）、SummaryCard（摘要卡，overview / flow）、FeeCard、AmountHero（確認頁大金額）、AmountCell（列表金額欄）、StockName（股票名稱＋代碼）、SectionHeader（區塊標題＋連結＋說明）、CollapsibleCard、ExpandToggle、IconAction（圓形圖示捷徑）、EmptyState、StatGroup（並排大數字）、NoticeBar（淡黃提示條）、NoticeCard（通知條：公告 icon＋一行訊息＋›，整張可點；icon 一律 24px）、StatementCard（對帳單卡片：標題＋類型標籤＋資料列，可展開淡藍明細）、StockPickCard（精選擔保品卡）、ServiceCardList（圖示＋標題＋說明的服務清單）、AccountPicker、Checkbox、CheckboxHeader（勾選框＋標題＋補充說明，說明與標題對齊；全選用）、Accordion（收合問答，FAQ）、FilterPill、Tag、SearchIcon
+  - ui：Button、Icon、InfoLabel（文字＋ⓘ）、DetailRow、DetailCard（確認資料卡）、DetailPanel（列表展開明細卡；放在白卡裡加 `tone="blue"`）、SummaryCard（摘要卡，overview / flow）、FeeCard、AmountHero（確認頁大金額）、AmountCell（列表金額欄）、StockName（股票名稱＋代碼）、SectionHeader（區塊標題＋連結＋說明）、CollapsibleCard、ExpandToggle、IconAction（圓形圖示捷徑）、EmptyState、StatGroup（並排大數字）、NoticeBar（淡黃提示條）、NoticeCard（通知條：公告 icon＋一行訊息＋›，整張可點；icon 一律 24px）、StatementCard（對帳單卡片：標題＋類型標籤＋資料列，可展開淡藍明細）、ExpandButton（展開明細 / 收闔明細文字按鈕）、DateTimeLines（日期＋時間兩行；只要拆日期 / 時間用 format.js 的 `dateTimeParts`）、StockPickCard（精選擔保品卡）、ServiceCardList（圖示＋標題＋說明的服務清單）、AccountPicker、Checkbox、CheckboxHeader（勾選框＋標題＋補充說明，說明與標題對齊；全選用）、Accordion（收合問答，FAQ）、FilterPill、Tag、SearchIcon
   - form：PickerField（`onOpen` + `displayValue` = 自訂選擇畫面；`hint` 底線下說明）、NumberField（整數輸入＋單位）、AmountField（金額；`disabled` 鎖定；`value=null` + `placeholder` = 未填狀態，tertiary 色）、RadioGroup（單選，橫排平分）、QtyStepper（張數）、SelectableItem（勾選項目）、SearchField（Figma Atom_SearchBar_Mobile；預設淡藍底放白底上，藍底頁面加 `onSurface` 改白底）
   - layout：FlowPage（流程頁框架，流程每一步都用）、PageHeader、StepBar、BottomNav、TextTabs、SegmentedTabs、ListTable／ListRow（列表；ListRow 的 `detail` 自動包在 DetailPanel 白色明細卡裡；欄位每段文字最多 2 行，超出顯示「…」，完整內容（例如商品名稱）要放在展開明細，明細裡的長文字加 `text-wrap`）、Carousel（橫向滑動卡片）、StickyFooter（固定置底；plain = 只有按鈕時）、BottomActions（頁面底部按鈕區，見下方「底部按鈕」）、TotalBar（置底總計；`note` = 標題下方補充，例如已選取筆數；`expanded` + `onToggle` + children = 在置底區內向上展開明細，最高 90%）、ResultPage（完成頁）
   - overlay：Dialog / InfoDialog（置中對話框：ⓘ、注意事項說明、確認提示）、Sheet（底部彈窗：選單、明細；非選單內容包 `.sheet__content`；搜尋類加 `fullHeight` 固定 90% 高，不隨結果數量變矮）、SheetOptions（彈窗選項，選中項淡藍底；`chevron` = 前往型選單，例如選擇還款方式）、Toast
   - 2 個以上地方會用到的畫面才抽成新元件，放進對應資料夾並在 `index.js` 匯出，檔頭註明對應的 Figma 元件名稱與用法範例。
 - `Button` 用 `variant`（primary / text / capsule）與 `typo`（換文字層級）；需要換色的 icon 用 `<Icon tint />`。
+- **文字按鈕一律用 `Button variant="text"`**，不要自己寫 `<button class="c-active">`：顏色用 `tone`（預設藍；`negative` 紅，例如「移除」），停用一律灰；文字＋icon 直接放在 children（間距 4）。「展開明細 / 收闔明細」用 `ExpandButton`（由文字按鈕組成）。
 - 新功能放 `src/features/<功能>/`；功能之間不互相 import，只透過 `store.js` 讀寫資料。需要組合多個功能的頁面放 `src/shells/`（入口頁）或 `src/pages/`（例如股票借貸明細）。
 - 步驟順序寫在 `src/flows/flows.js`；頁面用 `flowPosition` / `nextStep` / `prevStep`，不要寫死下一頁。
 - 測試情境放 `src/scenarios/`（一個任務一個檔，並在 `index.js` 註冊）；已開戶客戶共用 `base-account.js`。借款日期不寫死，一律用 `scenarioLoan({ dueIn })` 依當天計算（任何一天測試，即將到期等狀態都一樣）。資料結構改版時，遞增 `store.js` 的 `KEY` 版本。
@@ -83,7 +84,7 @@
 - 帳戶 `opened = false` 代表尚未借款（未開戶）：專區顯示初始頁、帳務 › 授信管理顯示方案卡（`features/hub/LoanIntroCard`）＋認識並開立借貸戶，借款走 `newAccountLoan`（匯入擔保品 → 填寫借款金額 → 確認資料，最後一次送出 `firstLoan`）。專區初始頁的精選擔保品卡可點，進 `newAccountLoan` 並預先勾選該檔全部張數（`?code=`）。
 - 文案放 `src/content/copy.js`；公式與業務規則放 `src/lib/calc.js`；股價放 `src/mock/stocks.js`。
 - **產品資料以根目錄 `產品資料.md` 為準**（標的、收盤價、成數、利率、手續費、展延、維持率規則）。使用者說「依產品資料.md 更新」時：讀 md → 同步到 `stocks.js`、`calc.js` → 檢查測試任務金額（約 100 萬）與 `copy.js` 裡寫死的利率 / 手續費 / 成數 → 驗證畫面。程式改了這些數值時也要回寫 md。股票只能整張擔保（`lots`，1 張 = 1,000 股）；收盤價顯示兩位小數（`format.js` 的 `price`）。
-- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是長按底部導覽「更多」2 秒（`lib/useLongPress`）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 現金還款、T7 借新還舊（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
+- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是連續點兩下底部導覽「更多」（`BottomNav` 的 `onMoreDoubleTap`；只點一下仍顯示未開放）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 現金還款、T7 借新還舊（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
 - 任務連動（`scenarios/carry.js`）：T3 首次借款（`carryOut`）完成時，把擔保品、庫存、擔保品紀錄、借款存到 localStorage `lending-proto-carry-v1`（換任務不會清掉，「清除所有測試資料」或重新開始 T3 才清）。T4～T7 的 `carryIn` 帶入受測者的擔保品，已借款總額沿用他借的金額：T4、T5 就是那一筆（T5 另加已還清借款）；T6 拆 60% 快到期＋40%；T7 拆 50%＋25%（都展延 2 次、快到期）＋25%。可借額度放不下借款（T4 還要留 5 萬可再借）或沒有 T3 資料時，改用固定資料。T4 借的錢不帶到 T5～T7。
 - 任務完成：情境設 `completeOnFlows`（例如 T1 = `['newAccountLoan', 'existingLoan']`）時，`startFlow` 不進流程，改顯示「任務完成」對話框（`app.js`），按鈕回任務列表。
 - 所有任務都從證券主頁「我的」（`/home`，`shells/HomeShell.js`）開始：快捷功能「股票借貸」→ 專區，底部導覽「帳務」→ 授信管理。
@@ -92,7 +93,7 @@
 - **返回路徑**：股票借貸明細（`/records`）屬於專區，按返回一律回專區（包括從完成頁進來時，不會回到完成頁）；從帳務 › 授信管理進來時網址帶 `back=/account`，返回帳務。切換頁籤會保留 `back`。
 - **申請流程的按鈕狀態**：必填資訊沒完成時，下一步 / 送出按鈕一律 `disabled`，不採用「點擊後才跳錯誤訊息」。會影響能否送出的狀態（例如扣款帳戶餘額不足）直接顯示在欄位旁。
 - 認識股票借貸介紹頁：`features/intro/IntroSheet`（全螢幕從底部開啟，右上 ✕ 關閉回原頁，不是獨立路由）。未借款第一次進專區自動開啟一次（`store.introShown`，每個任務重新計算；情境設 `introSeen: true` 則不自動開啟，例如 T3 首次借款，因為任務一＆二已看過）；專區右上產品說明、帳務「認識股票借貸」也可開啟。本次測試不開放開戶：開戶相關按鈕顯示未開放。「追繳風險評估 › 立即試算」與案例的「試算可借金額」關閉介紹頁並切到專區「試算」頁籤（從帳務開啟時前往 `/lending-zone?tab=simulate`）。
-- 可借貸額度試算：專區「試算」頁籤（`features/simulate/SimulateForm`，草稿 `store.simDraft`；只剩一檔時「移除」停用）→ `/simulate/result`（返回帶 `?tab=simulate`）。公式在 `calc.js` 的 `simulate()`；追繳線 / 補足線在 `LOAN_RULES.callRatio / recoverRatio`。圖表（`RatioChart`）y 軸 120%～至少 160%、每 10% 一條線；x 軸右端 = 初始維持率跌到 120% 的跌幅（線落在右下角），刻度每 10%；左右拖拉圓點（每次 1%）查看維持率，手指在圖上時頁面不捲動（`touch-action: none`），預設停在起點（初始維持率）。表單下方「自選擔保品」直接開選擇標的彈窗（選完新增一列）、「使用庫存試算」本次測試不開放。結果頁「立即借貸」：未借款走 `newAccountLoan`（預先勾選有庫存的試算標的），已借款走 `existingLoan`。
+- 可借貸額度試算：專區「試算」頁籤（`features/simulate/SimulateForm`，草稿 `store.simDraft`；只剩一檔時「移除」停用）→ `/simulate/result`（返回帶 `?tab=simulate`）。公式在 `calc.js` 的 `simulate()`；追繳線 / 補足線在 `LOAN_RULES.callRatio / recoverRatio`。圖表（`RatioChart`）y 軸 120%～至少 160%、每 10% 一條線；x 軸右端 = 初始維持率跌到 120% 的跌幅（線落在右下角），刻度每 10%；左右拖拉圓點（每次 1%）查看維持率，手指在圖上時頁面不捲動（`touch-action: none`），預設停在起點（初始維持率）。表單下方「新增擔保品」直接開選擇標的彈窗（選完新增一列）、「使用庫存試算」本次測試不開放。結果頁「立即借貸」：未借款走 `newAccountLoan`（預先勾選有庫存的試算標的），已借款走 `existingLoan`。
 - 確認資料頁的送出按鈕一律用 `COPY.common.submit`（確認送出）。
 - 新頁面要在 `src/routes.js` 註冊。
 - 選擇還款方式的「借新還舊」：只有展延 2 次的借款才顯示（沒指定借款時，有任何一筆即將到期且展延已滿才顯示），選了進 `refinance` 流程。
@@ -101,6 +102,7 @@
 - 到期通知：有即將到期（`DUE_SOON_DAYS` 天內）的借款時，專區總覽、帳務 › 授信管理的摘要卡下方顯示「有 N 筆借款，即將到期」（`features/hub/DueSoonNotice`），點擊 → 股票借貸明細 › 借款（帳務帶 `back=/account`）。共用基本資料的借款都還沒到期；需要即將到期的任務（T6 現金還款、T7 借新還舊）自己覆寫 `loans`。
 - 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。
 - 不安裝建置工具或 npm 套件（電腦沒有 Node.js）。
+- **ui-kit/**（給其他專案用的元件與樣式包）由 `python3 scripts/build-ui-kit.py` 產生；**只有使用者要求「重新產生 ui-kit」時才執行**，改元件或樣式時不要主動重新產生。不要手動改 ui-kit/ 裡的檔案；元件依賴本專案的部分（文案、Toast、換頁、金額規則）在 ui-kit 裡改指向 `ui-kit/src/kit.js`（模板在 `scripts/ui-kit-template/`）。元件新增對 `copy.js` / `store.js` / `router.js` / `calc.js` 的依賴時，要同步更新 kit.js 模板，否則產生時會報錯。
 
 ## 從 Figma 實作畫面
 

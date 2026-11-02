@@ -1,5 +1,5 @@
 // 主持人頁：任務列表（只顯示任務名稱，點了開始任務）、重置
-// 進入方式：網址 #/moderator，或長按底部導覽「更多」2 秒
+// 進入方式：網址 #/moderator，或連續點兩下底部導覽「更多」
 import { html } from '../lib/preact.js';
 import { resetAll, showToast } from '../store.js';
 import { COPY } from '../content/copy.js';

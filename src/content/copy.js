@@ -30,7 +30,7 @@ export const COPY = {
     lotsLabel: '擔保張數',
     lotsPlaceholder: '請輸入數字',
     lotUnit: '張',
-    customPick: '自選擔保品',
+    customPick: '新增擔保品',
     useHoldings: '使用庫存試算', // 本次測試不開放
     submit: '試算',
     sheetTitle: '選擇可擔保標的',
@@ -267,8 +267,6 @@ export const COPY = {
     extensions: '展延次數',
     interest: '應還利息',
     interestAndFee: '應還利息與借款手續費',
-    expand: '展開明細',
-    collapse: '收闔明細',
     detail: {
       amount: '初始借款金額',
       startDate: '起息日',

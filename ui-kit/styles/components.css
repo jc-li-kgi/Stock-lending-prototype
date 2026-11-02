@@ -1,0 +1,849 @@
+/* ===== 共用元件樣式 =====
+ * 顏色 / 間距 / 圓角 / 陰影全部使用 One KGI Design Guideline token。
+ * 文字大小不寫在這裡，請在元件 markup 上加 .t-* / .n-* class（見 typography.css）。
+ */
+
+/* ---------- PageHeader：返回 / 標題 / 右側 icon ---------- */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  padding: var(--spacing-12) var(--spacing-16);
+}
+.page-header__title { flex: 1; text-align: center; }
+.page-header__slot { width: 24px; height: 24px; flex-shrink: 0; }
+
+/* ---------- StepBar：第 N 步 / 共 M 步 ---------- */
+.step-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: 0 var(--spacing-16);
+}
+.step-bar__text { display: flex; justify-content: space-between; align-items: flex-start; }
+.step-bar__current { display: flex; gap: var(--spacing-8); color: var(--color-content-general-active); }
+.step-bar__total { color: var(--color-content-general-secondary); }
+.step-bar__track { display: flex; }
+.step-bar__seg { flex: 1; height: 2px; background: var(--color-content-general-tertiary); opacity: 0.2; }
+.step-bar__seg--on { background: var(--color-content-general-active); opacity: 1; }
+
+/* ---------- Card ----------
+ * .card          一般卡片：左右留邊，圓角 radius-medium（Guideline：卡片一律 6px）
+ * .card--full    滿版卡片：貼齊畫面左右，不用圓角（專案規範）
+ * .card--shadow  疊在 Surface Blue 上的陰影（Guideline：Basic）
+ */
+.card {
+  background: var(--color-container-card-white);
+  border-radius: var(--radius-medium);
+}
+.card--full {
+  width: 100%;
+  border-radius: var(--radius-none);
+}
+.card--shadow { box-shadow: var(--shadow-basic); }
+
+/* NoticeCard 公告卡｜Figma wk25/card/3：內距 16、icon 與文字 16 */
+.notice-card { display: flex; align-items: center; gap: var(--spacing-16); width: 100%; padding: var(--spacing-16); text-align: left; }
+.notice-card__text { flex: 1; min-width: 0; }
+
+/* ---------- FeeCard（流程申請 › 詳情概覽卡：內距 24×24；標題→內容 12；詳情條列 20） ---------- */
+.fee-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding: var(--spacing-24);
+}
+.fee-card__rows { display: flex; flex-direction: column; gap: var(--spacing-20); }
+
+/* ---------- DetailRow：左標題 右數值 ---------- */
+.detail-row { display: flex; gap: var(--spacing-8); align-items: flex-start; }
+.detail-row--warning .detail-row__label,
+.detail-row--warning .detail-row__value { color: var(--color-content-semantic-warning); }
+.detail-row__label {
+  flex: 1;
+  color: var(--color-content-general-secondary);
+}
+.detail-row__value { text-align: right; color: var(--color-content-general-primary); white-space: nowrap; }
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-none);
+  background: var(--color-container-general-active-primary);
+  color: var(--color-content-general-light-active);
+}
+.btn-primary:active { background: var(--color-container-general-active-primary-hover); }
+.btn-primary:disabled {
+  background: var(--color-container-general-disabled);
+  color: var(--color-content-general-disabled);
+  cursor: default;
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  color: var(--color-content-general-active);
+}
+.btn-text--negative { color: var(--color-content-semantic-negative); } /* 移除等刪除類動作 */
+.btn-text:disabled { color: var(--color-content-general-disabled); cursor: default; }
+.btn--block { width: 100%; padding: var(--spacing-12) var(--spacing-16); }
+
+.btn-capsule {
+  padding: var(--spacing-8) var(--spacing-20);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-active-secondary);
+  color: var(--color-content-general-active-button-capsule);
+  white-space: nowrap;
+}
+.btn-capsule:active { background: var(--color-container-general-active-secondary-hover); }
+
+@media (hover: hover) {
+  .btn-primary:not(:disabled):hover { background: var(--color-container-general-active-primary-hover); }
+  .btn-capsule:hover { background: var(--color-container-general-active-secondary-hover); }
+}
+
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* ---------- Icon 尺寸跟著文字層級（token 見 tokens.css；手機 / 電腦自動切換） ---------- */
+.icon--caption  { width: var(--icon-size-caption);  height: var(--icon-size-caption);  flex-shrink: 0; }
+.icon--body     { width: var(--icon-size-body);     height: var(--icon-size-body);     flex-shrink: 0; }
+.icon--subtitle { width: var(--icon-size-subtitle); height: var(--icon-size-subtitle); flex-shrink: 0; }
+
+/* 文字＋icon 的間距：前置 / 後置 icon 都適用；Subtitle 前置 icon 用 --leading（8） */
+.icon-text--caption  { display: inline-flex; align-items: center; gap: var(--icon-gap-caption); }
+.icon-text--body     { display: inline-flex; align-items: center; gap: var(--icon-gap-body); }
+.icon-text--subtitle { display: inline-flex; align-items: center; gap: var(--icon-gap-subtitle-trailing); }
+.icon-text--subtitle.icon-text--leading { gap: var(--icon-gap-subtitle-leading); }
+
+/* 可換色的 icon（用 mask，顏色跟著 currentColor 走，停用時可變灰） */
+.icon-tint {
+  display: inline-block;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* ---------- BottomActions 頁面底部按鈕區（不固定） ----------
+ * 與內容至少 32（padding-top）；內容不滿一屏時 margin-top: auto 把按鈕推到底
+ * 距離畫面底部 48（iPhone 安全區 34 包含在 48 內，取兩者較大值）
+ * 父層必須是撐滿高度的直式 flex 容器，且不要再加 gap（距離由這裡負責）
+ */
+.bottom-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding: var(--spacing-32) var(--spacing-16) max(var(--spacing-48), env(safe-area-inset-bottom));
+}
+
+/* ---------- Form：PickerField / AmountField（Guideline：標題與輸入框 8px） ---------- */
+.field { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.field__title { display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-20); }
+.field__picker {
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap-subtitle-trailing); /* Subtitle 文字＋後置 icon 4 */
+  padding-top: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-4) - var(--spacing-8)); /* 與底線間距 4px（抵銷 .field 的 8px） */
+  text-align: left;
+}
+.field__picker > span:first-child { flex: 1; }
+/* NumberField：輸入框沿用下拉選單的版面（文字＋右側單位） */
+.number-field input { flex: 1; min-width: 0; width: 0; border: 0; outline: 0; padding: 0; background: transparent; color: var(--color-content-general-primary); }
+.number-field input::placeholder { color: var(--color-content-general-tertiary); opacity: 1; }
+.field__line {
+  display: block;
+  height: 1px;
+  background: var(--color-container-general-divider);
+  margin-top: calc(var(--spacing-4) - var(--spacing-8));
+}
+.field__line--error { background: var(--color-content-semantic-negative); }
+.field__error { color: var(--color-content-semantic-negative); margin-top: calc(var(--spacing-4) - var(--spacing-8)); }
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding-top: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-4) - var(--spacing-8));
+}
+.amount-input__btn { width: 20px; height: 20px; color: var(--color-content-general-primary); }
+.amount-input__btn:disabled { color: var(--color-content-general-disabled); cursor: default; }
+.amount-input__value {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.3em; /* 一個空白字寬，「TWD」與金額之間 */
+  color: var(--color-content-general-primary);
+}
+.amount-input__value input::placeholder { color: var(--color-content-general-tertiary); opacity: 1; } /* 未填 */
+.amount-input__value input {
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  min-width: 0;
+}
+
+/* ---------- BottomNav（Guideline：Top & bottom navigation 用 PopOver 陰影） ---------- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-12) var(--spacing-24) calc(var(--spacing-12) + env(safe-area-inset-bottom));
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-popover);
+  z-index: 10;
+}
+.bottom-nav__item {
+  -webkit-touch-callout: none; /* 長按「更多」不跳出系統選單 */
+  -webkit-user-select: none;
+  user-select: none;
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+  opacity: 0.4;
+  color: var(--color-content-general-primary);
+  white-space: nowrap;
+}
+.bottom-nav__item--active { opacity: 1; color: var(--color-content-general-active); }
+.bottom-nav__icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+
+/* 「選股」icon：三根柱 + 折線（Figma 為組合圖層） */
+.nav-fund { position: relative; width: 20px; height: 20px; }
+.nav-fund__bar { position: absolute; width: 3.226px; background: currentColor; }
+.nav-fund__line { position: absolute; left: 2.37px; top: 2.13px; display: flex; }
+
+/* ---------- Sheet 底部彈窗｜Figma：Action Sheet_service list_Mobile（Guideline：Bottom Sheet 用 PopOver 陰影） ---------- */
+.sheet-mask {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay);
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade-in 0.2s ease;
+}
+.sheet {
+  width: 100%;
+  max-width: var(--app-max-width);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-container-card-white);
+  box-shadow: var(--shadow-popover);
+  padding-bottom: calc(var(--spacing-32) + env(safe-area-inset-bottom));
+  white-space: normal;
+  text-align: left;
+  animation: slide-up 0.25s ease;
+}
+/* 標題列：上 32、下 8、左右 16 */
+.sheet__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-32) var(--spacing-16) var(--spacing-8);
+}
+.sheet--full-height { height: 90vh; } /* 搜尋類：固定高度，不隨結果數量變矮 */
+.sheet__title { flex: 1; }
+.sheet__content { padding: var(--spacing-8) var(--spacing-16) 0; }
+.sheet__options { display: flex; flex-direction: column; }
+.sheet__option {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16);
+  background: var(--color-container-card-white);
+  text-align: left;
+}
+.sheet__option:active { background: var(--color-container-general-option-selected-blue); }
+.sheet__option--selected { background: var(--color-container-general-option-selected-blue); }
+.sheet__option-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-4); }
+/* 前往型選單（例如選擇還款方式）：項目間距較大、右側 › */
+.sheet__option--nav { padding: var(--spacing-16); gap: var(--icon-gap-subtitle-trailing); }
+.sheet__option--nav + .sheet__option--nav { margin-top: var(--spacing-8); }
+
+/* ---------- RadioGroup 單選按鈕｜Figma：📱 Radio button ---------- */
+.radio-group { display: flex; gap: var(--spacing-12); }
+.radio { flex: 1; display: flex; align-items: center; gap: var(--spacing-8); cursor: pointer; }
+.radio__input { position: absolute; opacity: 0; width: 0; height: 0; }
+.radio__circle {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-content-general-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radio__input:checked + .radio__circle { border-color: var(--color-content-general-active); }
+.radio__input:checked + .radio__circle::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-content-general-active);
+}
+.radio__input:focus-visible + .radio__circle { outline: 2px solid var(--color-content-general-active); outline-offset: 2px; }
+
+/* ---------- Dialog 置中對話框｜Figma：Dialog_Mobile（白底浮層用 PopOver 陰影） ---------- */
+.dialog-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-24);
+  background: var(--color-overlay);
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
+  animation: fade-in 0.2s ease;
+}
+.dialog {
+  width: 100%;
+  max-width: calc(var(--app-max-width) - var(--spacing-48));
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-container-card-white);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-popover);
+  white-space: normal; /* 放在 nowrap 的表頭等處也能換行 */
+  text-align: left;
+}
+.dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  padding: var(--spacing-32) var(--spacing-24);
+  overflow-y: auto;
+}
+.dialog__title { text-align: center; }
+.dialog__body--left { text-align: left; }
+.dialog__body--center { text-align: center; }
+.dialog__actions { display: flex; border-top: 1px solid var(--color-container-general-divider); }
+.dialog__btn { flex: 1; padding: var(--spacing-16) var(--spacing-24); text-align: center; }
+.dialog__btn + .dialog__btn { border-left: 1px solid var(--color-container-general-divider); }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* ---------- Toast（Guideline：Snackbar／Toast 用 PopOver 陰影） ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--bottom-nav-height) + var(--spacing-48) + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-medium);
+  background: var(--color-content-general-primary);
+  color: var(--color-content-general-light-active);
+  box-shadow: var(--shadow-popover);
+  text-align: center;
+  z-index: 60;
+  animation: fade-in 0.2s ease;
+}
+
+/* ---------- AccountPicker 帳號選擇（外層自行留左右邊距） ---------- */
+.account-picker {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 40px;
+  padding: var(--spacing-8) var(--spacing-8) var(--spacing-8) var(--spacing-16);
+  background: var(--color-surface-white);
+  border-radius: var(--radius-small);
+  text-align: left;
+}
+.account-picker__badge {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-small);
+  background: var(--color-red-400);
+  color: var(--color-content-general-light-active);
+  flex-shrink: 0;
+}
+.account-picker__name { flex: 1; color: var(--color-content-general-primary); }
+
+/* ---------- TextTabs 文字型頁籤 ---------- */
+.text-tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-16);
+  padding: var(--spacing-4) var(--spacing-16) 0;
+}
+.text-tabs__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-bottom: calc(var(--spacing-8) + 2px); /* 與選中項底線（2px）等高 */
+  color: var(--color-content-general-secondary);
+  white-space: nowrap;
+}
+.text-tabs__item--active { color: var(--color-content-general-active); padding-bottom: 0; }
+.text-tabs--flush { padding-left: 0; padding-right: 0; }
+.text-tabs--center { justify-content: center; }
+.text-tabs__item--active i { display: block; height: 2px; background: var(--color-container-general-active-primary); }
+
+/* ---------- SegmentedTabs 膠囊型頁籤（Guideline：未選 filter-active-blue、已選 light-active） ---------- */
+.segmented {
+  display: flex;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-filter-active-blue);
+}
+.segmented__item {
+  flex: 1;
+  padding: var(--spacing-8) var(--spacing-12);
+  border-radius: var(--radius-full);
+  color: var(--color-content-general-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+.segmented__item--active {
+  background: var(--color-container-general-light-active);
+  color: var(--color-content-general-active-button-capsule);
+  box-shadow: var(--shadow-light);
+}
+
+/* ---------- Checkbox ---------- */
+.checkbox { display: inline-flex; padding: 3px; flex-shrink: 0; }
+.checkbox__box {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-container-general-active-primary);
+}
+.checkbox--checked .checkbox__box { background: var(--color-container-general-active-primary); }
+.checkbox__check { position: absolute; left: -0.5px; top: -0.5px; }
+.checkbox--disabled { cursor: default; }
+.checkbox--disabled .checkbox__box { border-color: var(--color-content-general-disabled); background: none; }
+
+/* ---------- Accordion 收合問答｜Figma：aFAQ（CollapseBtn 上 16 下 12、Answer 上 12 下 24） ---------- */
+.accordion { display: flex; flex-direction: column; }
+.accordion__item { border-bottom: 1px solid var(--color-container-general-divider); }
+.accordion__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap-subtitle-trailing);
+  padding: var(--spacing-16) var(--spacing-4) var(--spacing-12) 0;
+  text-align: left;
+}
+.accordion__head > span { flex: 1; }
+.accordion__body { padding: var(--spacing-12) 0 var(--spacing-24); }
+
+/* ---------- CheckboxHeader 勾選標題：標題與補充說明對齊，勾選框與標題第一行置中 ---------- */
+.checkbox-header { display: flex; align-items: flex-start; gap: var(--spacing-8); } /* 與 SelectableItem 相同間距，勾選框上下對齊 */
+.checkbox-header__box {
+  display: flex;
+  align-items: center;
+  height: calc(var(--kgi-font-auto-subtitle-bold-tc-size-rem) * var(--kgi-font-auto-subtitle-bold-tc-line-height)); /* 標題一行高 */
+}
+.checkbox-header__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-4); } /* 標題→附註 4（Figma：CheckBox Title） */
+
+/* ---------- QtyStepper 數量加減框 ---------- */
+.qty-stepper {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 34px;
+  padding: var(--spacing-4) var(--spacing-8);
+  border: 1px solid var(--color-container-general-divider);
+  border-radius: var(--radius-small);
+  background: var(--color-container-card-white);
+}
+.qty-stepper__btn { width: 20px; height: 20px; color: var(--color-content-general-primary); }
+.qty-stepper__btn:disabled { color: var(--color-content-general-disabled); cursor: default; }
+.qty-stepper__divider { width: 1px; height: 22px; background: var(--color-container-general-divider); flex-shrink: 0; }
+.qty-stepper__input {
+  flex: 1;
+  width: 0; /* 不用 input 預設寬度，改由 flex 分配 */
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  color: var(--color-content-general-primary);
+}
+.qty-stepper__unit { color: var(--color-content-general-secondary); }
+
+/* ---------- FilterPill 篩選膠囊 ---------- */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--icon-gap-body); /* Body 文字＋icon 4 */
+  height: 32px;
+  padding: var(--spacing-4) var(--spacing-16);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-active-secondary);
+  color: var(--color-content-general-primary);
+  white-space: nowrap;
+}
+.filter-pill:active { background: var(--color-container-general-active-secondary-hover); }
+
+/* ---------- Tag 狀態標籤（Guideline：Tag 用 radius-full） ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-8);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+.tag--default { background: var(--color-container-general-active-secondary); color: var(--color-content-general-active); }
+.tag--warning { border: 1px solid var(--color-content-tag-warning); color: var(--color-content-tag-warning); }
+.tag--info { border: 1px solid var(--color-sky-blue-300); color: var(--color-sky-blue-500); } /* Guideline 無對應語意 token，用 Graphic Blue 色票 */
+.tag--highlight { border: 1px solid var(--color-content-tag-highlight); color: var(--color-content-tag-highlight); }
+
+/* ---------- StatementCard 對帳單卡片｜Figma 1822:124697（收合）、1822:124845（展開） ----------
+   內距 16；標題→資料列 24；資料列 12；資料列→明細 / 按鈕 16 */
+.statement-card { display: flex; flex-direction: column; gap: var(--spacing-24); padding: var(--spacing-16); }
+.statement-card__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); }
+.statement-card__head > p { flex: 1; min-width: 0; }
+.statement-card__body { display: flex; flex-direction: column; gap: var(--spacing-16); }
+.statement-card__rows { display: flex; flex-direction: column; gap: var(--spacing-12); }
+.statement-card__toggle { align-self: center; }
+.expand-button { align-self: center; } /* 在直式 flex 容器裡預設置中 */
+
+/* ---------- SearchIcon ---------- */
+.search-icon { position: relative; display: inline-block; flex-shrink: 0; }
+.search-icon img { position: absolute; left: 2px; top: 2px; }
+.search-icon i {
+  position: absolute;
+  left: 17.2px;
+  top: 15px;
+  width: 2.2px;
+  height: 7.1px;
+  border-radius: var(--radius-full);
+  background: var(--color-content-general-primary);
+  transform: rotate(-46deg);
+}
+
+/* ---------- CollapsibleCard 可收合卡片（流程申請 詳情卡 24×24；標題→內容 24；條列 20） ---------- */
+.collapsible { display: flex; flex-direction: column; padding: var(--spacing-24); gap: var(--spacing-24); }
+.collapsible--overview { padding: var(--spacing-16); } /* 資訊瀏覽 詳情卡 16×16 */
+.collapsible__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-24); text-align: left; }
+.collapsible__chevron { display: inline-flex; transition: transform 0.2s ease; }
+.collapsible__chevron--closed { transform: rotate(180deg); }
+.collapsible__body { display: flex; flex-direction: column; gap: var(--spacing-20); }
+
+/* ---------- AmountHero 確認頁大金額 ---------- */
+.amount-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  margin-bottom: var(--spacing-4); /* 與下方條列 = 不同資訊段落 24（20 + 4） */
+}
+.amount-hero__currency {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: calc(var(--spacing-8) - var(--spacing-12)); /* 幣別與金額 8 */
+  color: var(--color-content-general-primary);
+}
+.amount-hero__flag { border-radius: var(--radius-full); border: 0.4px solid var(--color-container-general-divider); }
+.amount-hero__value { text-align: center; color: var(--color-content-general-primary); }
+
+/* ---------- StickyFooter 置底操作區（Guideline：Floating bottom 用 PopOver 陰影） ---------- */
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spacing-16) calc(var(--spacing-16) + env(safe-area-inset-bottom));
+  background: var(--color-surface-white);
+  border-top: 1px solid var(--color-container-general-divider);
+  box-shadow: var(--shadow-popover);
+  max-height: 90vh;
+  max-height: 90dvh;
+  z-index: 20;
+}
+
+.sticky-footer > :not(.total-bar__detail) { flex-shrink: 0; } /* 只有展開明細會被壓縮、捲動 */
+.sticky-footer--plain { background: transparent; border-top: 0; box-shadow: none; } /* 只有一顆按鈕時 */
+
+/* ---------- ResultPage 完成頁 ---------- */
+.result-page { display: flex; flex-direction: column; }
+.result-page__content {
+  flex: 1;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-24);
+  padding: 0 var(--spacing-16) var(--spacing-24);
+}
+.result-page__image {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result-page__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12); /* Level 3：Headline 配 Subtitle 12 */
+  padding: 0 var(--spacing-40);
+  text-align: center;
+}
+
+
+
+/* ---------- InfoLabel 文字 + ⓘ（Guideline：圖示與標題水平間距 4） ---------- */
+.info-label { display: inline-flex; align-items: center; } /* 文字與 ⓘ 間距由 .icon-text--{level} 決定 */
+
+/* ---------- DetailCard 確認資料卡（流程申請 詳情概覽卡 24×24；條列 20） ---------- */
+.detail-card { display: flex; flex-direction: column; gap: var(--spacing-20); padding: var(--spacing-24); }
+
+/* 卡片組：左右 16、卡片之間 12（Guideline：卡片組間距） */
+.card-stack { display: flex; flex-direction: column; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+
+/* ---------- SummaryCard 摘要卡 ---------- */
+.summary-card { display: flex; flex-direction: column; gap: var(--spacing-20); }
+.summary-card--overview { padding: var(--spacing-16); } /* 資訊瀏覽 詳情概覽卡 16×16 */
+.summary-card--flow { padding: var(--spacing-24); }     /* 流程申請 詳情概覽卡 24×24 */
+.summary-card__head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--spacing-4); }
+.summary-card__head > div { display: flex; flex-direction: column; gap: var(--spacing-4); }
+.summary-card__actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--spacing-16); }
+
+/* ---------- SectionHeader 區塊標題（Guideline：主標題與副標題 8） ---------- */
+.section-header { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.section-header__row { display: flex; align-items: center; gap: var(--spacing-8); }
+.section-header__title { flex: 1; }
+
+/* ---------- StockName / AmountCell ---------- */
+.amount-cell { text-align: right; }
+
+/* ---------- ExpandToggle 展開箭頭（收起朝下、展開朝上） ---------- */
+.expand-toggle { display: inline-flex; transform: rotate(180deg); transition: transform 0.2s ease; }
+.expand-toggle--expanded { transform: rotate(0deg); }
+
+/* ---------- EmptyState ---------- */
+.empty-state { padding: var(--spacing-40) var(--spacing-16); text-align: center; }
+
+/* ---------- IconAction 圓形圖示捷徑（疊在 Surface Blue 上：Basic 陰影） ---------- */
+.icon-action { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-8); text-align: center; }
+.icon-action__circle {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-white);
+  box-shadow: var(--shadow-basic);
+  color: var(--color-content-general-primary);
+}
+
+/* ---------- SelectableItem 可勾選項目 ---------- */
+.selectable-item { display: flex; align-items: flex-start; gap: var(--spacing-8); }
+.selectable-item__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-8); }
+.selectable-item--disabled,
+.selectable-item--disabled .detail-row__label,
+.selectable-item--disabled .detail-row__value { color: var(--color-content-general-disabled); }
+
+/* ---------- SearchField 搜尋框 ---------- */
+.search-field {
+  flex: 1;
+  min-width: 0; /* 讓搜尋框可以縮窄，旁邊的按鈕才不會被擠出畫面 */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-option-selected-blue);
+}
+.search-field--on-surface { background: var(--color-surface-white); }
+.search-field input {
+  flex: 1;
+  width: 0;     /* 不用 input 預設寬度（約 20 個字），由 flex 分配 */
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--color-content-general-primary);
+}
+.search-field input::placeholder { color: var(--color-content-general-tertiary); }
+
+/* ---------- TotalBar 置底總計列 ---------- */
+.total-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); padding: var(--spacing-12) 0; }
+.total-bar__value { display: inline-flex; align-items: center; }
+.total-bar__label { display: flex; flex-direction: column; }
+.total-bar__value:disabled { cursor: default; }
+/* 展開明細：在置底區內向上推開；置底區最高 90%，明細區自己捲動（Figma：標題→內容 12、條列 12） */
+.total-bar__detail {
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  padding-bottom: var(--spacing-12);
+  animation: push-up 0.25s ease;
+}
+@keyframes push-up { from { max-height: 0; opacity: 0; } to { max-height: 90vh; opacity: 1; } }
+
+/* ---------- FlowPage 流程頁（流程申請：頁首→內容 24、區塊 24、內容→按鈕 32） ---------- */
+.flow-page { display: flex; flex-direction: column; gap: var(--spacing-24); }
+.flow-page__body { flex: 1; display: flex; flex-direction: column; } /* 內容→按鈕 32 由 BottomActions 負責 */
+.flow-page__content { display: flex; flex-direction: column; gap: var(--spacing-24); }
+
+/* ---------- ListTable 列表 ---------- */
+.list-table { display: flex; flex-direction: column; padding: 0 var(--spacing-16); }
+.list-table__head,
+.list-table__main {
+  display: grid;
+  grid-template-columns: var(--list-cols);
+  justify-content: space-between; /* 欄寬都固定時，多出的寬度平均分到欄與欄之間，最右欄仍貼齊右邊 */
+  align-items: center;
+  gap: var(--spacing-4);
+}
+.list-table__head { padding-bottom: var(--spacing-8); border-bottom: 1px solid var(--color-container-general-divider); }
+.list-table__head > * { white-space: nowrap; }
+.list-table__head--end { align-items: end; }
+.list-table__main { width: 100%; text-align: left; }
+.list-table__cell--left { justify-self: start; text-align: left; }
+.list-table__cell--center { justify-self: center; text-align: center; }
+.list-table__cell--right { justify-self: end; text-align: right; }
+/* 列表欄位每段文字最多 2 行，超出顯示「…」；完整內容放在展開明細（例如商品名稱） */
+.list-table__main .list-table__cell { min-width: 0; max-width: 100%; }
+.list-table__main .list-table__cell p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.list-table__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-container-general-divider);
+}
+.list-table__detail { display: flex; flex-direction: column; }
+/* DetailPanel 列表展開明細：白色卡片，內距 16×16、資料列 12（Figma 3089:63010） */
+.detail-panel { display: flex; flex-direction: column; gap: var(--spacing-12); padding: var(--spacing-16); }
+.detail-panel--blue { background: var(--color-container-general-option-selected-blue); }
+.list-table__footer { display: flex; align-items: center; gap: var(--spacing-8); }
+.list-table__footer--end { justify-content: flex-end; padding-right: calc(24px + var(--spacing-8)); } /* 與箭頭欄左緣對齊 */
+.list-table__footer--between { justify-content: space-between; }
+.sort-head { display: inline-flex; align-items: flex-end; gap: var(--spacing-4); color: inherit; text-align: left; }
+/* 排序 icon 與「最後一行文字」垂直置中：單行表頭置中，兩行表頭對齊第二行 */
+.sort-head__icon { display: inline-flex; align-items: center; height: calc(1em * var(--kgi-font-auto-caption-regular-tc-line-height)); }
+
+/* 小尺寸膠囊按鈕（列表內） */
+.btn-capsule--sm { padding: var(--spacing-4) var(--spacing-16); }
+
+/* ---------- StatGroup 並排數據 ---------- */
+.stat-group { display: flex; align-items: center; justify-content: center; gap: var(--spacing-20); }
+.stat-group__divider { width: 1px; height: 24px; background: var(--color-container-general-divider); flex-shrink: 0; }
+.stat { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-4); white-space: nowrap; }
+.stat__value { display: flex; align-items: baseline; justify-content: center; gap: var(--spacing-4); color: var(--color-content-general-primary); }
+.stat--highlight .stat__value { color: var(--color-content-semantic-warning); } /* Guideline：Content/Semantic/Warning */
+
+/* ---------- NoticeBar 提示條（Guideline：Surface/Yellow） ---------- */
+.notice-bar {
+  padding: var(--spacing-8);
+  border-radius: var(--radius-small);
+  background: var(--color-surface-yellow);
+  text-align: center;
+}
+
+/* ---------- Carousel 橫向滑動卡片 ---------- */
+.carousel { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-16); }
+.carousel__track {
+  width: 100%;
+  display: flex;
+  gap: var(--spacing-12);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--spacing-16);
+  scrollbar-width: none;
+  padding: var(--spacing-4) var(--spacing-16) var(--spacing-12); /* 上下留陰影空間；左右 16 = 頁面邊界 */
+}
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__item { flex: 0 0 var(--carousel-item-width, 280px); scroll-snap-align: center; display: flex; }
+/* 第一張、最後一張停在距離畫面邊界 16 的位置；中間的置中 */
+.carousel__item:first-child { scroll-snap-align: start; }
+.carousel__item:last-child { scroll-snap-align: end; }
+.carousel__dots { display: flex; gap: var(--spacing-4); margin-top: calc(var(--spacing-4) - var(--spacing-16)); }
+.carousel__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-xs);
+  background: var(--color-blue-100);
+  transition: width 0.2s ease;
+}
+.carousel__dot--active { width: 22px; background: var(--color-content-general-active); }
+
+/* ---------- StockPickCard 精選擔保品卡（Figma：貸款卡_v2） ---------- */
+.stock-pick-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-20) var(--spacing-16);
+  text-align: center;
+}
+
+/* ---------- LoanIntroCard 方案卡（features/hub，專區與帳務共用；資訊瀏覽 卡片 16×16） ---------- */
+.loan-intro-card { display: flex; flex-direction: column; gap: var(--spacing-12); padding: var(--spacing-16); }
+
+/* ---------- ServiceCardList 服務卡片清單（Figma：Service Card - Onboarding） ---------- */
+.service-list { display: flex; flex-direction: column; }
+.service-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-16);
+  min-height: 84px;
+  padding: var(--spacing-24) var(--spacing-16);
+  text-align: left;
+}
+.service-card__icon { flex-shrink: 0; }
+.service-card__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-4); }
+.service-card__title { display: flex; align-items: center; gap: var(--icon-gap-subtitle-trailing); }
+.service-card__title > :first-child { flex: 1; }

@@ -1,0 +1,77 @@
+/* ===== 元件文件頁（只給 ui-kit/index.html 用，新專案不需要） ===== */
+html, body.docs-body { background: var(--color-surface-white); }
+.docs-body #app { min-height: 100vh; }
+
+.docs { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; }
+
+/* 左側目錄 */
+.docs-nav {
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: var(--spacing-24);
+  padding: var(--spacing-24) var(--spacing-16);
+  border-right: 1px solid var(--color-container-general-divider);
+}
+.docs-nav__brand { display: flex; flex-direction: column; gap: var(--spacing-4); padding: 0 var(--spacing-8); }
+.docs-nav__group { display: flex; flex-direction: column; gap: var(--spacing-2); }
+.docs-nav__group-title { padding: 0 var(--spacing-8) var(--spacing-4); }
+.docs-nav a {
+  padding: var(--spacing-4) var(--spacing-8); border-radius: var(--radius-small);
+  color: var(--color-content-general-secondary); text-decoration: none;
+}
+.docs-nav a:hover { background: var(--color-container-general-option-selected-blue); color: var(--color-content-general-primary); }
+
+/* 右側內容 */
+.docs-main { display: flex; flex-direction: column; gap: var(--spacing-80); padding: var(--spacing-48) var(--spacing-48) var(--spacing-80); max-width: 1080px; }
+.docs-section { display: flex; flex-direction: column; gap: var(--spacing-16); scroll-margin-top: var(--spacing-24); }
+.docs-section__head { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.docs-section__title { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-12); }
+.docs-group-title { padding-top: var(--spacing-24); border-top: 1px solid var(--color-container-general-divider); }
+
+/* 適用平台標籤 */
+.docs-badges { display: flex; gap: var(--spacing-8); }
+.docs-badge { padding: var(--spacing-2) var(--spacing-8); border-radius: var(--radius-full); border: 1px solid currentColor; }
+.docs-badge--mobile { color: var(--color-content-general-active); }
+.docs-badge--web { color: var(--color-content-semantic-descend); }
+.docs-badge--mobile-only { color: var(--color-content-semantic-warning); }
+
+/* 預覽 + 程式碼 */
+.docs-demo { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--spacing-24); align-items: start; }
+.docs-demo--stack { grid-template-columns: minmax(0, 1fr); }
+.mobile-frame {
+  width: 375px; max-height: 720px; overflow: auto;
+  background: var(--color-surface-blue);
+  border: 1px solid var(--color-container-general-divider); border-radius: var(--radius-medium);
+  transform: translateZ(0); /* 讓 fixed 的元件（底部導覽、置底按鈕）定位在預覽框內 */
+}
+.mobile-frame__body { display: flex; flex-direction: column; gap: var(--spacing-16); padding: var(--spacing-16) 0; }
+.mobile-frame--page { height: 720px; }
+.mobile-frame--page .page { min-height: 100%; }
+.docs-pad { padding: 0 var(--spacing-16); }
+.docs-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-12); padding: 0 var(--spacing-16); }
+.docs-white { display: flex; flex-direction: column; gap: var(--spacing-24); padding: var(--spacing-16); }
+
+.docs-code { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.docs-code pre {
+  margin: 0; padding: var(--spacing-40) var(--spacing-16) var(--spacing-16); overflow: auto; /* 上方留給「複製」按鈕 */
+  background: var(--color-navy-500); color: var(--color-grey-0);
+  border-radius: var(--radius-medium);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; line-height: 1.6;
+}
+.docs-code__copy { position: absolute; top: var(--spacing-8); right: var(--spacing-8); padding: var(--spacing-2) var(--spacing-8); border-radius: var(--radius-small); background: var(--color-grey-0-30); color: var(--color-grey-0); }
+
+/* 表格（字級規範、props） */
+.docs-table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; } /* 太寬時表格自己左右捲動，不撐開整頁 */
+.docs-table td.n-caption-regular, .docs-table td:has(> code) { white-space: nowrap; }
+.docs-table td { min-width: 96px; } /* 中文說明欄不要擠成一字一行 */
+.docs-section, .docs-main { min-width: 0; }
+.docs-table th, .docs-table td { padding: var(--spacing-8) var(--spacing-12); border-bottom: 1px solid var(--color-container-general-divider); text-align: left; vertical-align: top; }
+.docs-table th { color: var(--color-content-general-secondary); }
+.docs-table code, .docs-inline-code { padding: 0 var(--spacing-4); border-radius: var(--radius-small); background: var(--color-container-general-option-selected-blue); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.docs-typo-sample { width: auto; max-height: none; overflow: visible; display: flex; align-items: baseline; gap: var(--spacing-8); padding: var(--spacing-4) var(--spacing-8); white-space: nowrap; color: var(--color-content-general-primary); }
+.docs-list { margin: 0; padding-left: var(--spacing-20); display: flex; flex-direction: column; gap: var(--spacing-8); }
+
+/* 視窗較窄時：預覽在上、程式碼在下 */
+@media (max-width: 1100px) {
+  .docs-demo { grid-template-columns: minmax(0, 1fr); }
+  .docs-main { padding: var(--spacing-32) var(--spacing-24) var(--spacing-80); }
+}
