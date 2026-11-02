@@ -15,4 +15,13 @@ export const STOCKS = {
   '2883': { name: '凱基金', price: 37.75, ratio: 0.6, type: 'eligible' },
   '2882': { name: '國泰金', price: 60, ratio: 0, type: 'ratioOnly' },                              // 收盤價待確認
   '3481': { name: '群創', price: 18, ratio: 0, type: 'ineligible', reason: '目前被列為處置股' },        // 收盤價待確認
+
+  // 試算用：不在任何任務的庫存裡，只會出現在「可借貸額度試算」的選股清單（收盤價待確認）
+  '2330': { name: '台積電', price: 1080, ratio: 0.6, type: 'eligible' },
+  '2317': { name: '鴻海', price: 220, ratio: 0.6, type: 'eligible' },
+  '2454': { name: '聯發科', price: 1350, ratio: 0.6, type: 'eligible' },
+  '2412': { name: '中華電', price: 130, ratio: 0.6, type: 'eligible' },
+  '2881': { name: '富邦金', price: 90, ratio: 0.6, type: 'eligible' },
+  '006208': { name: '富邦台50', price: 120, ratio: 0.6, type: 'eligible' },
+  '00878': { name: '國泰永續高股息', price: 22, ratio: 0.6, type: 'eligible' },
 };
