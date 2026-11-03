@@ -66,12 +66,12 @@ export function flowTitle(fallback) {
 
 /* 各入口的首頁（完成、返回時回到這裡） */
 export const ENTRY_HOME = {
-  account: '/account',
+  account: '/account?product=credit', // 帳務 › 授信管理
   lendingZone: '/lending-zone',
 };
 
 export function entryHome() {
-  return ENTRY_HOME[getState().entry] || '/account';
+  return ENTRY_HOME[getState().entry] || ENTRY_HOME.account;
 }
 
 /**

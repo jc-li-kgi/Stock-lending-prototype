@@ -18,7 +18,7 @@ export function CollateralChanges({ query }) {
   const [open, setOpen] = useState(null);
   const stock = stockOf(query.code);
   const rows = records.filter((r) => r.code === query.code).sort((a, b) => b.appliedAt.localeCompare(a.appliedAt));
-  const back = () => navigate(`/records?tab=collateral&sub=pledged${query.back ? `&back=${query.back}` : ''}`, { replace: true });
+  const back = () => navigate(`/records?tab=collateral&sub=pledged${query.back ? `&back=${encodeURIComponent(query.back)}` : ''}`, { replace: true });
 
   return html`
     <div class="page records-page">

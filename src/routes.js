@@ -26,7 +26,7 @@ export const ROUTES = {
 
   // 入口
   '/home': HomeShell,               // 證券主頁「我的」（所有任務的起點）
-  '/account': AccountShell,         // 帳務 › 授信管理
+  '/account': AccountShell,         // 帳務（預設台股；?product=credit = 授信管理）
   '/lending-zone': LendingZoneShell, // 股票借貸專區
 
   // 借款

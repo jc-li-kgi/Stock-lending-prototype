@@ -7,10 +7,10 @@ import { navigate } from '../../router.js';
 import { isDueSoon } from '../../lib/calc.js';
 import { COPY } from '../../content/copy.js';
 
-/** back：明細頁按返回回到哪裡（帳務帶 '/account'；專區不用帶） */
+/** back：明細頁按返回回到哪裡（帳務帶 '/account?product=credit'；專區不用帶） */
 export function DueSoonNotice({ back }) {
   const count = useStore((s) => s.account.loans.filter(isDueSoon).length);
   if (!count) return null;
-  const to = `/records?tab=loans&sub=borrow${back ? `&back=${back}` : ''}`;
+  const to = `/records?tab=loans&sub=borrow${back ? `&back=${encodeURIComponent(back)}` : ''}`;
   return html`<${NoticeCard} text=${COPY.hub.dueSoonNotice(count)} onClick=${() => navigate(to)} />`;
 }
