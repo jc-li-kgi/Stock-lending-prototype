@@ -1,7 +1,7 @@
 // 假資料庫：所有功能都透過這裡讀寫，功能之間不互相 import
 // 存在 localStorage，受測者重新整理不會遺失進度
 import { useReducer, useEffect } from './lib/preact.js';
-import { LOAN_RULES, addMonths, today, repayPlan, refinancePlan } from './lib/calc.js';
+import { LOAN_RULES, LOAN_PENDING, addMonths, today, repayPlan, refinancePlan } from './lib/calc.js';
 
 const KEY = 'lending-proto-state-v5'; // 資料結構改版時遞增，避免讀到舊格式
 const CARRY_KEY = 'lending-proto-carry-v1'; // 任務三 → 任務四～七連動的資料（見 scenarios/carry.js），換任務不會清掉
@@ -200,7 +200,7 @@ export function borrow({ amount, purpose }) {
     applyDate: date,
     startDate: date,
     dueDate: addMonths(date, LOAN_RULES.termMonths),
-    status: '撥款中',
+    status: LOAN_PENDING, // 剛送出的借款先顯示審核中（借款紀錄：橘字＋取消申請）
     extensions: 0,
     fee: LOAN_RULES.fee,
     appliedAt: new Date().toISOString(),

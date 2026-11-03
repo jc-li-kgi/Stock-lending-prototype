@@ -57,7 +57,7 @@ export function LoanConfirm() {
 
         ${isFirstLoan &&
         html`
-          <${CollapsibleCard} title=${COPY.collateral.detailTitle}>
+          <${CollapsibleCard} title=${COPY.collateral.detailTitle} defaultOpen=${false}>
             ${items.map(
               (i) => html`
                 <${DetailRow}

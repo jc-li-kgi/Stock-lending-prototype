@@ -219,7 +219,7 @@ function Faq() {
   return html`
     <div class="intro-faq">
       <${TextTabs} class="text-tabs--flush" tabs=${t.faq} active=${tab} onChange=${setTab} />
-      <${Accordion} key=${tab} items=${group.items} defaultOpen=${0} />
+      <${Accordion} key=${tab} items=${group.items} />
     </div>
   `;
 }

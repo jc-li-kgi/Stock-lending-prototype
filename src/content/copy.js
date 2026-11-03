@@ -268,11 +268,9 @@ export const COPY = {
     due: (d) => `${d} 到期`,
     extensions: '展延次數',
     interest: '應還利息',
-    interestAndFee: '應還利息與借款手續費',
     detail: {
       amount: '初始借款金額',
       startDate: '起息日',
-      accrued: '累積利息',
       serial: '借款序號',
       applyDate: '申請日',
       channel: '申請管道',
@@ -281,7 +279,6 @@ export const COPY = {
     selectedCount: (n) => `(已選取 ${n} 筆)`,
     breakdownTitle: '扣款明細',
     totalInterest: '應還利息',
-    totalFee: '借款手續費',
     // 確認資料
     payTitle: '扣款資訊',
     bankAccount: '扣款帳號',
@@ -449,6 +446,7 @@ export const COPY = {
     dueSoon: '即將到期',
     extend: '展延',
     refinance: '借新還舊', // 展延次數已滿時取代「展延」
+    cancelApply: '取消申請', // 借款審核中；本次測試不開放
     repay: '還款',
     // 借款展開明細｜Figma 3167:192520
     borrowDetail: {
