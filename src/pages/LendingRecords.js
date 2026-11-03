@@ -44,7 +44,7 @@ export function LendingRecords({ query }) {
 
   return html`
     <div class="page records-page">
-      <div>
+      <div class="sticky-head">
         <${PageHeader} title=${t.title} onBack=${back} showShare=${false} />
         <${TextTabs} tabs=${t.tabs} active=${tab} onChange=${switchTab} />
       </div>

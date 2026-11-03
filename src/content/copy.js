@@ -395,6 +395,7 @@ export const COPY = {
   },
 
   zone: {
+    headerTitle: '股票借貸', // 往上滑、主視覺標題捲出畫面後，頁首顯示
     heroTitle: '股票借貸，存股變現金',
     heroDesc: '免賣股、股息照領，用途不受限，靈活運用長期持股，放大資產效益！',
     tabs: [{ key: 'overview', label: '總覽' }, { key: 'simulate', label: '試算' }],

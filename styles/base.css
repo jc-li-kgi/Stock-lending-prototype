@@ -27,7 +27,7 @@ img { display: block; }
   margin: 0 auto;
   padding-top: env(safe-area-inset-top);
   background: var(--color-surface-blue);
-  overflow-x: hidden;
+  overflow-x: clip; /* 不用 hidden：hidden 會讓頁首的 position: sticky 失效 */
 }
 .page--white { background: var(--color-surface-white); }
 

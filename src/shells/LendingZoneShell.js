@@ -2,7 +2,7 @@
 // 證券主頁 › 快捷功能「股票借貸」→ 股票借貸專區（返回回到主頁）；或 帳務 › 授信管理 ›「前往專區」
 //   尚未借款（account.opened = false）→ 專區初始頁：可借額度試算 + 庫存精選擔保品 + 馬上借貸一筆
 //   已借款                          → 專區總覽：摘要卡 + 快捷功能 + 尚可匯入擔保品
-import { html, useState, useEffect } from '../lib/preact.js';
+import { html, useState, useEffect, useRef } from '../lib/preact.js';
 import {
   Icon, SegmentedTabs, SectionHeader, Carousel, StockPickCard, Button, BottomActions,
 } from '../components/index.js';
@@ -44,12 +44,22 @@ export function LendingZoneShell({ query }) {
     }
   }, []);
 
+  // 頁首固定在頂端；主視覺標題捲出畫面後，頁首中間顯示「股票借貸」
+  const heroRef = useRef();
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting), { rootMargin: '-48px 0px 0px 0px' });
+    if (heroRef.current) io.observe(heroRef.current);
+    return () => io.disconnect();
+  }, []);
+
   return html`
     <div class=${'page zone-page' + (showActions ? ' zone-page--with-actions' : '')}>
       <header class="zone-header">
         <button class="icon-btn page-header__slot" onClick=${() => navigate('/home')} aria-label="返回">
           <${Icon} name="chevron-back.svg" />
         </button>
+        <p class=${'zone-header__title t-subtitle-bold c-primary' + (scrolled ? ' zone-header__title--show' : '')} aria-hidden=${!scrolled}>${t.headerTitle}</p>
         <button class="icon-btn page-header__slot" onClick=${() => setIntroOpen(true)} aria-label="產品說明">
           <${Icon} name="book-info.svg" />
         </button>
@@ -59,7 +69,7 @@ export function LendingZoneShell({ query }) {
         <div class="zone-top">
           <section class="zone-hero">
             <div class="zone-hero__text">
-              <h1 class="t-title c-primary">${t.heroTitle}</h1>
+              <h1 class="t-title c-primary" ref=${heroRef}>${t.heroTitle}</h1>
               <p class="t-body-regular c-secondary">${t.heroDesc}</p>
             </div>
             <img class="zone-hero__image" src="assets/illustrations/lending-hero.png" width="80" height="80" alt="" />

@@ -4,12 +4,23 @@
  */
 
 /* ---------- PageHeader：返回 / 標題 / 右側 icon ---------- */
+/* 往上滑時固定在畫面頂端（要是 .page 的直接子層，底色沿用頁面底色） */
 .page-header {
+  position: sticky;
+  top: 0;
+  z-index: 15;
   display: flex;
   align-items: center;
   gap: var(--spacing-16);
   padding: var(--spacing-12) var(--spacing-16);
+  background: inherit;
 }
+/* 頁首＋頁籤一起固定（例如股票借貸明細）：包在 .sticky-head 裡 */
+.sticky-head { position: sticky; top: 0; z-index: 15; background: inherit; }
+/* 往上滑、頁首固定在頂端時：淺陰影（Guideline：Light）；.is-scrolled 由 app.js 加在 <html> */
+.is-scrolled .page > .page-header,
+.is-scrolled .sticky-head,
+.is-scrolled .zone-header { box-shadow: var(--shadow-light); }
 .page-header__title { flex: 1; text-align: center; }
 .page-header__slot { width: 24px; height: 24px; flex-shrink: 0; }
 

@@ -25,6 +25,14 @@ function TaskDoneDialog() {
   />`;
 }
 
+// 頁面往上滑（頁首固定在頂端）時在 <html> 加 .is-scrolled，固定頁首顯示陰影（styles/components.css）
+function trackScroll() {
+  const update = () => document.documentElement.classList.toggle('is-scrolled', window.scrollY > 0);
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+trackScroll();
+
 function App() {
   const { path, query } = useRoute();
   const hasScenario = useStore((s) => !!s.account);

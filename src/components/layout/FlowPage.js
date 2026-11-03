@@ -14,11 +14,12 @@ import { BottomActions } from './BottomActions.js';
  *   actionsClass   按鈕區額外 class（例如限制按鈕寬度）
  *   sticky         固定在畫面底部的操作區（例如總計 + 下一步），和 actions 擇一
  * 間距：頁首→內容 24、內容區塊之間 24（Guideline：流程申請）
+ * 頁首（返回＋標題）與步驟條往上滑時一起固定在頂端
  */
 export function FlowPage({ title, step, onBack, actions, actionsClass = '', sticky, children }) {
   return html`
     <div class="page flow-page">
-      <div>
+      <div class="sticky-head">
         <${PageHeader} title=${title} onBack=${onBack} />
         ${step && html`<${StepBar} ...${step} />`}
       </div>
