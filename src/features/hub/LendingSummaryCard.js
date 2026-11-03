@@ -40,7 +40,7 @@ export function LendingSummaryCard({ variant = 'account' }) {
       rows=${rows}
       onBell=${() => showToast(COPY.common.notAvailable)}
       actions=${html`
-        <${Button} variant="text" onClick=${() => startFlow('collateralIn')}>${t.raiseLimit}<//>
+        <${Button} variant="text" onClick=${() => startFlow('raiseLimit')}>${t.raiseLimit}<//>
         <${Button} variant="capsule" onClick=${() => startFlow('existingLoan')}>${t.borrowAgain}<//>
       `}
     />

@@ -8,7 +8,7 @@ import {
   SegmentedTabs, FilterPill, Tag, Button, DetailRow, ListTable, ListRow, EmptyState, DateTimeLines,
 } from '../../components/index.js';
 import { showToast } from '../../store.js';
-import { LOAN_RULES, isDueSoon, extensionsUsed, periodInterest } from '../../lib/calc.js';
+import { LOAN_RULES, LOAN_PENDING, isDueSoon, extensionsUsed, periodInterest } from '../../lib/calc.js';
 import { twd, date, rate, dateTimeParts } from '../../lib/format.js';
 import { COPY } from '../../content/copy.js';
 
@@ -76,7 +76,7 @@ function BorrowList({ loans, open, setOpen, onRepay, onRefinance, onRepayRecords
             cells=${[
               html`
                 <p class="n-body-regular c-primary">${twd(l.balance)}</p>
-                <p class="t-body-regular c-secondary">${l.status}</p>
+                <p class=${'t-body-regular ' + (l.status === LOAN_PENDING ? 'c-warning' : 'c-secondary')}>${l.status}</p>
               `,
               html`<p class="n-body-regular c-primary">${date(l.dueDate)}</p>`,
             ]}
@@ -97,8 +97,10 @@ function BorrowList({ loans, open, setOpen, onRepay, onRefinance, onRepayRecords
                 <${Button} variant="capsule" onClick=${notAvailable}>${t.extendRecords}<//>
               </div>
             `}
-            footerAlign="between"
-            footer=${isDueSoon(l) &&
+            footerAlign=${l.status === LOAN_PENDING ? 'end' : 'between'}
+            footer=${l.status === LOAN_PENDING
+              ? html`<${Button} variant="capsule" class="btn-capsule--sm" onClick=${notAvailable}>${t.cancelApply}<//>`
+              : isDueSoon(l) &&
             html`
               <${Tag} variant="warning">${t.dueSoon}<//>
               <div class="records-row-buttons">

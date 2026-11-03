@@ -1,5 +1,5 @@
 // 借新還舊 第 2 步：確認資料｜Figma 1804:118296
-//   扣款資訊：扣款總額（應還利息 + 借款手續費）、扣款帳號、餘額、申請日
+//   扣款資訊：扣款總額（應還利息，不收手續費）、扣款帳號、餘額、申請日
 //   新借款契約：選取的舊借款整併成一筆
 import { html, useEffect } from '../../lib/preact.js';
 import { FlowPage, SectionHeader, DetailCard, DetailRow, AmountHero, Button } from '../../components/index.js';

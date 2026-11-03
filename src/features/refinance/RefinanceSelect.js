@@ -1,13 +1,13 @@
 // 借新還舊 第 1 步：選取借款契約｜Figma 1804:117905（展開明細 1804:117906）
 // 網址帶 ?loan=借款編號（從借款紀錄的「借新還舊」進來）：預設勾選這一筆
-// 清單 = 近 DUE_SOON_DAYS 天內到期、且展延 2 次的借款，可一併勾選；下方總計 = 扣款總額（應還利息 + 借款手續費）
+// 清單 = 近 DUE_SOON_DAYS 天內到期、且展延 2 次的借款，可一併勾選；下方總計 = 扣款總額（應還利息，不收手續費）
 import { html, useState } from '../../lib/preact.js';
 import {
   FlowPage, SummaryCard, Checkbox, SelectableItem, DetailRow, DetailPanel, ExpandButton, Button, TotalBar,
 } from '../../components/index.js';
 import { useStore, updateRefiDraft } from '../../store.js';
 import { flowPosition, nextStep, prevStep, flowTitle } from '../../flows/flows.js';
-import { LOAN_RULES, refinanceCandidates, refinanceDue, refinancePlan, accruedInterest } from '../../lib/calc.js';
+import { LOAN_RULES, refinanceCandidates, refinanceDue, refinancePlan } from '../../lib/calc.js';
 import { twd, num, rate, date } from '../../lib/format.js';
 import { COPY } from '../../content/copy.js';
 
@@ -50,7 +50,6 @@ export function RefinanceSelect({ query }) {
         >
           <p class="t-body-bold c-primary">${t.breakdownTitle}</p>
           <${DetailRow} label=${t.totalInterest} value=${twd(plan.interest)} />
-          <${DetailRow} label=${t.totalFee} value=${twd(plan.fee)} />
         <//>
         <${Button} disabled=${selected.length === 0} onClick=${submit}>${COPY.common.next}<//>
       `}
@@ -86,7 +85,7 @@ export function RefinanceSelect({ query }) {
                     <div class="refi-card__rows">
                       <${DetailRow} label=${t.extensions} value=${`${l.extensions ?? 0}/${LOAN_RULES.maxExtensions}`} valueClass="n-body-bold" />
                       <${DetailRow}
-                        label=${due.fee ? t.interestAndFee : t.interest}
+                        label=${t.interest}
                         value=${html`<span class="n-body-regular">TWD </span><span class="n-subtitle-bold">${num(due.total)}</span>`}
                       />
                     </div>
@@ -95,7 +94,6 @@ export function RefinanceSelect({ query }) {
                       <${DetailPanel} tone="blue">
                         <${DetailRow} label=${t.detail.amount} value=${twd(l.amount)} />
                         <${DetailRow} label=${t.detail.startDate} value=${date(l.startDate)} />
-                        <${DetailRow} label=${t.detail.accrued} value=${twd(accruedInterest(l))} />
                         <${DetailRow} label=${t.detail.serial} value=${l.id} />
                         <${DetailRow} label=${t.detail.applyDate} value=${date(l.applyDate)} />
                         <${DetailRow} label=${t.detail.channel} value=${l.channel ?? 'APP'} />

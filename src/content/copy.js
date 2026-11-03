@@ -195,6 +195,21 @@ export const COPY = {
     updatedAt: '更新時間',
   },
 
+  // 帳務 ›「台股」頁籤（只供瀏覽，功能都未開放）｜Figma QJWIW4gG5Q0wfEOLpH1RTG 40006013:1205012
+  twStock: {
+    tabs: ['庫存', '已實現損益', '交割款項', '股利查詢', '對帳單', '銀行餘額', '維持率查詢'],
+    tradeType: '交易類別',
+    marketValue: '台股庫存總市值 (台幣)',
+    cost: '投資成本',
+    colName: ['商品名稱', '代碼'],
+    colShares: ['今餘股數', '可下單數'],
+    colPrice: ['現價', '成本均價'],
+    colProfit: ['損益', '報酬率'],
+    spot: '現股',
+    order: '下單',
+    notes: '注意事項',
+  },
+
   hub: {
     dueSoonNotice: (n) => `有 ${n} 筆借款，即將到期`, // 到期通知｜Figma 3177:194338、2720:159497
     ratio: '整戶維持率',
@@ -268,11 +283,9 @@ export const COPY = {
     due: (d) => `${d} 到期`,
     extensions: '展延次數',
     interest: '應還利息',
-    interestAndFee: '應還利息與借款手續費',
     detail: {
       amount: '初始借款金額',
       startDate: '起息日',
-      accrued: '累積利息',
       serial: '借款序號',
       applyDate: '申請日',
       channel: '申請管道',
@@ -281,7 +294,6 @@ export const COPY = {
     selectedCount: (n) => `(已選取 ${n} 筆)`,
     breakdownTitle: '扣款明細',
     totalInterest: '應還利息',
-    totalFee: '借款手續費',
     // 確認資料
     payTitle: '扣款資訊',
     bankAccount: '扣款帳號',
@@ -327,6 +339,7 @@ export const COPY = {
     interest: '利息',
     fee: '借款手續費',
     total: '總扣款金額',
+    estimate: '預估扣款', // 還款額度選「全部」時的大金額標題
     bankAccount: '扣款帳號',
     bankBalance: '扣款帳戶餘額',
     balanceError: '扣款帳戶餘額不足',
@@ -449,6 +462,7 @@ export const COPY = {
     dueSoon: '即將到期',
     extend: '展延',
     refinance: '借新還舊', // 展延次數已滿時取代「展延」
+    cancelApply: '取消申請', // 借款審核中；本次測試不開放
     repay: '還款',
     // 借款展開明細｜Figma 3167:192520
     borrowDetail: {

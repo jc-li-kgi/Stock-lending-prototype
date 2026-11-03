@@ -2,7 +2,7 @@
 // 網址：#/records?tab=loans|collateral|statement
 //   借還款紀錄可再帶 &sub=borrow|repay&open=紀錄編號（展開該筆）；擔保品可再帶 &sub=pledged|unpledged|history
 //   &back=返回頁：明細頁屬於專區，預設返回專區（例如從完成頁進來，按返回回專區，不會回到完成頁）；
-//   從帳務 › 授信管理進來時帶 back=/account
+//   從帳務 › 授信管理進來時帶 back=/account?product=credit（要 encodeURIComponent，網址裡不能有第二個 ?）
 // 頁面負責組合各功能模組（features 之間不互相 import）
 import { html, useState } from '../lib/preact.js';
 import { PageHeader, TextTabs, SegmentedTabs, SearchField, Button, FilterPill, SearchIcon } from '../components/index.js';
@@ -36,7 +36,7 @@ export function LendingRecords({ query }) {
 
   const parent = query.back || '/lending-zone';
   const back = () => navigate(parent, { replace: true });
-  const backQs = query.back ? `&back=${query.back}` : '';
+  const backQs = query.back ? `&back=${encodeURIComponent(query.back)}` : '';
   const switchTab = (key) => navigate(`/records?tab=${key}${backQs}`, { replace: true });
   // 擔保品子頁籤跟著網址走（從其他頁帶 &sub= 進來時也會正確切換）
   const sub = t.collateralTabs.some((x) => x.key === query.sub) ? query.sub : 'pledged';

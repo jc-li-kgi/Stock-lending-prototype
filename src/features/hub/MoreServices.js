@@ -5,8 +5,9 @@ import { showToast } from '../../store.js';
 import { navigate } from '../../router.js';
 import { COPY } from '../../content/copy.js';
 
-// 對應 COPY.hub.services 的順序；back=/account：明細頁按返回回到帳務
-const TARGETS = ['/records?tab=loans&back=/account', '/records?tab=collateral&back=/account', '/records?tab=statement&back=/account'];
+// 對應 COPY.hub.services 的順序；back=帳務 › 授信管理：明細頁按返回回到授信管理
+const BACK = encodeURIComponent('/account?product=credit');
+const TARGETS = [`/records?tab=loans&back=${BACK}`, `/records?tab=collateral&back=${BACK}`, `/records?tab=statement&back=${BACK}`];
 
 export function MoreServices({ showZoneLink = true }) {
   const t = COPY.hub;

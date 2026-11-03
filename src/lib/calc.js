@@ -144,6 +144,9 @@ export function daysUntil(isoDate) {
 /** 即將到期的天數門檻 */
 export const DUE_SOON_DAYS = 20;
 
+/** 剛送出、尚未撥款的借款狀態（借款紀錄顯示橘字＋「取消申請」） */
+export const LOAN_PENDING = '借款審核中';
+
 /** 是否即將到期（到期前 DUE_SOON_DAYS 天內，含當天） */
 export function isDueSoon(loan) {
   const days = daysUntil(loan.dueDate);
@@ -211,13 +214,12 @@ export function refinanceCandidates(account) {
 }
 
 /**
- * 單筆舊借款借新還舊時要付的錢：本期應還利息 + 借款手續費（尚未收過才收，費率同還款）
- * 本金由新借款償還，不需扣款
+ * 單筆舊借款借新還舊時要付的錢：只有應還利息（= 累積到今天的利息）
+ * 不收手續費；本金由新借款償還，不需扣款
  */
 export function refinanceDue(loan) {
-  const interest = periodInterest(loan);
-  const fee = loan.feePaid ? 0 : Math.round(loan.balance * REPAY_RULES.feeRate);
-  return { interest, fee, total: interest + fee };
+  const interest = accruedInterest(loan);
+  return { interest, fee: 0, total: interest };
 }
 
 /** 借新還舊試算：選取的舊借款整併成一筆新借款 */

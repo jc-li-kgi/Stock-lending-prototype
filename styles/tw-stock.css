@@ -1,0 +1,30 @@
+/* ===== 帳務 ›「台股」頁籤（庫存）｜Figma QJWIW4gG5Q0wfEOLpH1RTG 40006013:1205012；情境：資訊瀏覽 ===== */
+.tw-stock { display: flex; flex-direction: column; gap: var(--spacing-24); }
+.tw-stock__pad { padding: 0 var(--spacing-16); }
+.tw-stock__meta { display: flex; flex-direction: column; gap: var(--spacing-16); } /* 帳號選擇 → 子頁籤 16 */
+
+/* 交易類別＋搜尋 → 更新時間 → 庫存卡：12 */
+.tw-stock__summary { display: flex; flex-direction: column; gap: var(--spacing-12); }
+.tw-stock__toolbar { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-8); }
+.tw-stock__time { display: flex; align-items: center; gap: var(--spacing-12); }
+
+/* 台股庫存總市值卡（藍底上 → Basic 陰影；內距 16） */
+.tw-stock-card { display: flex; flex-direction: column; gap: var(--spacing-16); padding: var(--spacing-16); }
+.tw-stock-card__top { display: flex; align-items: flex-start; gap: var(--spacing-4); }
+.tw-stock-card__value { flex: 1; display: flex; flex-direction: column; gap: var(--spacing-4); min-width: 0; }
+.tw-stock-card__label { display: inline-flex; align-items: center; gap: var(--spacing-8); align-self: flex-start; }
+.tw-stock-card__amount { display: flex; align-items: baseline; gap: var(--spacing-4); }
+.tw-stock-card__expand {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-8);
+  border-radius: var(--radius-full);
+  background: var(--color-container-general-active-secondary); /* 同膠囊按鈕的淡藍底 */
+}
+.tw-stock-card__rows { display: flex; flex-direction: column; gap: var(--spacing-8); }
+.tw-stock-card__row { display: flex; align-items: center; gap: var(--spacing-8); }
+.tw-stock-card__change { display: inline-flex; align-items: center; gap: var(--spacing-8); }
+
+/* 列表（ListTable 自帶左右 16），注意事項置中、與列表 24 */
+.tw-stock__list { display: flex; flex-direction: column; gap: var(--spacing-24); }
+.tw-stock__notes { display: flex; justify-content: center; }
