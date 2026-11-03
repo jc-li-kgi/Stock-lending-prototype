@@ -1,9 +1,9 @@
 // 現金還款 第 1 步：輸入還款金額｜Figma 1804:117306
 //   部分：預設帶入即將到期金額，可用 − ＋ 調整
-//   全部：帶入全部借款金額，金額鎖定
+//   全部：Figma 1804:116463 — 預估扣款大金額（本金＋利息＋手續費）＋ 還款本金、利息、手續費、扣款帳號、餘額
 // 網址帶 ?loan=借款編號（從借款紀錄的「還款」進來）
 import { html, useState } from '../../lib/preact.js';
-import { FlowPage, SummaryCard, DetailRow, RadioGroup, AmountField, Button } from '../../components/index.js';
+import { FlowPage, SummaryCard, DetailRow, RadioGroup, AmountField, AmountHero, Button } from '../../components/index.js';
 import { useStore, updateRepayDraft } from '../../store.js';
 import { flowPosition, nextStep, prevStep, flowTitle } from '../../flows/flows.js';
 import { loanBalance, maintenanceRatio, isDueSoon, repayPlan, repayRange, clampAmount } from '../../lib/calc.js';
@@ -29,6 +29,11 @@ export function RepayAmount({ query }) {
   const plan = repayPlan(account, principal);
   const overBalance = plan.total > (account.bankBalance ?? Infinity);
   const bank = account.payoutBank;
+  const bankRows = html`
+    <${DetailRow} label=${t.bankAccount} value=${html`<p class="t-body-regular">${bank.name}</p><p class="n-body-regular">${bank.number}</p>`} />
+    ${account.bankBalance != null && html`<${DetailRow} label=${t.bankBalance} value=${twd(account.bankBalance)} />`}
+    ${overBalance && html`<p class="t-caption-regular field__error">${t.balanceError}</p>`}
+  `;
 
   const submit = () => {
     if (overBalance) return;
@@ -58,33 +63,43 @@ export function RepayAmount({ query }) {
       <section class="card card--full loan-form">
         <${RadioGroup} label=${t.modeTitle} options=${t.modes} value=${mode} onChange=${setMode} />
 
-        <${AmountField}
-          label=${t.principal}
-          prefix="TWD"
-          value=${principal}
-          onChange=${setPartial}
-          ...${range}
-          disabled=${mode === 'full'}
-          hints=${dueSoon ? [t.suggestHint(num(dueSoon))] : []}
-        />
+        ${mode === 'full'
+          ? html`
+              <div class="repay-estimate">
+                <${AmountHero} label=${t.estimate} labelClass="t-body-bold c-primary" amount=${plan.total} />
+              </div>
+              <div class="repay-breakdown">
+                <${DetailRow} label=${t.principal} value=${twd(principal)} />
+                <${DetailRow} label=${t.interest} value=${twd(plan.interest)} />
+                <${DetailRow} label=${t.fee} value=${twd(plan.fee)} />
+                ${bankRows}
+              </div>
+            `
+          : html`
+              <${AmountField}
+                label=${t.principal}
+                prefix="TWD"
+                value=${principal}
+                onChange=${setPartial}
+                ...${range}
+                hints=${dueSoon ? [t.suggestHint(num(dueSoon))] : []}
+              />
 
-        <${DetailRow}
-          label=${t.ratioAfter}
-          labelClass="t-body-bold c-primary"
-          value=${pct(maintenanceRatio(account, -principal))}
-          valueClass="n-subtitle-bold"
-          info=${t.ratioSheet}
-        />
+              <${DetailRow}
+                label=${t.ratioAfter}
+                labelClass="t-body-bold c-primary"
+                value=${pct(maintenanceRatio(account, -principal))}
+                valueClass="n-subtitle-bold"
+                info=${t.ratioSheet}
+              />
 
-        <div class="repay-breakdown">
-          <${DetailRow} label=${t.interest} value=${twd(plan.interest)} />
-          <${DetailRow} label=${t.fee} value=${twd(plan.fee)} />
-          <${DetailRow} label=${t.total} value=${twd(plan.total)} />
-          <${DetailRow} label=${t.bankAccount} value=${html`<p class="t-body-regular">${bank.name}</p><p class="n-body-regular">${bank.number}</p>`} />
-          ${account.bankBalance != null &&
-          html`<${DetailRow} label=${t.bankBalance} value=${twd(account.bankBalance)} />`}
-          ${overBalance && html`<p class="t-caption-regular field__error">${t.balanceError}</p>`}
-        </div>
+              <div class="repay-breakdown">
+                <${DetailRow} label=${t.interest} value=${twd(plan.interest)} />
+                <${DetailRow} label=${t.fee} value=${twd(plan.fee)} />
+                <${DetailRow} label=${t.total} value=${twd(plan.total)} />
+                ${bankRows}
+              </div>
+            `}
       </section>
     <//>
   `;

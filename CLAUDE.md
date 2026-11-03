@@ -98,7 +98,7 @@
 - 剛送出的借款狀態是「借款審核中」（`calc.js` 的 `LOAN_PENDING`）：借款紀錄狀態用橘字（`c-warning`），列下方右側「取消申請」膠囊按鈕（未開放）。T3 帶到 T4～T7 的借款改成已撥款。借款確認頁的擔保品明細、介紹頁常見問題都預設收合。
 - 新頁面要在 `src/routes.js` 註冊。
 - 選擇還款方式的「借新還舊」：只有展延 2 次的借款才顯示（沒指定借款時，有任何一筆即將到期且展延已滿才顯示），選了進 `refinance` 流程。
-- 還款：借款紀錄到期前 `DUE_SOON_DAYS`（20）天顯示即將到期＋展延 / 還款；還款 → 選擇還款方式（`features/repay/RepayMethodSheet`，由專區 shell 與明細頁放置；專區快捷功能「還款」也會開啟）→ `cashRepay` 流程，送出 `repay()`；試算在 `calc.js` 的 `repayPlan`。
+- 還款：借款紀錄到期前 `DUE_SOON_DAYS`（20）天顯示即將到期＋展延 / 還款；還款 → 選擇還款方式（`features/repay/RepayMethodSheet`，由專區 shell 與明細頁放置；專區快捷功能「還款」也會開啟）→ `cashRepay` 流程，送出 `repay()`；試算在 `calc.js` 的 `repayPlan`。第 1 步還款額度選「全部」時（Figma 1804:116463）不顯示金額輸入與還款後維持率，改為「預估扣款」大金額（AmountHero，= 本金＋利息＋手續費）＋還款本金、利息、借款手續費、扣款帳號、餘額。
 - 借新還舊：借款展延次數上限 `LOAN_RULES.maxExtensions`（2）。即將到期且展延已滿的借款，借款紀錄的「展延」改為「借新還舊」→ `refinance` 流程（`features/refinance/`：選取借款契約 → 確認資料，送出 `refinance()`）。第 1 步預設勾選點選的那筆，其他近 20 天內到期、且展延 2 次的借款可一併勾選（展延未滿的不列出）；扣款總額 = 應還利息（不收手續費；應還利息 = 累積到今天的利息；展開明細不再重複列累積利息）；選取的舊借款整併成一筆新借款（狀態已撥款），並新增一筆還款紀錄（還款方式借新還舊、已扣款；還款金額＝舊借款本金＋利息），完成頁「查看借款紀錄」展開新借款。規則在 `calc.js` 的 `refinanceDue` / `refinancePlan`。
 - 到期通知：有即將到期（`DUE_SOON_DAYS` 天內）的借款時，專區總覽、帳務 › 授信管理的摘要卡下方顯示「有 N 筆借款，即將到期」（`features/hub/DueSoonNotice`），點擊 → 股票借貸明細 › 借款（帳務帶 `back=/account`）。共用基本資料的借款都還沒到期；需要即將到期的任務（T6 現金還款、T7 借新還舊）自己覆寫 `loans`。
 - 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。

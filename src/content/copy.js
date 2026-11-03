@@ -324,6 +324,7 @@ export const COPY = {
     interest: '利息',
     fee: '借款手續費',
     total: '總扣款金額',
+    estimate: '預估扣款', // 還款額度選「全部」時的大金額標題
     bankAccount: '扣款帳號',
     bankBalance: '扣款帳戶餘額',
     balanceError: '扣款帳戶餘額不足',
