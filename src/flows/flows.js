@@ -22,6 +22,16 @@ export const FLOWS = {
     done: '/collateral-in/result',
   },
 
+  // 提升可借總額（摘要卡）：同匯入擔保品，但「僅可用於提升維持率」的標的不能勾選（不會增加可借額度）
+  raiseLimit: {
+    title: '匯入擔保品',
+    steps: [
+      { path: '/collateral-in/select', label: '匯入擔保品' },
+      { path: '/collateral-in/confirm', label: '確認資料' },
+    ],
+    done: '/collateral-in/result',
+  },
+
   // 首次借款（未開戶）：匯入擔保品 → 借款，最後一次送出
   newAccountLoan: {
     title: '申請借款',

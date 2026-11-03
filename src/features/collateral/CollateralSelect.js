@@ -29,7 +29,9 @@ export function CollateralSelect({ query }) {
   const t = COPY.collateral;
   const groups = groupHoldings(account);
   const firstLoan = isFlow('newAccountLoan');
-  const importable = firstLoan ? groups.eligible : [...groups.eligible, ...groups.ratioOnly];
+  // 首次借款、提升可借總額：「僅可用於提升維持率」的標的不能勾選（不會增加可借額度）
+  const lockRatioOnly = firstLoan || isFlow('raiseLimit');
+  const importable = lockRatioOnly ? groups.eligible : [...groups.eligible, ...groups.ratioOnly];
   // 單檔模式：匯入擔保品流程從列表帶 code 進來（返回此頁時從草稿帶回）
   const singleCode = isFlow('collateralIn') ? query.code ?? draft.single : null;
   const single = importable.some((h) => h.code === singleCode) ? singleCode : null;
@@ -172,12 +174,12 @@ export function CollateralSelect({ query }) {
           ${ratioOnly.length > 0 &&
           html`
             <section class="coll-group">
-              ${firstLoan
-                ? groupHead('ratioOnly', ratioOnly.length)
+              ${lockRatioOnly
+                ? groupHead('ratioOnly', ratioOnly.length, { desc: firstLoan ? t.groups.ratioOnly.desc : t.groups.ratioOnly.descImport })
                 : groupHead('ratioOnly', ratioOnly.length, { list: ratioOnly, desc: t.groups.ratioOnly.descImport })}
-              <div class=${'card card--full coll-card' + (firstLoan ? ' coll-card--disabled' : '')}>
+              <div class=${'card card--full coll-card' + (lockRatioOnly ? ' coll-card--disabled' : '')}>
                 ${ratioOnly.map((h) =>
-                  firstLoan
+                  lockRatioOnly
                     ? html`
                         <${SelectableItem} disabled label=${stockOf(h.code).name}>
                           <${StockName} inline name=${stockOf(h.code).name} code=${h.code} />
