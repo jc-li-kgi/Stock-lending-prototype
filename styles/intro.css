@@ -25,7 +25,7 @@
 .intro-header {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10; /* 高於內容裡自帶 z-index 的區塊（例如 .intro-risk__more），捲動時才不會蓋到頁首 */
   display: flex;
   justify-content: flex-end;
   padding: var(--spacing-16);
