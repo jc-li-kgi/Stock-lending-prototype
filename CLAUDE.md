@@ -88,6 +88,7 @@
 - 任務連動（`scenarios/carry.js`）：T3 首次借款（`carryOut`）完成時，把擔保品、庫存、擔保品紀錄、借款存到 localStorage `lending-proto-carry-v1`（換任務不會清掉，「清除所有測試資料」或重新開始 T3 才清）。T4～T7 的 `carryIn` 帶入受測者的擔保品，已借款總額沿用他借的金額：T4、T5 就是那一筆（T5 另加已還清借款）；T6 拆 60% 快到期＋40%；T7 拆 50%＋25%（都展延 2 次、快到期）＋25%。可借額度放不下借款（T4 還要留 5 萬可再借）或沒有 T3 資料時，改用固定資料。T4 借的錢不帶到 T5～T7。
 - 任務完成：情境設 `completeOnFlows`（例如 T1 = `['newAccountLoan', 'existingLoan']`）時，`startFlow` 不進流程，改顯示「任務完成」對話框（`app.js`），按鈕回任務列表。
 - 所有任務都從證券主頁「我的」（`/home`，`shells/HomeShell.js`）開始：快捷功能「股票借貸」→ 專區，底部導覽「帳務」→ 授信管理。
+- 帳務的產品頁籤可切換「授信管理」（預設）與「台股」（`features/tw-stock/TwStockTab`，Figma 檔 QJWIW4gG5Q0wfEOLpH1RTG 40006013:1205012），其他頁籤未開放；切換後選取的頁籤捲到中間。台股庫存只供瀏覽，裡面所有按鈕都顯示未開放；庫存 = 情境的持股＋擔保品（與「我的」台股庫存總市值一致），成本與損益依 `mock/home.js` 的 `TW_PROFIT_RATE` 推算。
 - 擔保品紀錄：`account.collateralRecords` 每檔一筆 `{ id, type: 匯入|匯出, code, lots, status: 成功|失敗, appliedAt, channel }`（匯入沒有處理中，新匯入直接是成功）；情境資料要和 `collateral` 對得上。明細 › 擔保品：歷史紀錄（`CollateralHistory`，篩選未開放、可依代碼排序）；已擔保上方是排序「可借款金額高到低」＋搜尋 icon（都未開放，固定依可借款金額排序），每列有「賣股還款」（未開放），展開明細的「查看異動明細」→ `/records/collateral-changes?code=`（`CollateralChanges`，返回回已擔保）。
 - 對帳單（明細 › 對帳單，`features/records/StatementList`）：借款、還款、擔保品匯入 / 匯出彙整成 StatementCard，最新的在最上面；卡片內容與各明細表格的展開明細一致，但對帳單只列成功的交易，不顯示任何狀態（失敗的擔保品匯入不列入）；上方篩選時間（預設全部期間）與交易類別（預設全部類別），可實際篩選。
 - **返回路徑**：股票借貸明細（`/records`）屬於專區，按返回一律回專區（包括從完成頁進來時，不會回到完成頁）；從帳務 › 授信管理進來時網址帶 `back=/account`，返回帳務。切換頁籤會保留 `back`。

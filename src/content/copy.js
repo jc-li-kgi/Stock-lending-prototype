@@ -195,6 +195,21 @@ export const COPY = {
     updatedAt: '更新時間',
   },
 
+  // 帳務 ›「台股」頁籤（只供瀏覽，功能都未開放）｜Figma QJWIW4gG5Q0wfEOLpH1RTG 40006013:1205012
+  twStock: {
+    tabs: ['庫存', '已實現損益', '交割款項', '股利查詢', '對帳單', '銀行餘額', '維持率查詢'],
+    tradeType: '交易類別',
+    marketValue: '台股庫存總市值 (台幣)',
+    cost: '投資成本',
+    colName: ['商品名稱', '代碼'],
+    colShares: ['今餘股數', '可下單數'],
+    colPrice: ['現價', '成本均價'],
+    colProfit: ['損益', '報酬率'],
+    spot: '現股',
+    order: '下單',
+    notes: '注意事項',
+  },
+
   hub: {
     dueSoonNotice: (n) => `有 ${n} 筆借款，即將到期`, // 到期通知｜Figma 3177:194338、2720:159497
     ratio: '整戶維持率',
