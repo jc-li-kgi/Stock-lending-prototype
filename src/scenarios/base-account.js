@@ -31,7 +31,7 @@ export function scenarioLoan({ id, amount, purpose, dueIn, extensions = 0, feePa
 
 // 已開戶任務（T4～T7）的已借款總額一律 TWD 400,000（T5 另有一筆已還清的借款）
 // 共用的借款都還沒到期（不會出現到期通知）；需要即將到期的任務（T6、T7）自己覆寫 loans
-/** 擔保品異動紀錄：daysBefore = 幾天前申請（要早於借款起息日，T7 的借款約 18 個月前起息） */
+/** 擔保品異動紀錄：daysBefore = 幾天前申請（要早於借款起息日，T6 借新還舊的借款約 18 個月前起息） */
 function collateralRecord({ id, type, code, lots, status, daysBefore, time }) {
   return { id, type, code, lots, status, appliedAt: `${addDays(today(), -daysBefore)}T${time}`, channel: 'APP' };
 }
