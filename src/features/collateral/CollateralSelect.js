@@ -73,18 +73,17 @@ export function CollateralSelect({ query }) {
     nextStep(PATH);
   };
 
-  // 群組標題；給 list 時有全選勾選框（CheckboxHeader）。單檔匯入不顯示
+  // 群組標題；給 list 時有全選勾選框（CheckboxHeader），list 是空的就不顯示勾選框。單檔匯入不顯示
   const groupHead = (key, count, { list, desc = t.groups[key].desc } = {}) => {
     if (single) return null;
     const title = `${t.groups[key].title} (${count})`;
     return html`
       <div class="coll-group__head">
-        ${list
+        ${list?.length
           ? html`<${CheckboxHeader}
               title=${title}
               desc=${desc}
               checked=${allOf(list)}
-              disabled=${!list.length}
               onChange=${(on) => toggleAll(list, on)}
               label=${`全選${t.groups[key].title}`}
             />`
@@ -153,8 +152,10 @@ export function CollateralSelect({ query }) {
           ${(!single || eligible.length > 0) &&
           html`
           <section class="coll-group">
-            ${groupHead('eligible', eligible.length, { list: eligible })}
-            <div class="card card--full coll-card">
+            ${groupHead('eligible', eligible.length, eligible.length ? { list: eligible } : { desc: t.groups.eligible.empty })}
+            <!-- 沒有可借貸的標的：只留標題（0）＋說明，不顯示勾選框與白底卡片 -->
+            ${eligible.length > 0 &&
+            html`<div class="card card--full coll-card">
               ${eligible.map(
                 (h) => html`
                   <${SelectableItem} checked=${!!selected[h.code]} onChange=${(on) => toggle(h.code, on)} label=${stockOf(h.code).name}>
@@ -166,7 +167,7 @@ export function CollateralSelect({ query }) {
                   <//>
                 `
               )}
-            </div>
+            </div>`}
           </section>
           `}
 
