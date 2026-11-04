@@ -355,7 +355,7 @@ export const COPY = {
     title: '匯入擔保品',
     sortTitle: '選擇排序方式',
     groups: {
-      eligible: { title: '可借貸' },
+      eligible: { title: '可借貸', empty: '目前沒有可借貸的標的' }, // empty：列表沒有標的時顯示在標題下方
       ratioOnly: {
         title: '僅可用於提升維持率',
         desc: '無法借款，借款後，可以匯入提高擔保品市值，提升維持率', // 首次借款（不可勾選）

@@ -41,7 +41,7 @@ export function CollateralConfirm() {
           <${DetailRow} label=${t.channel} value=${t.channelValue} />
         <//>
 
-        <${CollapsibleCard} title=${t.detailTitle}>
+        <${CollapsibleCard} title=${t.detailTitle} defaultOpen=${false}>
           ${items.map(
             (i) => html`
               <${DetailRow}
