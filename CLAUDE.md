@@ -84,8 +84,8 @@
 - 帳戶 `opened = false` 代表尚未借款（未開戶）：專區顯示初始頁、帳務 › 授信管理顯示方案卡（`features/hub/LoanIntroCard`）＋認識並開立借貸戶，借款走 `newAccountLoan`（匯入擔保品 → 填寫借款金額 → 確認資料，最後一次送出 `firstLoan`）。專區初始頁的精選擔保品卡可點，進 `newAccountLoan` 並預先勾選該檔全部張數（`?code=`）。
 - 文案放 `src/content/copy.js`；公式與業務規則放 `src/lib/calc.js`；股價放 `src/mock/stocks.js`。
 - **產品資料以根目錄 `產品資料.md` 為準**（標的、收盤價、成數、利率、手續費、展延、維持率規則）。使用者說「依產品資料.md 更新」時：讀 md → 同步到 `stocks.js`、`calc.js` → 檢查測試任務金額（約 100 萬）與 `copy.js` 裡寫死的利率 / 手續費 / 成數 → 驗證畫面。程式改了這些數值時也要回寫 md。股票只能整張擔保（`lots`，1 張 = 1,000 股）；收盤價顯示兩位小數（`format.js` 的 `price`）。
-- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是連續點兩下底部導覽「更多」（`BottomNav` 的 `onMoreDoubleTap`；只點一下仍顯示未開放）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 借新還舊、T7 現金還款（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
-- 任務連動（`scenarios/carry.js`）：T3 首次借款（`carryOut`）完成時，把擔保品、庫存、擔保品紀錄、借款存到 localStorage `lending-proto-carry-v1`（換任務不會清掉，「清除所有測試資料」或重新開始 T3 才清）。T4～T7 的 `carryIn` 帶入受測者的擔保品，已借款總額沿用他借的金額：T4、T5 就是那一筆（T5 另加已還清借款）；T6 拆 50%＋25%（都展延 2 次、快到期）＋25%；T7 拆 60% 快到期＋40%。可借額度放不下借款（T4 還要留 5 萬可再借）或沒有 T3 資料時，改用固定資料。T4 借的錢不帶到 T5～T7。
+- 主持人頁（任務列表）：`#/moderator`，依 `scenarios/index.js` 的順序顯示「任務{情境的 no}」＋任務名稱；隱藏入口是連續點兩下底部導覽「更多」（`BottomNav` 的 `onMoreDoubleTap`；只點一下仍顯示未開放）。任務：T1 任務一＆二 瀏覽借貸專區＋試算、T3 首次借款、T4 再借一筆、T5 瀏覽借貸明細、T6 現金還款、T7 借新還舊（任務代碼 = 編號）；匯入擔保品（`extra-import-collateral.js`）目前不列入。
+- 任務連動（`scenarios/carry.js`）：T3 首次借款（`carryOut`）完成時，把擔保品、庫存、擔保品紀錄、借款存到 localStorage `lending-proto-carry-v1`（換任務不會清掉，「清除所有測試資料」或重新開始 T3 才清）。T4～T7 的 `carryIn` 帶入受測者的擔保品，已借款總額沿用他借的金額：T4、T5 就是那一筆（T5 另加已還清借款）；T6 拆 60% 快到期＋40%；T7 拆 50%＋25%（都展延 2 次、快到期）＋25%。可借額度放不下借款（T4 還要留 5 萬可再借）或沒有 T3 資料時，改用固定資料。T4 借的錢不帶到 T5～T7。
 - 任務完成：情境設 `completeOnFlows`（例如 T1 = `['newAccountLoan', 'existingLoan']`）時，`startFlow` 不進流程，改顯示「任務完成」對話框（`app.js`），按鈕回任務列表。
 - 所有任務都從證券主頁「我的」（`/home`，`shells/HomeShell.js`）開始：快捷功能「股票借貸」→ 專區，底部導覽「帳務」→ 台股（切到授信管理）。
 - 帳務（底部導覽「帳務」、`/account`）預設停在「台股」；`/account?product=credit` = 授信管理（流程結束、明細頁返回都回這裡）。產品頁籤可切換「台股」與「授信管理」（`features/tw-stock/TwStockTab`，Figma 檔 QJWIW4gG5Q0wfEOLpH1RTG 40006013:1205012），其他頁籤未開放；切換後選取的頁籤捲到中間。台股庫存只供瀏覽，裡面所有按鈕都顯示未開放；庫存 = 情境的持股＋擔保品（與「我的」台股庫存總市值一致），成本與損益依 `mock/home.js` 的 `TW_PROFIT_RATE` 推算。
@@ -104,7 +104,7 @@
 - 選擇還款方式的「借新還舊」：只有展延 2 次的借款才顯示（沒指定借款時，有任何一筆即將到期且展延已滿才顯示），選了進 `refinance` 流程。
 - 還款：借款紀錄到期前 `DUE_SOON_DAYS`（20）天顯示即將到期＋展延 / 還款；還款 → 選擇還款方式（`features/repay/RepayMethodSheet`，由專區 shell 與明細頁放置；專區快捷功能「還款」也會開啟）→ `cashRepay` 流程，送出 `repay()`；試算在 `calc.js` 的 `repayPlan`。第 1 步還款額度選「全部」時（Figma 1804:116463）不顯示金額輸入與還款後維持率，改為「預估扣款」大金額（AmountHero，= 本金＋利息＋手續費）＋還款本金、利息、借款手續費、扣款帳號、餘額。
 - 借新還舊：借款展延次數上限 `LOAN_RULES.maxExtensions`（2）。即將到期且展延已滿的借款，借款紀錄的「展延」改為「借新還舊」→ `refinance` 流程（`features/refinance/`：選取借款契約 → 確認資料，送出 `refinance()`）。第 1 步預設勾選點選的那筆，其他近 20 天內到期、且展延 2 次的借款可一併勾選（展延未滿的不列出）；扣款總額 = 應還利息（不收手續費；應還利息 = 累積到今天的利息；展開明細不再重複列累積利息）；選取的舊借款整併成一筆新借款（狀態已撥款），並新增一筆還款紀錄（還款方式借新還舊、已扣款；還款金額＝舊借款本金＋利息），完成頁「查看借款紀錄」展開新借款。規則在 `calc.js` 的 `refinanceDue` / `refinancePlan`。
-- 到期通知：有即將到期（`DUE_SOON_DAYS` 天內）的借款時，專區總覽、帳務 › 授信管理的摘要卡下方顯示「有 N 筆借款，即將到期」（`features/hub/DueSoonNotice`），點擊 → 股票借貸明細 › 借款（帳務帶 `back=/account?product=credit`）。共用基本資料的借款都還沒到期；需要即將到期的任務（T6 借新還舊、T7 現金還款）自己覆寫 `loans`。
+- 到期通知：有即將到期（`DUE_SOON_DAYS` 天內）的借款時，專區總覽、帳務 › 授信管理的摘要卡下方顯示「有 N 筆借款，即將到期」（`features/hub/DueSoonNotice`），點擊 → 股票借貸明細 › 借款（帳務帶 `back=/account?product=credit`）。共用基本資料的借款都還沒到期；需要即將到期的任務（T6 現金還款、T7 借新還舊）自己覆寫 `loans`。
 - 未實作的按鈕呼叫 `showToast(COPY.common.notAvailable)`。
 - 不安裝建置工具或 npm 套件（電腦沒有 Node.js）。
 - **ui-kit/**（給其他專案用的元件與樣式包）由 `python3 scripts/build-ui-kit.py` 產生；**只有使用者要求「重新產生 ui-kit」時才執行**，改元件或樣式時不要主動重新產生。不要手動改 ui-kit/ 裡的檔案；元件依賴本專案的部分（文案、Toast、換頁、金額規則）在 ui-kit 裡改指向 `ui-kit/src/kit.js`（模板在 `scripts/ui-kit-template/`）。元件新增對 `copy.js` / `store.js` / `router.js` / `calc.js` 的依賴時，要同步更新 kit.js 模板，否則產生時會報錯。
